@@ -46,6 +46,7 @@ jobs:
     needs: collect
     if: needs.collect.outputs.changed == 'true'
     permissions:
+      actions: read
       contents: read
       pages: write
       id-token: write

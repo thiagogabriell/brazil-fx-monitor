@@ -16,6 +16,9 @@ on:
   workflow_dispatch:
 
 permissions:
+  # actions:read permite ao deploy-pages localizar o artefato pela API de
+  # Actions, inclusive quando este workflow e chamado por outro com `uses:`.
+  actions: read
   contents: read
   pages: write
   id-token: write
