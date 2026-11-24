@@ -1,0 +1,52 @@
+name: Coleta das atuações no mercado de câmbio
+
+# O conjunto de dados de atuações é atualizado até o último dia útil do mês e
+# traz as operações do mês anterior. Verificamos todo dia útil a partir do dia
+# 20, que é quando a publicação costuma aparecer, e também às segundas-feiras.
+on:
+  schedule:
+    - cron: '30 21 20-31 * 1-5'
+    - cron: '30 21 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: coleta
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.process.outputs.changed }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+
+      - name: Coletar atuações e comunicados
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: |
+          set -euo pipefail
+          python3 scripts/collect_interventions.py
+          python3 scripts/collect_announcements.py
+
+      - name: Processar e publicar
+        id: process
+        uses: ./.github/actions/process
+        with:
+          label: atuações no mercado de câmbio
+
+  deploy:
+    needs: collect
+    if: needs.collect.outputs.changed == 'true'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/deploy.yml

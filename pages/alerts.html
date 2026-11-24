@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alertas · Brazil FX Monitor</title>
+<meta name="description" content="Monitoramento das reservas internacionais do Brasil, das intervenções cambiais do Banco Central, do fluxo de dólares e da pressão sobre o real, com dados oficiais.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/app.css?v=7676524102">
+</head>
+<body>
+<div id="app-shell"></div>
+<template id="page-template">
+<p class="page-intro">
+  Central de alertas com limites configuráveis. As rotinas automáticas avaliam os
+  limites padrão e gravam o histórico no repositório; no navegador você pode usar
+  os seus próprios limites, guardados apenas neste dispositivo.
+</p>
+
+<div class="notice notice--info">
+  Os limites são <strong>critérios de monitoramento desta aplicação</strong> e não
+  indicadores oficiais de crise.
+</div>
+
+<div class="grid grid--4" id="alert-cards"></div>
+
+<section class="section">
+  <div class="section__head"><h2>Alertas com os seus limites</h2>
+    <div class="topbar__spacer"></div>
+    <label class="toggle-row"><input type="checkbox" id="use-custom"> Usar meus limites</label>
+    <button class="btn" id="notify-btn" type="button">Ativar notificações do navegador</button>
+  </div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr>
+          <th scope="col">Severidade</th><th scope="col">Indicador</th>
+          <th scope="col" class="right">Valor observado</th><th scope="col" class="right">Limite</th>
+          <th scope="col">Data de referência</th><th scope="col">Detectado em</th>
+          <th scope="col" class="wrap">Descrição</th><th scope="col">Fonte</th><th scope="col">Dados</th>
+        </tr></thead>
+        <tbody id="active-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Configuração dos limites</h2>
+    <div class="topbar__spacer"></div>
+    <button class="btn" id="reset-thresholds" type="button">Restaurar padrões</button></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th scope="col">Regra</th><th scope="col">Indicador</th>
+          <th scope="col">Unidade</th><th scope="col">Comparação</th>
+          <th scope="col" class="right">Limite padrão</th><th scope="col">Meu limite</th>
+          <th scope="col">Ativo</th></tr></thead>
+        <tbody id="rules-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Histórico gerado pelas rotinas automáticas</h2>
+    <div class="topbar__spacer"></div>
+    <div class="field"><label for="history-severity">Severidade</label>
+      <select id="history-severity">
+        <option value="all">Todas</option><option value="critica">Crítica</option>
+        <option value="alta">Alta</option><option value="atencao">Atenção</option>
+        <option value="info">Informativa</option>
+      </select></div>
+    <button class="btn" id="export-history" type="button">Exportar CSV</button></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th scope="col">Detectado em</th><th scope="col">Severidade</th>
+          <th scope="col">Regra</th><th scope="col" class="right">Valor</th>
+          <th scope="col" class="right">Limite</th><th scope="col">Referência</th>
+          <th scope="col" class="wrap">Descrição</th></tr></thead>
+        <tbody id="history-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+</template>
+
+<script defer src="../assets/js/core.js?v=7676524102"></script>
+
+<script defer src="../assets/js/page-alerts.js?v=7676524102"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var start = function () {
+    if (!window.BFX) { setTimeout(start, 20); return; }
+    BFX.init('alerts', "Central de alertas").then(function () {
+      if (window.PAGE && typeof window.PAGE.init === 'function') {
+        window.PAGE.init().catch(function (error) {
+          var main = document.getElementById('main');
+          if (main) {
+            var box = document.createElement('p');
+            box.className = 'notice notice--error';
+            box.textContent = 'Falha ao carregar os dados desta página: ' + error.message;
+            main.prepend(box);
+          }
+          console.error(error);
+        });
+      }
+    });
+  };
+  start();
+});
+</script>
+</body>
+</html>

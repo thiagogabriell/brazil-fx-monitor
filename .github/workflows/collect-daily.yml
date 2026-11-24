@@ -1,0 +1,59 @@
+name: Coleta diária completa
+
+# Uma vez por dia útil roda tudo, inclusive as fontes mensais, para pegar uma
+# publicação antecipada e para revalidar a ausência da composição das reservas.
+on:
+  schedule:
+    - cron: '40 20 * * 1-5'   # 17h40 em São Paulo
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: coleta
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.process.outputs.changed }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+
+      - name: Coletar todas as fontes
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: |
+          set -euo pipefail
+          # Cada coletor preserva o último dado válido quando a fonte falha, por
+          # isso uma falha isolada não interrompe as demais.
+          failed=0
+          for script in collect_reserves collect_exchange_rates collect_exchange_flow \
+                        collect_interventions collect_announcements collect_composition; do
+            echo "::group::$script"
+            python3 "scripts/$script.py" || { echo "$script falhou"; failed=1; }
+            echo "::endgroup::"
+          done
+          echo "falhas=$failed"
+          exit 0
+
+      - name: Processar e publicar
+        id: process
+        uses: ./.github/actions/process
+        with:
+          label: coleta diária completa
+
+  deploy:
+    needs: collect
+    if: needs.collect.outputs.changed == 'true'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/deploy.yml

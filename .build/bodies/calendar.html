@@ -1,0 +1,47 @@
+<p class="page-intro">
+  Calendário das atuações do Banco Central no mercado de câmbio. As cores
+  identificam o tipo de operação e cada célula traz também um símbolo, para que a
+  informação não dependa só da cor. Dias posteriores à última publicação oficial
+  aparecem como <strong>sem dados disponíveis</strong>, não como dias sem
+  intervenção.
+</p>
+
+<div id="coverage-notice"></div>
+
+<section class="section" style="margin-top:0">
+  <div class="section__head">
+    <button class="btn" id="prev-month" type="button" aria-label="Mês anterior">‹</button>
+    <h2 id="month-title">—</h2>
+    <button class="btn" id="next-month" type="button" aria-label="Próximo mês">›</button>
+    <div class="topbar__spacer"></div>
+    <div class="field"><label for="month-input">Mês</label>
+      <input type="month" id="month-input"></div>
+  </div>
+  <div class="section__body">
+    <div class="calendar" id="calendar" role="grid" aria-label="Calendário de intervenções"></div>
+    <div class="legend" id="calendar-legend" style="margin-top:12px"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2 id="day-title">Selecione um dia</h2></div>
+  <div class="section__body" id="day-detail">
+    <p class="card__meta-row">Clique em um dia do calendário para ver as operações,
+      os totais e os saldos das reservas daquela data.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Mapa anual de intervenções</h2>
+    <div class="topbar__spacer"></div>
+    <div class="field"><label for="heatmap-year">Ano</label><select id="heatmap-year"></select></div>
+    <div class="field"><label for="heatmap-metric">Métrica</label>
+      <select id="heatmap-metric">
+        <option value="sold">Volume vendido diretamente</option>
+        <option value="bought">Volume comprado diretamente</option>
+        <option value="operations">Número de operações</option>
+        <option value="swap">Valor nocional de swaps</option>
+      </select></div>
+  </div>
+  <div class="section__body"><div class="chart" id="chart-heatmap"></div></div>
+</section>

@@ -1,0 +1,76 @@
+name: Publicar no GitHub Pages
+
+# Publica o site estático. É chamado pelas rotinas de coleta logo após um
+# commit de dados, porque commits feitos com o GITHUB_TOKEN não disparam
+# outros workflows por si.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'pages/**'
+      - 'assets/**'
+      - 'data/**'
+      - '.github/workflows/deploy.yml'
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Montar o pacote do site
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          cp -r index.html pages assets data _site/
+          cp README.md _site/ 2>/dev/null || true
+          # Impede que o Jekyll ignore diretorios iniciados por underscore.
+          touch _site/.nojekyll
+          # Conteudo minimo que precisa existir para o site funcionar.
+          for required in index.html assets/js/core.js data/indicators/summary.json; do
+            test -s "_site/$required" || { echo "faltando $required" >&2; exit 1; }
+          done
+          echo "arquivos publicados: $(find _site -type f | wc -l)"
+
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+
+      - name: Validar a URL publicada
+        run: |
+          set -euo pipefail
+          url="${{ steps.deployment.outputs.page_url }}"
+          echo "verificando $url"
+          for attempt in 1 2 3 4 5 6; do
+            code=$(curl -sS -o /tmp/page.html -w '%{http_code}' --max-time 30 "$url" || echo 000)
+            if [ "$code" = "200" ] && grep -q "Brazil FX Monitor" /tmp/page.html; then
+              data_code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 \
+                "${url}data/indicators/summary.json" || echo 000)
+              echo "pagina $code, dados $data_code"
+              [ "$data_code" = "200" ] && exit 0
+            fi
+            echo "tentativa $attempt: HTTP $code"
+            sleep 20
+          done
+          echo "a URL publicada nao respondeu como esperado" >&2
+          exit 1

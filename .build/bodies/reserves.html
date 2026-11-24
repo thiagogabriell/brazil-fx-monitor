@@ -1,0 +1,92 @@
+<p class="page-intro">
+  Extrato diário das reservas internacionais. Para cada dia publicado pelo Banco
+  Central, o saldo inicial, o saldo final, a variação e a parcela dessa variação
+  que as operações confirmadas explicam. O que as operações não explicam aparece
+  como <strong>variação não identificada</strong> e não é atribuído a venda de
+  dólares.
+</p>
+
+<div id="coverage-notice"></div>
+
+<section class="section" style="margin-top:0">
+  <div class="section__head">
+    <h2>Filtros</h2>
+    <div class="topbar__spacer"></div>
+    <button class="btn" id="export-csv" type="button">Exportar CSV</button>
+    <button class="btn" id="export-json" type="button">Exportar JSON</button>
+  </div>
+  <div class="section__body">
+    <div class="filters">
+      <div class="field"><label for="concept-select">Conceito das reservas</label>
+        <select id="concept-select"></select></div>
+      <div class="field"><label for="year-select">Ano</label>
+        <select id="year-select"></select></div>
+      <div class="field"><label for="from-date">De</label>
+        <input type="date" id="from-date"></div>
+      <div class="field"><label for="to-date">Até</label>
+        <input type="date" id="to-date"></div>
+      <div class="field"><label for="filter-kind">Tipo de dia</label>
+        <select id="filter-kind">
+          <option value="all">Todos os dias</option>
+          <option value="with-operation">Com operação confirmada</option>
+          <option value="with-sale">Com venda direta</option>
+          <option value="with-purchase">Com compra direta</option>
+          <option value="with-temporary">Com operação temporária</option>
+          <option value="with-swap">Com swap cambial</option>
+          <option value="uses-reserves">Que usaram as reservas diretamente</option>
+          <option value="unexplained">Com variação não identificada relevante</option>
+          <option value="no-data">Sem dados de atuação publicados</option>
+        </select></div>
+      <div class="field"><label for="min-variation">Variação mínima (US$ milhões, absoluta)</label>
+        <input type="number" id="min-variation" min="0" step="50" value="0"></div>
+    </div>
+    <p class="card__meta-row" id="concept-explanation" style="margin-top:10px"></p>
+  </div>
+</section>
+
+<div class="grid grid--4" id="statement-cards" style="margin-top:16px"></div>
+
+<section class="section">
+  <div class="section__head"><h2>Conciliação por dia</h2>
+    <div class="topbar__spacer"></div>
+    <span class="card__meta-row" id="row-count"></span></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data" id="statement-table">
+        <caption>Clique em uma linha para abrir todos os detalhes do dia.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Data</th>
+            <th scope="col" class="right">Saldo inicial</th>
+            <th scope="col" class="right">Saldo final</th>
+            <th scope="col" class="right">Variação</th>
+            <th scope="col" class="right">Variação %</th>
+            <th scope="col" class="right">Retirado (confirmado)</th>
+            <th scope="col" class="right">Adicionado (confirmado)</th>
+            <th scope="col" class="right">Vendido direto</th>
+            <th scope="col" class="right">Comprado direto</th>
+            <th scope="col" class="right">Temporárias</th>
+            <th scope="col" class="right">Retorno temporárias</th>
+            <th scope="col" class="right">Não identificada</th>
+            <th scope="col">Situação</th>
+          </tr>
+        </thead>
+        <tbody id="statement-body"><tr><td colspan="13" class="loading">Carregando…</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Evolução do saldo e da variação diária</h2>
+    <div class="topbar__spacer"></div><div id="reserves-range"></div></div>
+  <div class="section__body">
+    <div class="chart" id="chart-balance"></div>
+    <div class="chart chart--short" id="chart-daily-change" style="margin-top:12px"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Metodologia da conciliação</h2></div>
+  <div class="section__body"><dl class="kv" id="methodology"></dl></div>
+</section>

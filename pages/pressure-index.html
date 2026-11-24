@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pressão cambial · Brazil FX Monitor</title>
+<meta name="description" content="Monitoramento das reservas internacionais do Brasil, das intervenções cambiais do Banco Central, do fluxo de dólares e da pressão sobre o real, com dados oficiais.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/app.css?v=7676524102">
+</head>
+<body>
+<div id="app-shell"></div>
+<template id="page-template">
+<p class="page-intro">
+  Indicador de pressão cambial de 0 a 100 construído por esta aplicação. A
+  metodologia é determinística, transparente e configurável no código.
+</p>
+
+<div class="notice notice--warn">
+  <strong>Isto não é uma classificação oficial.</strong> O indicador é uma
+  metodologia experimental desta aplicação. Não é classificação do Banco Central,
+  não é previsão de crise e não é recomendação financeira.
+</div>
+
+<div class="grid grid--4" id="pressure-cards"></div>
+
+<section class="section">
+  <div class="section__head"><h2>Pontuação por componente</h2>
+    <div class="topbar__spacer"></div>
+    <span class="card__meta-row" id="coverage-note"></span></div>
+  <div class="section__body" id="components"></div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Dados ausentes</h2></div>
+  <div class="section__body"><ul class="plain" id="missing"></ul></div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Histórico da pontuação</h2>
+    <div class="topbar__spacer"></div><div id="pressure-range"></div></div>
+  <div class="section__body"><div class="chart" id="chart-history"></div></div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Faixas e fórmula</h2></div>
+  <div class="section__body">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th scope="col">Faixa</th><th scope="col">Classificação</th></tr></thead>
+        <tbody id="bands-body"></tbody>
+      </table>
+    </div>
+    <dl class="kv" id="formula" style="margin-top:14px"></dl>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Padrões monitorados</h2></div>
+  <div class="section__body" id="patterns"></div>
+</section>
+</template>
+<script defer src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js" integrity="sha384-Mx5lkUEQPM1pOJCwFtUICyX45KNojXbkWdYhkKUKsbv391mavbfoAmONbzkgYPzR" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="../assets/js/core.js?v=7676524102"></script>
+<script defer src="../assets/js/charts.js?v=7676524102"></script>
+<script defer src="../assets/js/page-pressure.js?v=7676524102"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var start = function () {
+    if (!window.BFX) { setTimeout(start, 20); return; }
+    BFX.init('pressure', "Indicador de pressão cambial").then(function () {
+      if (window.PAGE && typeof window.PAGE.init === 'function') {
+        window.PAGE.init().catch(function (error) {
+          var main = document.getElementById('main');
+          if (main) {
+            var box = document.createElement('p');
+            box.className = 'notice notice--error';
+            box.textContent = 'Falha ao carregar os dados desta página: ' + error.message;
+            main.prepend(box);
+          }
+          console.error(error);
+        });
+      }
+    });
+  };
+  start();
+});
+</script>
+</body>
+</html>

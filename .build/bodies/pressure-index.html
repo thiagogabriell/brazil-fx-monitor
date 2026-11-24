@@ -1,0 +1,48 @@
+<p class="page-intro">
+  Indicador de pressão cambial de 0 a 100 construído por esta aplicação. A
+  metodologia é determinística, transparente e configurável no código.
+</p>
+
+<div class="notice notice--warn">
+  <strong>Isto não é uma classificação oficial.</strong> O indicador é uma
+  metodologia experimental desta aplicação. Não é classificação do Banco Central,
+  não é previsão de crise e não é recomendação financeira.
+</div>
+
+<div class="grid grid--4" id="pressure-cards"></div>
+
+<section class="section">
+  <div class="section__head"><h2>Pontuação por componente</h2>
+    <div class="topbar__spacer"></div>
+    <span class="card__meta-row" id="coverage-note"></span></div>
+  <div class="section__body" id="components"></div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Dados ausentes</h2></div>
+  <div class="section__body"><ul class="plain" id="missing"></ul></div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Histórico da pontuação</h2>
+    <div class="topbar__spacer"></div><div id="pressure-range"></div></div>
+  <div class="section__body"><div class="chart" id="chart-history"></div></div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Faixas e fórmula</h2></div>
+  <div class="section__body">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th scope="col">Faixa</th><th scope="col">Classificação</th></tr></thead>
+        <tbody id="bands-body"></tbody>
+      </table>
+    </div>
+    <dl class="kv" id="formula" style="margin-top:14px"></dl>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Padrões monitorados</h2></div>
+  <div class="section__body" id="patterns"></div>
+</section>

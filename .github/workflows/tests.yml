@@ -1,0 +1,64 @@
+name: Testes
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'data/**'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: testes-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependências de teste
+        run: python3 -m pip install --disable-pip-version-check -r requirements-dev.txt
+
+      - name: Testes de unidade, cálculo, deduplicação e tratamento de erros
+        run: python3 -m pytest tests -q
+
+      - name: Validar os schemas e a integridade dos dados publicados
+        run: python3 scripts/validate_data.py
+
+      - name: Conferir se as páginas estão sincronizadas com os assets
+        run: |
+          set -euo pipefail
+          python3 .build/make_pages.py
+          if ! git diff --quiet -- index.html pages; then
+            echo "As páginas estão desatualizadas. Rode: python3 .build/make_pages.py" >&2
+            git --no-pager diff --stat -- index.html pages
+            exit 1
+          fi
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+
+      - name: Instalar Playwright
+        run: |
+          python3 -m pip install --disable-pip-version-check -r requirements-dev.txt playwright
+          python3 -m playwright install --with-deps chromium
+
+      - name: Testar as páginas em um navegador real
+        env:
+          BFX_BROWSER_TESTS: "1"
+        run: python3 -m pytest tests/test_frontend.py -q

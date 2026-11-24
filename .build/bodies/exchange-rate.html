@@ -1,0 +1,52 @@
+<p class="page-intro">
+  O Banco Central publica a PTAX, uma taxa de referência calculada a partir de
+  quatro consultas ao mercado, divulgada por volta das 13h10 de São Paulo. Ela não
+  é cotação em tempo real. A cotação ao vivo exibida aqui vem de fonte secundária
+  e está identificada como tal.
+</p>
+
+<div class="grid grid--4" id="rate-cards"></div>
+
+<section class="section">
+  <div class="section__head"><h2>Cotação ao vivo</h2>
+    <span class="badge badge--secondary">Fonte secundária</span>
+    <div class="topbar__spacer"></div>
+    <span class="card__meta-row" id="live-updated"></span></div>
+  <div class="section__body">
+    <div class="grid grid--4" id="live-cards"></div>
+    <p class="card__meta-row" id="live-note" style="margin-top:10px"></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>PTAX de venda e de compra</h2>
+    <div class="topbar__spacer"></div><div id="rate-range"></div></div>
+  <div class="section__body">
+    <div class="chart" id="chart-ptax"></div>
+    <p class="card__meta-row" id="marker-note" style="margin-top:8px"></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Reservas internacionais versus dólar</h2></div>
+  <div class="section__body"><div class="chart" id="chart-reserves-vs-usd"></div></div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Intervenções cambiais versus dólar</h2></div>
+  <div class="section__body"><div class="chart" id="chart-interventions-vs-usd"></div></div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Boletins PTAX mais recentes</h2></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th scope="col">Data de referência</th>
+          <th scope="col">Publicado em (São Paulo)</th>
+          <th scope="col" class="right">Compra</th><th scope="col" class="right">Venda</th></tr></thead>
+        <tbody id="bulletins-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>

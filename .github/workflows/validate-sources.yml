@@ -1,0 +1,29 @@
+name: Validação das fontes oficiais
+
+# Confere todo dia útil se os endpoints continuam respondendo, se o layout do
+# CSV de atuações mudou e se o Banco Central passou a publicar a composição das
+# reservas. Não grava nada no repositório.
+on:
+  schedule:
+    - cron: '10 12 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+
+      - run: python3 -m pip install --disable-pip-version-check -r requirements-dev.txt
+
+      - name: Checar os endpoints oficiais
+        env:
+          BFX_LIVE_TESTS: "1"
+        run: python3 -m pytest tests/test_sources_live.py -q

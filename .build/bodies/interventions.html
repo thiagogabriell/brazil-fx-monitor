@@ -1,0 +1,106 @@
+<p class="page-intro">
+  Visão agregada das atuações do Banco Central no mercado de câmbio desde 1999,
+  separadas por tipo. Vendas diretas, operações temporárias e swaps cambiais são
+  apresentados em blocos distintos porque têm efeitos diferentes sobre as
+  reservas.
+</p>
+
+<div id="coverage-notice"></div>
+
+<div class="grid grid--4" id="window-cards"></div>
+
+<section class="section">
+  <div class="section__head"><h2>Acumulado por período</h2></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr>
+          <th scope="col">Período</th><th scope="col">Janela</th>
+          <th scope="col" class="right">Vendido direto</th>
+          <th scope="col" class="right">Comprado direto</th>
+          <th scope="col" class="right">Saldo líquido</th>
+          <th scope="col" class="right">Temporárias</th>
+          <th scope="col" class="right">Retorno temporárias</th>
+          <th scope="col" class="right">Swap tradicional (nocional)</th>
+          <th scope="col" class="right">Swap reverso (nocional)</th>
+          <th scope="col" class="right">Operações</th>
+          <th scope="col" class="right">Dias com venda</th>
+          <th scope="col" class="right">Só anunciadas</th>
+        </tr></thead>
+        <tbody id="windows-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="grid grid--2" style="margin-top:22px">
+  <section class="section" style="margin-top:0">
+    <div class="section__head"><h2>Venda direta de dólares à vista</h2>
+      <span class="chip chip--outflow">Reduz as reservas</span></div>
+    <div class="section__body" id="block-spot-sale"></div>
+  </section>
+  <section class="section" style="margin-top:0">
+    <div class="section__head"><h2>Compra direta de dólares</h2>
+      <span class="chip chip--inflow">Aumenta as reservas</span></div>
+    <div class="section__body" id="block-spot-purchase"></div>
+  </section>
+  <section class="section" style="margin-top:0">
+    <div class="section__head"><h2>Operações com compromisso de recompra</h2>
+      <span class="chip chip--temporary">Temporária</span></div>
+    <div class="section__body" id="block-temporary"></div>
+  </section>
+  <section class="section" style="margin-top:0">
+    <div class="section__head"><h2>Swap cambial tradicional</h2>
+      <span class="chip chip--notional">Valor nocional</span></div>
+    <div class="section__body" id="block-swap-traditional"></div>
+  </section>
+  <section class="section" style="margin-top:0">
+    <div class="section__head"><h2>Swap cambial reverso</h2>
+      <span class="chip chip--notional">Valor nocional</span></div>
+    <div class="section__body" id="block-swap-reverse"></div>
+  </section>
+  <section class="section" style="margin-top:0">
+    <div class="section__head"><h2>Outras operações</h2></div>
+    <div class="section__body" id="block-other"></div>
+  </section>
+</div>
+
+<section class="section">
+  <div class="section__head"><h2>Séries históricas</h2>
+    <div class="topbar__spacer"></div><div id="interventions-range"></div></div>
+  <div class="section__body">
+    <div class="chart" id="chart-daily-sales"></div>
+    <div class="chart" id="chart-cumulative" style="margin-top:12px"></div>
+    <div class="chart" id="chart-frequency" style="margin-top:12px"></div>
+    <div class="chart chart--short" id="chart-average" style="margin-top:12px"></div>
+    <div class="grid grid--2" style="margin-top:12px">
+      <div class="chart" id="chart-distribution"></div>
+      <div class="chart" id="chart-outstanding"></div>
+    </div>
+    <div class="chart" id="chart-swaps" style="margin-top:12px"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Comunicados oficiais</h2>
+    <div class="topbar__spacer"></div>
+    <div class="field"><label for="announcement-limit">Mostrar</label>
+      <select id="announcement-limit">
+        <option value="25">25 mais recentes</option>
+        <option value="100">100 mais recentes</option>
+        <option value="500">500 mais recentes</option>
+      </select></div></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr>
+          <th scope="col">Comunicado</th><th scope="col">Publicado em (São Paulo)</th>
+          <th scope="col">Datas de operação</th><th scope="col">Tipos</th>
+          <th scope="col" class="right">Ofertado</th><th scope="col" class="right">Negociado</th>
+          <th scope="col">Motivo oficial</th><th scope="col">Fonte</th>
+        </tr></thead>
+        <tbody id="announcements-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>

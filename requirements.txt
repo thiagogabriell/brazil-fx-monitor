@@ -1,0 +1,3 @@
+# A coleta e o processamento usam apenas a biblioteca padrão do Python 3.12.
+# Nenhuma dependência de terceiros é necessária em produção, o que elimina
+# superfície de ataque e mantém o custo recorrente em zero.

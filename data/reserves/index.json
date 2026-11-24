@@ -1,0 +1,28 @@
+{
+ "schema": "reserves-index/v1",
+ "generated_at": "2026-11-24T19:36:31+00:00",
+ "concepts": [
+  {
+   "key": "cash",
+   "label": "Conceito caixa",
+   "description": "Reservas internacionais no conceito caixa: ativos de reserva disponiveis, sem considerar compromissos de curto prazo em moeda estrangeira.",
+   "file": "data/reserves/cash.json",
+   "available": true,
+   "reference_date": "2026-11-23",
+   "observation_count": 7003,
+   "sgs_code": 13621
+  },
+  {
+   "key": "liquidity",
+   "label": "Conceito liquidez",
+   "description": "Reservas internacionais no conceito liquidez: inclui a posicao de liquidez em moeda estrangeira, portanto nao e comparavel nem somavel ao conceito caixa.",
+   "file": "data/reserves/liquidity.json",
+   "available": true,
+   "reference_date": "2026-11-23",
+   "observation_count": 4745,
+   "sgs_code": 13982
+  }
+ ],
+ "default_concept": "cash",
+ "warning": "Os conceitos caixa e liquidez medem a mesma reserva por oticas diferentes. Nao somar e nao comparar diretamente."
+}

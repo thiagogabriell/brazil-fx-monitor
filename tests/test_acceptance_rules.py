@@ -1,0 +1,338 @@
+"""The ten acceptance rules the application must never break.
+
+Each test maps one to one onto a rule in the project brief.
+"""
+
+from __future__ import annotations
+
+import datetime as _dt
+import json
+from pathlib import Path
+
+import pytest
+
+from intervention_model import CATEGORIES
+import collect_interventions as ci
+
+ROOT = Path(__file__).resolve().parent.parent
+
+NOTIONAL = {key for key, spec in CATEGORIES.items() if spec["notional"]}
+TEMPORARY = {key for key, spec in CATEGORIES.items() if spec["temporary"]}
+
+
+# 1 --------------------------------------------------------------------------
+def test_swap_is_never_counted_as_a_direct_sale(operations, summary, series):
+    swap_total = sum(
+        o["volume_accepted_usd_cents"] or 0
+        for o in operations
+        if o["category"] in NOTIONAL and o["counts_as_executed"]
+    )
+    sold_total = sum(
+        o["volume_accepted_usd_cents"] or 0
+        for o in operations
+        if o["category"] == "spot_sale" and o["counts_as_executed"]
+    )
+    assert swap_total > 0, "fixture should contain swaps"
+    assert sold_total > 0, "fixture should contain direct sales"
+
+    cumulative_sold = series["interventions_daily"][-1]["cumulative_sold_cents"]
+    assert cumulative_sold == sold_total
+    assert cumulative_sold != swap_total
+
+    for window in summary["interventions"]["windows"].values():
+        assert window["sold_usd_cents"] <= sold_total
+        assert window["swap_traditional_notional_usd_cents"] >= 0
+        # The swap bucket is reported on its own key, never folded into sales.
+        assert "swap_traditional_notional_usd_cents" in window
+
+    for category in NOTIONAL:
+        assert CATEGORIES[category]["reserve_effect"] == "none"
+
+
+def test_swap_daily_aggregate_is_separate_from_sales(series):
+    swap_days = [
+        row for row in series["interventions_daily"]
+        if row["swap_traditional_cents"] > 0 and row["sold_cents"] == 0
+    ]
+    assert swap_days, "there must be days with swaps and no direct sale"
+    for row in swap_days:
+        # The swap volume stays in its own field and never reaches the direct
+        # sale or purchase buckets, which drive the net balance.
+        assert row["sold_cents"] == 0
+        assert row["swap_traditional_cents"] != row["sold_cents"]
+        assert row["net_cents"] == row["bought_cents"] - row["sold_cents"]
+
+
+# 2 --------------------------------------------------------------------------
+def test_announced_operation_is_not_counted_as_executed(operations):
+    announced = [
+        o for o in operations
+        if o["status"] in ("anunciada", "pendente_de_confirmacao")
+    ]
+    assert announced, "fixture should contain announced-only operations"
+    for operation in announced:
+        assert operation["counts_as_executed"] is False
+
+
+def test_announced_volume_is_excluded_from_totals(series, operations):
+    executed_sold = sum(
+        o["volume_accepted_usd_cents"] or 0
+        for o in operations
+        if o["category"] == "spot_sale" and o["counts_as_executed"]
+    )
+    all_sold = sum(
+        o["volume_accepted_usd_cents"] or 0
+        for o in operations
+        if o["category"] == "spot_sale"
+    )
+    assert executed_sold <= all_sold
+    assert series["interventions_daily"][-1]["cumulative_sold_cents"] == executed_sold
+
+
+# 3 --------------------------------------------------------------------------
+def test_no_operation_is_counted_twice(operations, series):
+    identifiers = [o["id"] for o in operations]
+    assert len(identifiers) == len(set(identifiers))
+
+    by_category_count = {}
+    for operation in operations:
+        if operation["counts_as_executed"]:
+            by_category_count[operation["category"]] = (
+                by_category_count.get(operation["category"], 0) + 1
+            )
+    for row in series["distribution_by_category"]:
+        assert row["operation_count"] == by_category_count.get(row["category"], 0)
+
+
+def test_identical_published_rows_are_flagged_not_merged():
+    """A row the BCB publishes twice keeps both records, each flagged."""
+    header = ",".join(ci.COLUMNS)
+    line = (
+        ',,8845,2001-09-13 16:27:00,2001-09-13 16:27:00,Operação Direta,'
+        '2001-09-13 00:00:00,Venda a Vista,Mercado,,2001-09-17 00:00:00,,,'
+        '"50000000,00",'
+    )
+    csv_text = "\n".join([header, line, line])
+    operations, stats = ci.build_operations(csv_text, "2026-11-24")
+    assert len(operations) == 2
+    assert operations[0]["id"] != operations[1]["id"]
+    assert all(o["ambiguous_duplicate"] for o in operations)
+    assert stats["ambiguous_duplicate_count"] == 2
+
+
+# 4 --------------------------------------------------------------------------
+def test_unexplained_reserve_drop_is_not_called_a_sale(statement_cash):
+    unexplained = [
+        day for day in statement_cash["days"]
+        if day["interventions_coverage"] == "covered"
+        and (day["variation_usd"] or 0) < 0
+        and day["operation_count"] == 0
+    ]
+    assert unexplained, "fixture should contain drops with no operation behind them"
+    for day in unexplained:
+        assert day["direct_sold_usd_cents"] == 0
+        assert day["confirmed_outflow_usd_cents"] == 0
+        # The whole fall is reported as unidentified, never as a sale.
+        assert day["unidentified_variation_usd"] is not None
+        assert day["unidentified_variation_usd"] == pytest.approx(
+            day["variation_usd"], abs=1.0
+        )
+
+    # A day with a sale must attribute only the published amount to the sale.
+    with_sale = [
+        day for day in statement_cash["days"]
+        if day["interventions_coverage"] == "covered"
+        and day["direct_sold_usd_cents"] > 0
+    ]
+    assert with_sale
+    for day in with_sale:
+        assert abs(day["variation_usd"]) != day["direct_sold_usd_cents"] / 100 or (
+            day["unidentified_variation_usd"] == 0
+        )
+
+
+def test_reconciliation_adds_up(statement_cash):
+    checked = 0
+    for day in statement_cash["days"]:
+        if day["interventions_coverage"] != "covered" or day["variation_usd"] is None:
+            continue
+        total = day["explained_variation_usd"] + day["unidentified_variation_usd"]
+        assert total == pytest.approx(day["variation_usd"], abs=1.0)
+        assert day["opening_usd"] + day["variation_usd"] == pytest.approx(
+            day["closing_usd"], abs=1.0
+        )
+        checked += 1
+    assert checked > 100
+
+
+# 5 --------------------------------------------------------------------------
+def test_temporary_operations_differ_from_permanent_sales(operations, statement_cash):
+    for key in TEMPORARY:
+        assert CATEGORIES[key]["reserve_effect"] == "temporary_decrease"
+        assert CATEGORIES[key]["temporary"] is True
+    assert CATEGORIES["spot_sale"]["reserve_effect"] == "decrease"
+    assert CATEGORIES["spot_sale"]["temporary"] is False
+
+    temporary_days = [
+        day for day in statement_cash["days"] if day["temporary_out_usd_cents"] > 0
+    ]
+    assert temporary_days
+    for day in temporary_days:
+        # A temporary operation never lands in the direct sale bucket.
+        assert day["direct_sold_usd_cents"] != day["temporary_out_usd_cents"] or (
+            day["direct_sold_usd_cents"] == 0
+        )
+
+
+def test_temporary_operations_return_on_maturity(operations):
+    returns = [
+        o for o in operations
+        if o["category"] in TEMPORARY and o["maturity_date"] and o["counts_as_executed"]
+    ]
+    assert returns, "fixture should contain temporary operations with maturity"
+    for operation in returns:
+        assert operation["maturity_date"] > operation["settlement_date"]
+
+
+# 6 --------------------------------------------------------------------------
+def test_missing_data_is_never_turned_into_zero(
+    reserves_cash, operations, flow, composition
+):
+    for observation in reserves_cash["observations"]:
+        assert observation["value_usd"] is not None
+        assert observation["value_usd"] > 0
+
+    pending = [o for o in operations if o["status"] == "pendente_de_confirmacao"]
+    assert pending, "fixture should contain operations with no published result"
+    for operation in pending:
+        assert operation["volume_accepted_usd_cents"] is None
+
+    for serie in flow["series"]:
+        for observation in serie["observations"]:
+            assert observation["value_usd_million"] is not None
+
+    for bucket in composition["currency_buckets"] + composition["asset_class_buckets"]:
+        assert bucket["value_usd"] is None
+        assert bucket["share_pct"] is None
+
+
+# 7 --------------------------------------------------------------------------
+def test_different_frequencies_are_not_presented_as_simultaneous(summary):
+    anchors = summary["anchors"]
+    assert anchors["interventions"] <= anchors["reserves"]
+    assert summary["anchor_note"]
+    assert summary["interventions"]["anchor_date"] == anchors["interventions"]
+    assert summary["interventions"]["anchor_day"]["note"]
+    for window in summary["interventions"]["windows"].values():
+        assert window["to_date"] == anchors["interventions"]
+
+
+def test_days_beyond_source_coverage_are_marked_not_empty(statement_cash):
+    beyond = [
+        day for day in statement_cash["days"]
+        if day["interventions_coverage"] == "not_yet_published"
+    ]
+    assert beyond, "the reserves series runs ahead of the interventions source"
+    for day in beyond:
+        assert day["explained_variation_usd"] is None
+        assert day["unidentified_variation_usd"] is None
+
+
+# 8 --------------------------------------------------------------------------
+def test_asset_class_is_never_inferred(operations, composition):
+    disclosed = {"Títulos Soberanos (Global Bonds)"}
+    for operation in operations:
+        if operation["modality"] in disclosed:
+            assert operation["asset_class_disclosed"] is True
+        else:
+            assert operation["asset_class_disclosed"] is False
+    assert composition["available_via_api"] is False
+    assert "não divulgado" in composition["unavailable_label"].lower().replace("nao", "não")
+
+
+# 9 --------------------------------------------------------------------------
+def test_cash_and_liquidity_are_handled_separately(
+    statement_cash, statement_liquidity, summary
+):
+    assert statement_cash["concept"] == "cash"
+    assert statement_liquidity["concept"] == "liquidity"
+    assert all(
+        day["temporary_counted_in_reconciliation"] is True
+        for day in statement_cash["days"]
+    )
+    assert all(
+        day["temporary_counted_in_reconciliation"] is False
+        for day in statement_liquidity["days"]
+    )
+    assert set(summary["reserves"]) >= {"cash", "liquidity"}
+    assert (
+        summary["reserves"]["cash"]["current_usd"]
+        != summary["reserves"]["liquidity"]["current_usd"]
+    )
+
+
+# 10 -------------------------------------------------------------------------
+def test_revisions_are_tracked_and_recalculated(reserves_cash):
+    assert "revisions" in reserves_cash
+    assert isinstance(reserves_cash["revisions"], list)
+
+
+def test_revision_detection_records_the_change():
+    import collect_reserves as cr
+
+    previous = {
+        "revisions": [],
+        "observations": [
+            {"date": "2026-11-20", "value_usd": 1_000_000_000},
+            {"date": "2026-11-21", "value_usd": 1_100_000_000},
+        ],
+    }
+    current = [
+        {"date": "2026-11-20", "value_usd": 1_000_000_000},
+        {"date": "2026-11-21", "value_usd": 1_050_000_000},
+        {"date": "2026-11-24", "value_usd": 1_060_000_000},
+    ]
+    revisions = cr._detect_revisions(previous, current)
+    assert len(revisions) == 1
+    assert revisions[0]["date"] == "2026-11-21"
+    assert revisions[0]["previous_value_usd"] == 1_100_000_000
+    assert revisions[0]["new_value_usd"] == 1_050_000_000
+
+
+def test_reconciliation_follows_a_revised_balance():
+    """A restated balance changes the residual, not the confirmed operations."""
+    import reconcile_reserves as rr
+
+    observations = [
+        {"date": "2026-01-02", "value_usd": 300_000_000_000},
+        {"date": "2026-01-05", "value_usd": 298_500_000_000},
+    ]
+    operation = {
+        "id": "x-1",
+        "category": "spot_sale",
+        "instrument": "Venda a Vista",
+        "modality": "PTAX",
+        "trade_date": "2026-01-02",
+        "settlement_date": "2026-01-05",
+        "maturity_date": None,
+        "volume_accepted_usd_cents": 100_000_000_000,
+        "volume_offered_usd_cents": 100_000_000_000,
+        "cut_rate": None,
+        "status": "liquidada",
+        "counts_as_executed": True,
+        "communication_number": "1",
+    }
+    rows = rr.build_statement(
+        "cash", observations, {"2026-01-05": [operation]}, {}, {}, "2026-01-01", "2026-12-31"
+    )
+    assert rows[1]["direct_sold_usd_cents"] == 100_000_000_000
+    assert rows[1]["explained_variation_usd"] == -1_000_000_000
+    assert rows[1]["unidentified_variation_usd"] == -500_000_000
+
+    revised = [observations[0], {"date": "2026-01-05", "value_usd": 299_000_000_000}]
+    rows = rr.build_statement(
+        "cash", revised, {"2026-01-05": [operation]}, {}, {}, "2026-01-01", "2026-12-31"
+    )
+    assert rows[1]["direct_sold_usd_cents"] == 100_000_000_000
+    assert rows[1]["explained_variation_usd"] == -1_000_000_000
+    assert rows[1]["unidentified_variation_usd"] == 0

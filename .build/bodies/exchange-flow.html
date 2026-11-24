@@ -1,0 +1,65 @@
+<p class="page-intro">
+  Entrada e saída de dólares medidas pelo balanço de pagamentos mensal do Banco
+  Central. Saída líquida de dólares não é, por si, fuga de capital: cada
+  indicador segue a definição oficial e é apresentado com ela.
+</p>
+
+<div id="concept-notice"></div>
+
+<div class="grid grid--4" id="flow-cards"></div>
+
+<section class="section">
+  <div class="section__head"><h2>Indicadores do balanço de pagamentos</h2>
+    <div class="topbar__spacer"></div>
+    <div class="field"><label for="group-filter">Grupo</label>
+      <select id="group-filter">
+        <option value="all">Todos</option>
+        <option value="corrente">Transações correntes</option>
+        <option value="comercial">Comercial</option>
+        <option value="financeiro">Financeiro</option>
+      </select></div></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr>
+          <th scope="col">Indicador</th><th scope="col">Grupo</th>
+          <th scope="col">Referência</th>
+          <th scope="col" class="right">Mês</th><th scope="col" class="right">Mês anterior</th>
+          <th scope="col" class="right">3 meses</th><th scope="col" class="right">12 meses</th>
+          <th scope="col" class="right">No ano</th>
+          <th scope="col" class="right">Média móvel 3m</th><th scope="col" class="right">Média móvel 12m</th>
+          <th scope="col" class="right">Meses negativos seguidos</th>
+          <th scope="col">Tendência</th><th scope="col">Série</th>
+        </tr></thead>
+        <tbody id="flow-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Séries</h2>
+    <div class="topbar__spacer"></div><div id="flow-range"></div></div>
+  <div class="section__body">
+    <div class="chart" id="chart-commercial"></div>
+    <div class="chart" id="chart-financial" style="margin-top:12px"></div>
+    <div class="chart" id="chart-total" style="margin-top:12px"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Comparação com períodos históricos</h2></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <caption>Saldo anual do indicador selecionado, para comparar o ano corrente com anos anteriores.</caption>
+        <thead><tr><th scope="col">Ano</th><th scope="col" class="right">Transações correntes</th>
+          <th scope="col" class="right">Balança comercial</th>
+          <th scope="col" class="right">Investimento direto</th>
+          <th scope="col" class="right">Investimentos em carteira</th>
+          <th scope="col" class="right">Outros investimentos</th></tr></thead>
+        <tbody id="yearly-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulador de consumo das reservas · Brazil FX Monitor</title>
+<meta name="description" content="Monitoramento das reservas internacionais do Brasil, das intervenções cambiais do Banco Central, do fluxo de dólares e da pressão sobre o real, com dados oficiais.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/app.css?v=7676524102">
+</head>
+<body>
+<div id="app-shell"></div>
+<template id="page-template">
+<p class="page-intro">
+  Ferramenta para simular cenários hipotéticos de uso das reservas.
+</p>
+
+<div class="notice notice--warn">
+  <strong>Simulação matemática, não previsão econômica.</strong> Os cenários abaixo
+  são aritmética simples sobre o saldo informado. Não suponha que todo o saldo das
+  reservas esteja imediatamente disponível para intervenções: parte está em ativos
+  de prazo mais longo, parte responde a compromissos e a política de uso é decisão
+  do Banco Central.
+</div>
+
+<section class="section" style="margin-top:0">
+  <div class="section__head"><h2>Parâmetros</h2>
+    <div class="topbar__spacer"></div>
+    <button class="btn" id="reset-params" type="button">Voltar ao saldo oficial</button></div>
+  <div class="section__body">
+    <div class="filters">
+      <div class="field"><label for="initial">Saldo inicial (US$ bilhões)</label>
+        <input type="number" id="initial" step="0.1" min="0"></div>
+      <div class="field"><label for="per-intervention">Volume por intervenção (US$ bilhões)</label>
+        <input type="number" id="per-intervention" step="0.1" min="0" value="1"></div>
+      <div class="field"><label for="per-week">Intervenções por semana</label>
+        <input type="number" id="per-week" step="1" min="0" max="5" value="2"></div>
+      <div class="field"><label for="per-day">Volume adicional por dia útil (US$ bilhões)</label>
+        <input type="number" id="per-day" step="0.05" min="0" value="0"></div>
+      <div class="field"><label for="business-days">Dias úteis por mês</label>
+        <input type="number" id="business-days" step="1" min="15" max="23" value="21"></div>
+      <div class="field"><label for="replenish">Reposição por mês (US$ bilhões)</label>
+        <input type="number" id="replenish" step="0.1" value="0"></div>
+      <div class="field"><label for="floor">Saldo mínimo desejado (US$ bilhões)</label>
+        <input type="number" id="floor" step="1" min="0" value="200"></div>
+    </div>
+    <div class="legend" style="margin-top:12px">
+      <strong style="color:var(--text)">Cenários predefinidos:</strong>
+      <span id="presets"></span>
+    </div>
+  </div>
+</section>
+
+<div class="grid grid--4" id="sim-cards" style="margin-top:16px"></div>
+
+<section class="section">
+  <div class="section__head"><h2>Evolução hipotética</h2>
+    <div class="topbar__spacer"></div>
+    <button class="btn" id="add-comparison" type="button">Guardar para comparar</button>
+    <button class="btn" id="clear-comparison" type="button">Limpar comparação</button></div>
+  <div class="section__body">
+    <div class="chart chart--tall" id="chart-simulation"></div>
+    <p class="card__meta-row" id="comparison-note" style="margin-top:8px"></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Resultado por horizonte</h2></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th scope="col">Horizonte</th><th scope="col" class="right">Consumo acumulado</th>
+          <th scope="col" class="right">Saldo restante</th><th scope="col" class="right">% consumido</th>
+          <th scope="col">Situação</th></tr></thead>
+        <tbody id="horizon-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Cenários predefinidos comparados</h2></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th scope="col">Cenário</th><th scope="col" class="right">Por intervenção</th>
+          <th scope="col" class="right">Saldo em 30 dias</th><th scope="col" class="right">90 dias</th>
+          <th scope="col" class="right">180 dias</th><th scope="col" class="right">365 dias</th>
+          <th scope="col" class="right">Dias até o saldo mínimo</th></tr></thead>
+        <tbody id="presets-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+</template>
+<script defer src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js" integrity="sha384-Mx5lkUEQPM1pOJCwFtUICyX45KNojXbkWdYhkKUKsbv391mavbfoAmONbzkgYPzR" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="../assets/js/core.js?v=7676524102"></script>
+<script defer src="../assets/js/charts.js?v=7676524102"></script>
+<script defer src="../assets/js/page-simulator.js?v=7676524102"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var start = function () {
+    if (!window.BFX) { setTimeout(start, 20); return; }
+    BFX.init('simulator', "Simulador de consumo das reservas").then(function () {
+      if (window.PAGE && typeof window.PAGE.init === 'function') {
+        window.PAGE.init().catch(function (error) {
+          var main = document.getElementById('main');
+          if (main) {
+            var box = document.createElement('p');
+            box.className = 'notice notice--error';
+            box.textContent = 'Falha ao carregar os dados desta página: ' + error.message;
+            main.prepend(box);
+          }
+          console.error(error);
+        });
+      }
+    });
+  };
+  start();
+});
+</script>
+</body>
+</html>

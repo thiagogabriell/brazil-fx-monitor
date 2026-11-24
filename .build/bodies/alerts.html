@@ -1,0 +1,73 @@
+<p class="page-intro">
+  Central de alertas com limites configuráveis. As rotinas automáticas avaliam os
+  limites padrão e gravam o histórico no repositório; no navegador você pode usar
+  os seus próprios limites, guardados apenas neste dispositivo.
+</p>
+
+<div class="notice notice--info">
+  Os limites são <strong>critérios de monitoramento desta aplicação</strong> e não
+  indicadores oficiais de crise.
+</div>
+
+<div class="grid grid--4" id="alert-cards"></div>
+
+<section class="section">
+  <div class="section__head"><h2>Alertas com os seus limites</h2>
+    <div class="topbar__spacer"></div>
+    <label class="toggle-row"><input type="checkbox" id="use-custom"> Usar meus limites</label>
+    <button class="btn" id="notify-btn" type="button">Ativar notificações do navegador</button>
+  </div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr>
+          <th scope="col">Severidade</th><th scope="col">Indicador</th>
+          <th scope="col" class="right">Valor observado</th><th scope="col" class="right">Limite</th>
+          <th scope="col">Data de referência</th><th scope="col">Detectado em</th>
+          <th scope="col" class="wrap">Descrição</th><th scope="col">Fonte</th><th scope="col">Dados</th>
+        </tr></thead>
+        <tbody id="active-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Configuração dos limites</h2>
+    <div class="topbar__spacer"></div>
+    <button class="btn" id="reset-thresholds" type="button">Restaurar padrões</button></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th scope="col">Regra</th><th scope="col">Indicador</th>
+          <th scope="col">Unidade</th><th scope="col">Comparação</th>
+          <th scope="col" class="right">Limite padrão</th><th scope="col">Meu limite</th>
+          <th scope="col">Ativo</th></tr></thead>
+        <tbody id="rules-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Histórico gerado pelas rotinas automáticas</h2>
+    <div class="topbar__spacer"></div>
+    <div class="field"><label for="history-severity">Severidade</label>
+      <select id="history-severity">
+        <option value="all">Todas</option><option value="critica">Crítica</option>
+        <option value="alta">Alta</option><option value="atencao">Atenção</option>
+        <option value="info">Informativa</option>
+      </select></div>
+    <button class="btn" id="export-history" type="button">Exportar CSV</button></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th scope="col">Detectado em</th><th scope="col">Severidade</th>
+          <th scope="col">Regra</th><th scope="col" class="right">Valor</th>
+          <th scope="col" class="right">Limite</th><th scope="col">Referência</th>
+          <th scope="col" class="wrap">Descrição</th></tr></thead>
+        <tbody id="history-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fluxo cambial · Brazil FX Monitor</title>
+<meta name="description" content="Monitoramento das reservas internacionais do Brasil, das intervenções cambiais do Banco Central, do fluxo de dólares e da pressão sobre o real, com dados oficiais.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/app.css?v=7676524102">
+</head>
+<body>
+<div id="app-shell"></div>
+<template id="page-template">
+<p class="page-intro">
+  Entrada e saída de dólares medidas pelo balanço de pagamentos mensal do Banco
+  Central. Saída líquida de dólares não é, por si, fuga de capital: cada
+  indicador segue a definição oficial e é apresentado com ela.
+</p>
+
+<div id="concept-notice"></div>
+
+<div class="grid grid--4" id="flow-cards"></div>
+
+<section class="section">
+  <div class="section__head"><h2>Indicadores do balanço de pagamentos</h2>
+    <div class="topbar__spacer"></div>
+    <div class="field"><label for="group-filter">Grupo</label>
+      <select id="group-filter">
+        <option value="all">Todos</option>
+        <option value="corrente">Transações correntes</option>
+        <option value="comercial">Comercial</option>
+        <option value="financeiro">Financeiro</option>
+      </select></div></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr>
+          <th scope="col">Indicador</th><th scope="col">Grupo</th>
+          <th scope="col">Referência</th>
+          <th scope="col" class="right">Mês</th><th scope="col" class="right">Mês anterior</th>
+          <th scope="col" class="right">3 meses</th><th scope="col" class="right">12 meses</th>
+          <th scope="col" class="right">No ano</th>
+          <th scope="col" class="right">Média móvel 3m</th><th scope="col" class="right">Média móvel 12m</th>
+          <th scope="col" class="right">Meses negativos seguidos</th>
+          <th scope="col">Tendência</th><th scope="col">Série</th>
+        </tr></thead>
+        <tbody id="flow-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Séries</h2>
+    <div class="topbar__spacer"></div><div id="flow-range"></div></div>
+  <div class="section__body">
+    <div class="chart" id="chart-commercial"></div>
+    <div class="chart" id="chart-financial" style="margin-top:12px"></div>
+    <div class="chart" id="chart-total" style="margin-top:12px"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Comparação com períodos históricos</h2></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <caption>Saldo anual do indicador selecionado, para comparar o ano corrente com anos anteriores.</caption>
+        <thead><tr><th scope="col">Ano</th><th scope="col" class="right">Transações correntes</th>
+          <th scope="col" class="right">Balança comercial</th>
+          <th scope="col" class="right">Investimento direto</th>
+          <th scope="col" class="right">Investimentos em carteira</th>
+          <th scope="col" class="right">Outros investimentos</th></tr></thead>
+        <tbody id="yearly-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+</template>
+<script defer src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js" integrity="sha384-Mx5lkUEQPM1pOJCwFtUICyX45KNojXbkWdYhkKUKsbv391mavbfoAmONbzkgYPzR" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="../assets/js/core.js?v=7676524102"></script>
+<script defer src="../assets/js/charts.js?v=7676524102"></script>
+<script defer src="../assets/js/page-exchange-flow.js?v=7676524102"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var start = function () {
+    if (!window.BFX) { setTimeout(start, 20); return; }
+    BFX.init('exchange-flow', "Fluxo cambial").then(function () {
+      if (window.PAGE && typeof window.PAGE.init === 'function') {
+        window.PAGE.init().catch(function (error) {
+          var main = document.getElementById('main');
+          if (main) {
+            var box = document.createElement('p');
+            box.className = 'notice notice--error';
+            box.textContent = 'Falha ao carregar os dados desta página: ' + error.message;
+            main.prepend(box);
+          }
+          console.error(error);
+        });
+      }
+    });
+  };
+  start();
+});
+</script>
+</body>
+</html>

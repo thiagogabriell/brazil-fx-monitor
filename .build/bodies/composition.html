@@ -1,0 +1,78 @@
+<p class="page-intro">
+  Onde estão alocados os recursos que compõem as reservas internacionais
+  brasileiras, segundo o que o Banco Central efetivamente divulga.
+</p>
+
+<div id="availability-notice"></div>
+
+<div class="grid grid--2">
+  <section class="section" style="margin-top:0">
+    <div class="section__head"><h2>Distribuição por moeda</h2>
+      <span class="badge badge--unavailable">Indisponível em API</span></div>
+    <div class="section__body section__body--flush">
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr>
+            <th scope="col">Moeda</th><th scope="col" class="right">Valor em dólares</th>
+            <th scope="col" class="right">% das reservas</th>
+            <th scope="col">Data de referência</th><th scope="col">Situação</th>
+          </tr></thead>
+          <tbody id="currency-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="margin-top:0">
+    <div class="section__head"><h2>Distribuição por classe de ativo</h2>
+      <span class="badge badge--unavailable">Indisponível em API</span></div>
+    <div class="section__body section__body--flush">
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr>
+            <th scope="col">Classe de ativo</th><th scope="col" class="right">Valor em dólares</th>
+            <th scope="col" class="right">% das reservas</th>
+            <th scope="col" class="right">Quantidade original</th>
+            <th scope="col">Situação</th>
+          </tr></thead>
+          <tbody id="asset-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="section">
+  <div class="section__head"><h2>Ativo utilizado em cada intervenção</h2></div>
+  <div class="section__body">
+    <p class="card__meta-row" id="asset-usage-note"></p>
+    <div class="table-wrap" style="margin-top:10px">
+      <table class="data">
+        <caption>Operações cuja modalidade publicada identifica a classe de ativo.</caption>
+        <thead><tr>
+          <th scope="col">Data</th><th scope="col">Tipo</th><th scope="col">Modalidade</th>
+          <th scope="col">Moeda</th><th scope="col">Classe de ativo</th>
+          <th scope="col" class="right">Valor negociado</th><th scope="col">Fonte</th>
+        </tr></thead>
+        <tbody id="asset-usage-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Evolução do total das reservas</h2>
+    <div class="topbar__spacer"></div><div id="composition-range"></div></div>
+  <div class="section__body">
+    <div class="chart" id="chart-total"></div>
+    <p class="card__meta-row" style="margin-top:8px">
+      Só o total é publicado como série temporal. A abertura por moeda e por classe
+      de ativo existe apenas nos relatórios em PDF, com periodicidade anual.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Fontes oficiais da composição</h2></div>
+  <div class="section__body"><ul class="plain" id="official-sources"></ul></div>
+</section>

@@ -1,0 +1,69 @@
+name: Coleta intradiária (câmbio e reservas)
+
+# A PTAX de fechamento sai por volta das 13h10 de São Paulo (16h10 UTC) e o
+# saldo das reservas é publicado ao longo da manhã. Só rodamos em dias úteis e
+# em horários em que há publicação nova, para não gastar minutos à toa.
+on:
+  schedule:
+    # 11h05, 14h05, 16h20 e 19h05 UTC = 08h05, 11h05, 13h20 e 16h05 em São Paulo
+    - cron: '5 11 * * 1-5'
+    - cron: '5 14 * * 1-5'
+    - cron: '20 16 * * 1-5'
+    - cron: '5 19 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: coleta
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.process.outputs.changed }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+
+      - name: Pular feriados bancários brasileiros
+        id: guard
+        run: |
+          set -euo pipefail
+          today=$(TZ=America/Sao_Paulo date +%Y-%m-%d)
+          if grep -qx "$today" .github/holidays-br.txt; then
+            echo "feriado bancario em $today; nada a coletar"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Coletar câmbio e reservas
+        if: steps.guard.outputs.skip == 'false'
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: |
+          set -euo pipefail
+          python3 scripts/collect_exchange_rates.py
+          python3 scripts/collect_reserves.py
+
+      - name: Processar e publicar
+        id: process
+        if: steps.guard.outputs.skip == 'false'
+        uses: ./.github/actions/process
+        with:
+          label: coleta intradiária de câmbio e reservas
+
+  deploy:
+    needs: collect
+    if: needs.collect.outputs.changed == 'true'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/deploy.yml

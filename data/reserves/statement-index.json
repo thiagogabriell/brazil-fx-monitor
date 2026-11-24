@@ -1,0 +1,274 @@
+{
+ "schema": "reserves-statement-index/v1",
+ "generated_at": "2026-11-24T19:38:18+00:00",
+ "methodology": {
+  "variation": "saldo final menos saldo do dia util anterior publicado",
+  "operation_date_used": "data de liquidacao para vendas e compras; data de vencimento para o retorno de operacoes temporarias",
+  "excluded_from_reconciliation": "operacoes sem volume aceito publicado e swaps cambiais (valor nocional)",
+  "residual_label": "Variacao nao identificada",
+  "residual_meaning": "Diferenca entre a variacao observada do saldo e o efeito das operacoes confirmadas. Inclui rendimentos, variacao cambial entre moedas, marcacao de ouro e de titulos e qualquer outro movimento que o BCB nao divulga por dia. Nao e venda de dolares.",
+  "cash_concept": "No conceito caixa, operacoes temporarias entram como saida na liquidacao e como entrada no vencimento.",
+  "liquidity_concept": "No conceito liquidez o BCB nao divulga o efeito de cada operacao temporaria, portanto elas aparecem ao lado do extrato e nao sao subtraidas da variacao explicada."
+ },
+ "interventions_coverage": {
+  "from": "1999-01-22",
+  "to": "2026-10-27",
+  "note": "Depois de 2026-10-27 as atuacoes ainda nao foram publicadas. Dias posteriores aparecem como 'sem dados disponiveis', nao como 'sem intervencao'."
+ },
+ "concepts": [
+  {
+   "concept": "cash",
+   "label": "Conceito caixa",
+   "reference_date": "2026-11-23",
+   "day_count": 7003,
+   "latest_file": "data/reserves/statement-latest-cash.json",
+   "years": [
+    {
+     "year": 1999,
+     "file": "data/reserves/statement/cash/1999.json",
+     "day_count": 250
+    },
+    {
+     "year": 2000,
+     "file": "data/reserves/statement/cash/2000.json",
+     "day_count": 250
+    },
+    {
+     "year": 2001,
+     "file": "data/reserves/statement/cash/2001.json",
+     "day_count": 250
+    },
+    {
+     "year": 2002,
+     "file": "data/reserves/statement/cash/2002.json",
+     "day_count": 253
+    },
+    {
+     "year": 2003,
+     "file": "data/reserves/statement/cash/2003.json",
+     "day_count": 253
+    },
+    {
+     "year": 2004,
+     "file": "data/reserves/statement/cash/2004.json",
+     "day_count": 252
+    },
+    {
+     "year": 2005,
+     "file": "data/reserves/statement/cash/2005.json",
+     "day_count": 251
+    },
+    {
+     "year": 2006,
+     "file": "data/reserves/statement/cash/2006.json",
+     "day_count": 249
+    },
+    {
+     "year": 2007,
+     "file": "data/reserves/statement/cash/2007.json",
+     "day_count": 250
+    },
+    {
+     "year": 2008,
+     "file": "data/reserves/statement/cash/2008.json",
+     "day_count": 254
+    },
+    {
+     "year": 2009,
+     "file": "data/reserves/statement/cash/2009.json",
+     "day_count": 250
+    },
+    {
+     "year": 2010,
+     "file": "data/reserves/statement/cash/2010.json",
+     "day_count": 251
+    },
+    {
+     "year": 2011,
+     "file": "data/reserves/statement/cash/2011.json",
+     "day_count": 251
+    },
+    {
+     "year": 2012,
+     "file": "data/reserves/statement/cash/2012.json",
+     "day_count": 251
+    },
+    {
+     "year": 2013,
+     "file": "data/reserves/statement/cash/2013.json",
+     "day_count": 253
+    },
+    {
+     "year": 2014,
+     "file": "data/reserves/statement/cash/2014.json",
+     "day_count": 253
+    },
+    {
+     "year": 2015,
+     "file": "data/reserves/statement/cash/2015.json",
+     "day_count": 250
+    },
+    {
+     "year": 2016,
+     "file": "data/reserves/statement/cash/2016.json",
+     "day_count": 251
+    },
+    {
+     "year": 2017,
+     "file": "data/reserves/statement/cash/2017.json",
+     "day_count": 249
+    },
+    {
+     "year": 2018,
+     "file": "data/reserves/statement/cash/2018.json",
+     "day_count": 250
+    },
+    {
+     "year": 2019,
+     "file": "data/reserves/statement/cash/2019.json",
+     "day_count": 253
+    },
+    {
+     "year": 2020,
+     "file": "data/reserves/statement/cash/2020.json",
+     "day_count": 251
+    },
+    {
+     "year": 2021,
+     "file": "data/reserves/statement/cash/2021.json",
+     "day_count": 251
+    },
+    {
+     "year": 2022,
+     "file": "data/reserves/statement/cash/2022.json",
+     "day_count": 251
+    },
+    {
+     "year": 2023,
+     "file": "data/reserves/statement/cash/2023.json",
+     "day_count": 249
+    },
+    {
+     "year": 2024,
+     "file": "data/reserves/statement/cash/2024.json",
+     "day_count": 253
+    },
+    {
+     "year": 2025,
+     "file": "data/reserves/statement/cash/2025.json",
+     "day_count": 252
+    },
+    {
+     "year": 2026,
+     "file": "data/reserves/statement/cash/2026.json",
+     "day_count": 222
+    }
+   ]
+  },
+  {
+   "concept": "liquidity",
+   "label": "Conceito liquidez",
+   "reference_date": "2026-11-23",
+   "day_count": 4745,
+   "latest_file": "data/reserves/statement-latest-liquidity.json",
+   "years": [
+    {
+     "year": 2008,
+     "file": "data/reserves/statement/liquidity/2008.json",
+     "day_count": 254
+    },
+    {
+     "year": 2009,
+     "file": "data/reserves/statement/liquidity/2009.json",
+     "day_count": 250
+    },
+    {
+     "year": 2010,
+     "file": "data/reserves/statement/liquidity/2010.json",
+     "day_count": 251
+    },
+    {
+     "year": 2011,
+     "file": "data/reserves/statement/liquidity/2011.json",
+     "day_count": 251
+    },
+    {
+     "year": 2012,
+     "file": "data/reserves/statement/liquidity/2012.json",
+     "day_count": 251
+    },
+    {
+     "year": 2013,
+     "file": "data/reserves/statement/liquidity/2013.json",
+     "day_count": 253
+    },
+    {
+     "year": 2014,
+     "file": "data/reserves/statement/liquidity/2014.json",
+     "day_count": 253
+    },
+    {
+     "year": 2015,
+     "file": "data/reserves/statement/liquidity/2015.json",
+     "day_count": 250
+    },
+    {
+     "year": 2016,
+     "file": "data/reserves/statement/liquidity/2016.json",
+     "day_count": 251
+    },
+    {
+     "year": 2017,
+     "file": "data/reserves/statement/liquidity/2017.json",
+     "day_count": 249
+    },
+    {
+     "year": 2018,
+     "file": "data/reserves/statement/liquidity/2018.json",
+     "day_count": 250
+    },
+    {
+     "year": 2019,
+     "file": "data/reserves/statement/liquidity/2019.json",
+     "day_count": 253
+    },
+    {
+     "year": 2020,
+     "file": "data/reserves/statement/liquidity/2020.json",
+     "day_count": 251
+    },
+    {
+     "year": 2021,
+     "file": "data/reserves/statement/liquidity/2021.json",
+     "day_count": 251
+    },
+    {
+     "year": 2022,
+     "file": "data/reserves/statement/liquidity/2022.json",
+     "day_count": 251
+    },
+    {
+     "year": 2023,
+     "file": "data/reserves/statement/liquidity/2023.json",
+     "day_count": 249
+    },
+    {
+     "year": 2024,
+     "file": "data/reserves/statement/liquidity/2024.json",
+     "day_count": 253
+    },
+    {
+     "year": 2025,
+     "file": "data/reserves/statement/liquidity/2025.json",
+     "day_count": 252
+    },
+    {
+     "year": 2026,
+     "file": "data/reserves/statement/liquidity/2026.json",
+     "day_count": 222
+    }
+   ]
+  }
+ ],
+ "default_concept": "cash"
+}

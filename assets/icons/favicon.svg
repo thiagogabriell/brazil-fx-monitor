@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Brazil FX Monitor">
+  <rect width="32" height="32" rx="6" fill="#0b0e14"/>
+  <path d="M4 23 L10 17 L15 20 L21 11 L28 8" fill="none" stroke="#2ecc71" stroke-width="2.4"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="21" cy="11" r="2.6" fill="#ff5c5c"/>
+  <text x="4" y="30" font-family="monospace" font-size="7" fill="#8e9bb3">FX</text>
+</svg>

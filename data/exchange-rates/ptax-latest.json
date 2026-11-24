@@ -1,0 +1,104 @@
+{
+ "schema": "exchange-rate-ptax-latest/v1",
+ "unit": "BRL per USD",
+ "timezone": "America/Sao_Paulo",
+ "source": {
+  "name": "BCB Olinda - servico PTAX (OData v1)",
+  "endpoint": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial='11-03-2026'&@dataFinalCotacao='11-24-2026'&$format=json",
+  "entity_set": "CotacaoDolarPeriodo"
+ },
+ "reference_date": "2026-11-24",
+ "collected_at": "2026-11-24T19:36:42+00:00",
+ "bulletins": [
+  {
+   "date": "2026-11-03",
+   "published_at_sao_paulo": "2026-11-03 13:06:31.943412",
+   "buy": 5.4929,
+   "sell": 5.4935
+  },
+  {
+   "date": "2026-11-04",
+   "published_at_sao_paulo": "2026-11-04 13:05:19.232051",
+   "buy": 5.4772,
+   "sell": 5.4778
+  },
+  {
+   "date": "2026-11-05",
+   "published_at_sao_paulo": "2026-11-05 13:06:37.661774",
+   "buy": 5.4615,
+   "sell": 5.4621
+  },
+  {
+   "date": "2026-11-06",
+   "published_at_sao_paulo": "2026-11-06 13:06:13.966362",
+   "buy": 5.5007,
+   "sell": 5.5013
+  },
+  {
+   "date": "2026-11-09",
+   "published_at_sao_paulo": "2026-11-09 13:11:19.041465",
+   "buy": 5.514,
+   "sell": 5.5146
+  },
+  {
+   "date": "2026-11-10",
+   "published_at_sao_paulo": "2026-11-10 13:06:01.353639",
+   "buy": 5.5834,
+   "sell": 5.584
+  },
+  {
+   "date": "2026-11-11",
+   "published_at_sao_paulo": "2026-11-11 13:02:30.354667",
+   "buy": 5.56,
+   "sell": 5.5606
+  },
+  {
+   "date": "2026-11-12",
+   "published_at_sao_paulo": "2026-11-12 13:08:21.353658",
+   "buy": 5.6137,
+   "sell": 5.6143
+  },
+  {
+   "date": "2026-11-13",
+   "published_at_sao_paulo": "2026-11-13 13:03:27.375047",
+   "buy": 5.6512,
+   "sell": 5.6518
+  },
+  {
+   "date": "2026-11-16",
+   "published_at_sao_paulo": "2026-11-16 13:06:32.509132",
+   "buy": 5.7318,
+   "sell": 5.7324
+  },
+  {
+   "date": "2026-11-17",
+   "published_at_sao_paulo": "2026-11-17 13:07:26.01516",
+   "buy": 5.7845,
+   "sell": 5.7851
+  },
+  {
+   "date": "2026-11-18",
+   "published_at_sao_paulo": "2026-11-18 13:08:44.271245",
+   "buy": 5.8096,
+   "sell": 5.8102
+  },
+  {
+   "date": "2026-11-19",
+   "published_at_sao_paulo": "2026-11-19 13:04:18.325373",
+   "buy": 5.8883,
+   "sell": 5.8889
+  },
+  {
+   "date": "2026-11-23",
+   "published_at_sao_paulo": "2026-11-23 13:06:23.798289",
+   "buy": 5.9702,
+   "sell": 5.9708
+  },
+  {
+   "date": "2026-11-24",
+   "published_at_sao_paulo": "2026-11-24 13:07:40.485706",
+   "buy": 5.8567,
+   "sell": 5.8573
+  }
+ ]
+}

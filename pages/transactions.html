@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Movimentações diárias · Brazil FX Monitor</title>
+<meta name="description" content="Monitoramento das reservas internacionais do Brasil, das intervenções cambiais do Banco Central, do fluxo de dólares e da pressão sobre o real, com dados oficiais.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/app.css?v=7676524102">
+</head>
+<body>
+<div id="app-shell"></div>
+<template id="page-template">
+<p class="page-intro">
+  Cada operação do Banco Central no mercado de câmbio, uma por linha, como o
+  Banco Central publica. Valores anunciados, ofertados e aceitos ficam em colunas
+  separadas: uma operação apenas anunciada nunca é contada como venda realizada.
+  Swap cambial aparece como valor nocional e não como saída de dólares.
+</p>
+
+<div id="coverage-notice"></div>
+
+<section class="section" style="margin-top:0">
+  <div class="section__head"><h2>Filtros</h2>
+    <div class="topbar__spacer"></div>
+    <button class="btn" id="export-csv" type="button">Exportar CSV</button>
+    <button class="btn" id="export-json" type="button">Exportar JSON</button></div>
+  <div class="section__body">
+    <div class="filters">
+      <div class="field"><label for="year-select">Ano</label><select id="year-select"></select></div>
+      <div class="field"><label for="from-date">De (data da operação)</label><input type="date" id="from-date"></div>
+      <div class="field"><label for="to-date">Até</label><input type="date" id="to-date"></div>
+      <div class="field"><label for="filter-category">Tipo de operação</label><select id="filter-category"></select></div>
+      <div class="field"><label for="filter-currency">Moeda</label><select id="filter-currency"></select></div>
+      <div class="field"><label for="filter-asset">Classe de ativo</label><select id="filter-asset"></select></div>
+      <div class="field"><label for="filter-status">Status</label><select id="filter-status"></select></div>
+      <div class="field"><label for="filter-source">Fonte</label><select id="filter-source"></select></div>
+      <div class="field"><label for="min-value">Valor aceito mínimo (US$ milhões)</label>
+        <input type="number" id="min-value" min="0" step="50" value="0"></div>
+      <div class="field"><label for="filter-reserves">Uso das reservas</label>
+        <select id="filter-reserves">
+          <option value="all">Todas as operações</option>
+          <option value="direct">Usaram as reservas diretamente</option>
+          <option value="notional">Apenas nocionais (swaps)</option>
+          <option value="temporary">Apenas temporárias</option>
+        </select></div>
+    </div>
+  </div>
+</section>
+
+<div class="grid grid--4" id="ledger-cards" style="margin-top:16px"></div>
+
+<section class="section">
+  <div class="section__head"><h2>Operações</h2>
+    <div class="topbar__spacer"></div>
+    <span class="card__meta-row" id="row-count"></span></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data" id="ledger-table">
+        <caption>Clique em uma linha para ver todos os campos publicados e o link oficial.</caption>
+        <thead><tr>
+          <th scope="col">Data da operação</th>
+          <th scope="col">Liquidação</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Instrumento / modalidade</th>
+          <th scope="col" class="right">Anunciado</th>
+          <th scope="col" class="right">Ofertado</th>
+          <th scope="col" class="right">Negociado</th>
+          <th scope="col" class="right">Taxa</th>
+          <th scope="col">Moeda</th>
+          <th scope="col">Status</th>
+          <th scope="col">Efeito nas reservas</th>
+          <th scope="col">Comunicado</th>
+        </tr></thead>
+        <tbody id="ledger-body"><tr><td colspan="12" class="loading">Carregando…</td></tr></tbody>
+      </table>
+    </div>
+    <p class="card__meta-row" id="pager" style="padding:10px 14px"></p>
+  </div>
+</section>
+</template>
+
+<script defer src="../assets/js/core.js?v=7676524102"></script>
+
+<script defer src="../assets/js/page-transactions.js?v=7676524102"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var start = function () {
+    if (!window.BFX) { setTimeout(start, 20); return; }
+    BFX.init('transactions', "Movimentações diárias das reservas").then(function () {
+      if (window.PAGE && typeof window.PAGE.init === 'function') {
+        window.PAGE.init().catch(function (error) {
+          var main = document.getElementById('main');
+          if (main) {
+            var box = document.createElement('p');
+            box.className = 'notice notice--error';
+            box.textContent = 'Falha ao carregar os dados desta página: ' + error.message;
+            main.prepend(box);
+          }
+          console.error(error);
+        });
+      }
+    });
+  };
+  start();
+});
+</script>
+</body>
+</html>

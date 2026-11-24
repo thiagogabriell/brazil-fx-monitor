@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Efetividade das intervenções · Brazil FX Monitor</title>
+<meta name="description" content="Monitoramento das reservas internacionais do Brasil, das intervenções cambiais do Banco Central, do fluxo de dólares e da pressão sobre o real, com dados oficiais.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/app.css?v=7676524102">
+</head>
+<body>
+<div id="app-shell"></div>
+<template id="page-template">
+<p class="page-intro">
+  Comportamento do dólar em torno de cada venda direta de dólares feita pelo Banco
+  Central. A comparação usa fechamentos diários da PTAX, porque não existe série
+  intradiária confiável e gratuita para o horário dos leilões.
+  <strong>Correlação não é causalidade</strong>: outros fatores movem o câmbio no
+  mesmo período.
+</p>
+
+<div id="limitations-notice"></div>
+
+<div class="grid grid--4" id="effectiveness-cards"></div>
+
+<section class="section">
+  <div class="section__head"><h2>Distribuição dos resultados</h2>
+    <div class="topbar__spacer"></div>
+    <div class="field"><label for="population">População</label>
+      <select id="population">
+        <option value="summary_since_2015">Desde 2015</option>
+        <option value="summary_all">Toda a série (1999 em diante)</option>
+      </select></div></div>
+  <div class="section__body">
+    <div class="chart" id="chart-outcomes"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Valor vendido e variação do dólar</h2></div>
+  <div class="section__body"><div class="chart" id="chart-scatter"></div></div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Intervenção por intervenção</h2>
+    <div class="topbar__spacer"></div>
+    <div class="field"><label for="from-year">A partir de</label><select id="from-year"></select></div>
+    <button class="btn" id="export-csv" type="button">Exportar CSV</button>
+    <button class="btn" id="export-json" type="button">Exportar JSON</button></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr>
+          <th scope="col">Data</th><th scope="col" class="right">Valor vendido</th>
+          <th scope="col" class="right">PTAX dia anterior</th>
+          <th scope="col" class="right">PTAX no fechamento</th>
+          <th scope="col" class="right">Variação no dia</th>
+          <th scope="col" class="right">PTAX próximo dia útil</th>
+          <th scope="col" class="right">Variação</th>
+          <th scope="col" class="right">PTAX após 5 dias úteis</th>
+          <th scope="col" class="right">Variação</th>
+          <th scope="col">Comportamento em 5 dias</th>
+          <th scope="col">Comunicado</th>
+        </tr></thead>
+        <tbody id="cases-body"></tbody>
+      </table>
+    </div>
+    <p class="card__meta-row" id="row-count" style="padding:10px 14px"></p>
+  </div>
+</section>
+</template>
+<script defer src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js" integrity="sha384-Mx5lkUEQPM1pOJCwFtUICyX45KNojXbkWdYhkKUKsbv391mavbfoAmONbzkgYPzR" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="../assets/js/core.js?v=7676524102"></script>
+<script defer src="../assets/js/charts.js?v=7676524102"></script>
+<script defer src="../assets/js/page-effectiveness.js?v=7676524102"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var start = function () {
+    if (!window.BFX) { setTimeout(start, 20); return; }
+    BFX.init('effectiveness', "Efetividade das intervenções").then(function () {
+      if (window.PAGE && typeof window.PAGE.init === 'function') {
+        window.PAGE.init().catch(function (error) {
+          var main = document.getElementById('main');
+          if (main) {
+            var box = document.createElement('p');
+            box.className = 'notice notice--error';
+            box.textContent = 'Falha ao carregar os dados desta página: ' + error.message;
+            main.prepend(box);
+          }
+          console.error(error);
+        });
+      }
+    });
+  };
+  start();
+});
+</script>
+</body>
+</html>

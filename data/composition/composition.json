@@ -1,0 +1,178 @@
+{
+ "schema": "composition/v1",
+ "available_via_api": false,
+ "status": "unavailable_via_official_api",
+ "unavailable_label": "Ativo de origem nao divulgado pelo Banco Central.",
+ "explanation": "O Banco Central nao publica a composicao das reservas internacionais em API, serie temporal ou dado aberto. A abertura por moeda e por classe de ativo existe apenas em publicacoes em PDF, com periodicidade anual para o relatorio de gestao. Por isso esta aplicacao nao exibe percentuais de composicao: qualquer numero diario aqui seria estimativa, nao dado oficial.",
+ "perspective_warning": "A distribuicao por moeda e a distribuicao por classe de ativo sao duas oticas das mesmas reservas. Nao devem ser somadas.",
+ "currency_buckets": [
+  {
+   "code": "USD",
+   "label": "Dolar americano",
+   "value_usd": null,
+   "share_pct": null,
+   "reference_date": null,
+   "status": "nao_divulgado_em_api"
+  },
+  {
+   "code": "EUR",
+   "label": "Euro",
+   "value_usd": null,
+   "share_pct": null,
+   "reference_date": null,
+   "status": "nao_divulgado_em_api"
+  },
+  {
+   "code": "CNY",
+   "label": "Yuan chines",
+   "value_usd": null,
+   "share_pct": null,
+   "reference_date": null,
+   "status": "nao_divulgado_em_api"
+  },
+  {
+   "code": "GBP",
+   "label": "Libra esterlina",
+   "value_usd": null,
+   "share_pct": null,
+   "reference_date": null,
+   "status": "nao_divulgado_em_api"
+  },
+  {
+   "code": "JPY",
+   "label": "Iene japones",
+   "value_usd": null,
+   "share_pct": null,
+   "reference_date": null,
+   "status": "nao_divulgado_em_api"
+  },
+  {
+   "code": "CAD",
+   "label": "Dolar canadense",
+   "value_usd": null,
+   "share_pct": null,
+   "reference_date": null,
+   "status": "nao_divulgado_em_api"
+  },
+  {
+   "code": "AUD",
+   "label": "Dolar australiano",
+   "value_usd": null,
+   "share_pct": null,
+   "reference_date": null,
+   "status": "nao_divulgado_em_api"
+  },
+  {
+   "code": "OTHER",
+   "label": "Outras moedas",
+   "value_usd": null,
+   "share_pct": null,
+   "reference_date": null,
+   "status": "nao_divulgado_em_api"
+  }
+ ],
+ "asset_class_buckets": [
+  {
+   "key": "gold",
+   "label": "Ouro",
+   "value_usd": null,
+   "share_pct": null,
+   "original_quantity": null,
+   "reference_date": null,
+   "status": "nao_divulgado_em_api"
+  },
+  {
+   "key": "foreign_government_bonds",
+   "label": "Titulos publicos estrangeiros",
+   "value_usd": null,
+   "share_pct": null,
+   "original_quantity": null,
+   "reference_date": null,
+   "status": "nao_divulgado_em_api"
+  },
+  {
+   "key": "other_debt",
+   "label": "Outros titulos de divida",
+   "value_usd": null,
+   "share_pct": null,
+   "original_quantity": null,
+   "reference_date": null,
+   "status": "nao_divulgado_em_api"
+  },
+  {
+   "key": "bank_deposits",
+   "label": "Depositos bancarios",
+   "value_usd": null,
+   "share_pct": null,
+   "original_quantity": null,
+   "reference_date": null,
+   "status": "nao_divulgado_em_api"
+  },
+  {
+   "key": "sdr",
+   "label": "Direitos Especiais de Saque (DES)",
+   "value_usd": null,
+   "share_pct": null,
+   "original_quantity": null,
+   "reference_date": null,
+   "status": "nao_divulgado_em_api"
+  },
+  {
+   "key": "imf_reserve_position",
+   "label": "Posicao de reserva no FMI",
+   "value_usd": null,
+   "share_pct": null,
+   "original_quantity": null,
+   "reference_date": null,
+   "status": "nao_divulgado_em_api"
+  },
+  {
+   "key": "other_assets",
+   "label": "Outros ativos",
+   "value_usd": null,
+   "share_pct": null,
+   "original_quantity": null,
+   "reference_date": null,
+   "status": "nao_divulgado_em_api"
+  }
+ ],
+ "official_sources": [
+  {
+   "name": "Reservas internacionais (pagina institucional do BCB)",
+   "url": "https://www.bcb.gov.br/estabilidadefinanceira/reservasinternacionais",
+   "machine_readable": false,
+   "content": "Conceitos, metodologia e links para os relatorios."
+  },
+  {
+   "name": "Relatorio de Gestao das Reservas Internacionais",
+   "url": "https://www.bcb.gov.br/publicacoes/relatoriogestaoreservas",
+   "machine_readable": false,
+   "content": "Publicacao anual em PDF com a composicao por moeda e por classe de ativo, retornos e politica de investimento."
+  },
+  {
+   "name": "Demonstrativo de reservas internacionais e liquidez em moeda estrangeira",
+   "url": "https://www.bcb.gov.br/estatisticas/reservasinternacionaisliquidezmoedaestrangeira",
+   "machine_readable": false,
+   "content": "Template de divulgacao do FMI (SDDS) com ativos de reserva, compromissos e posicoes em derivativos."
+  },
+  {
+   "name": "International Monetary Fund - Brazil data",
+   "url": "https://www.imf.org/en/Countries/BRA",
+   "machine_readable": false,
+   "content": "Dados agregados de reservas e DES do Brasil nas publicacoes do FMI."
+  }
+ ],
+ "catalogue_survey": {
+  "checked": true,
+  "catalogue_size": 4261,
+  "reserve_datasets_found": [
+   "13621-reservas-internacionais---conceito-caixa---total---diaria",
+   "13982-reservas-internacionais---conceito-liquidez---total---diaria",
+   "24026-ativo---derivativos-financeiros-exceto-reservas---estoque",
+   "estatisticas-do-str-sistema-de-transferencia-de-reservas"
+  ],
+  "composition_candidates_found": [],
+  "conclusion": "Nenhum conjunto de dados de composicao das reservas foi encontrado no catalogo aberto do BCB."
+ },
+ "collected_at": "2026-11-24T19:37:08+00:00"
+}

@@ -1,0 +1,76 @@
+<p class="page-intro">
+  Preferências guardadas no LocalStorage deste navegador. Nada é enviado para
+  fora desta página.
+</p>
+
+<section class="section" style="margin-top:0">
+  <div class="section__head"><h2>Aparência</h2></div>
+  <div class="section__body">
+    <div class="filters">
+      <div class="field"><label for="theme-select">Tema</label>
+        <select id="theme-select">
+          <option value="dark">Escuro (padrão)</option>
+          <option value="light">Claro</option>
+        </select></div>
+      <div class="field"><label for="default-concept">Conceito de reservas padrão</label>
+        <select id="default-concept">
+          <option value="cash">Conceito caixa</option>
+          <option value="liquidity">Conceito liquidez</option>
+        </select></div>
+      <div class="field"><label for="default-range">Período padrão dos gráficos</label>
+        <select id="default-range"></select></div>
+      <div class="field"><label for="page-size">Linhas por página nas tabelas</label>
+        <select id="page-size">
+          <option value="50">50</option><option value="100">100</option>
+          <option value="250">250</option><option value="500">500</option>
+        </select></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Cotação ao vivo</h2></div>
+  <div class="section__body">
+    <div class="filters">
+      <div class="field"><label for="live-enabled">Buscar cotação ao vivo</label>
+        <select id="live-enabled"><option value="true">Sim</option><option value="false">Não</option></select></div>
+      <div class="field"><label for="live-interval">Intervalo (segundos)</label>
+        <input type="number" id="live-interval" min="15" max="600" step="5"></div>
+    </div>
+    <p class="card__meta-row" style="margin-top:10px">
+      A cotação ao vivo vem de fonte secundária, com CORS liberado, e é
+      identificada na interface como tal. O Banco Central não publica cotação em
+      tempo real.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Notificações</h2></div>
+  <div class="section__body">
+    <p class="card__meta-row" id="notification-state"></p>
+    <div style="margin-top:10px">
+      <button class="btn" id="request-permission" type="button">Pedir permissão ao navegador</button>
+      <button class="btn" id="test-notification" type="button">Enviar notificação de teste</button>
+    </div>
+    <p class="card__meta-row" style="margin-top:10px">
+      As notificações funcionam apenas enquanto o painel estiver aberto. Nenhum
+      serviço externo de envio é usado.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Dados guardados neste navegador</h2>
+    <div class="topbar__spacer"></div>
+    <button class="btn" id="clear-storage" type="button">Apagar tudo</button></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th scope="col">Chave</th><th scope="col" class="wrap">Valor</th>
+          <th scope="col">Ação</th></tr></thead>
+        <tbody id="storage-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>

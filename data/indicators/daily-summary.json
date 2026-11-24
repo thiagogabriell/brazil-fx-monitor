@@ -1,0 +1,99 @@
+{
+ "schema": "daily-summary/v1",
+ "generated_at": "2026-11-24T19:46:12+00:00",
+ "generated_at_sao_paulo": "2026-11-24T16:46:12-03:00",
+ "timezone": "America/Sao_Paulo",
+ "date_sao_paulo": "2026-11-24",
+ "method": "Texto gerado por regras determinísticas sobre os dados coletados. Nenhum modelo de linguagem e nenhum serviço pago é utilizado.",
+ "anchors": {
+  "reserves": "2026-11-23",
+  "interventions": "2026-10-27",
+  "exchange_rate": "2026-11-24",
+  "exchange_flow": "2026-09-01"
+ },
+ "blocks": [
+  {
+   "key": "reserves_balance",
+   "title": "Saldo das reservas internacionais",
+   "text": "Em 23 de novembro de 2026 as reservas internacionais do Brasil no conceito caixa somavam US$ 362,95 bilhões. A variação em relação a 19 de novembro de 2026, o dia útil anterior publicado, foi de US$ -105,0 milhões (-0,03%).",
+   "source": "SGS 13621 (BCB)",
+   "reference_date": "2026-11-23"
+  },
+  {
+   "key": "reserves_windows",
+   "title": "Variação em janelas mais longas",
+   "text": "Nos últimos 7 dias a variação foi de -0,24%; em 30 dias, -0,50%; em 90 dias, -3,47%; e em 365 dias, +1,22%. O maior saldo da série foi US$ 390,51 bilhões em 25 de junho de 2019, ou seja -7,06% em relação ao saldo atual.",
+   "source": "SGS 13621 (BCB)",
+   "reference_date": "2026-11-23"
+  },
+  {
+   "key": "interventions",
+   "title": "Intervenções confirmadas",
+   "text": "A fonte oficial de atuações no mercado de câmbio está publicada até 27 de outubro de 2026. Nessa base, as vendas diretas de dólares somam US$ 0 em 7 dias, US$ 0 em 30 dias, US$ 3,00 bilhões em 90 dias e US$ 8,00 bilhões em 365 dias. As compras diretas no mesmo período de 365 dias somam US$ 0, o que deixa um saldo líquido de US$ -8,00 bilhões.",
+   "source": "Histórico de atuações no mercado de câmbio (BCB)",
+   "reference_date": "2026-10-27"
+  },
+  {
+   "key": "last_sale",
+   "title": "Última venda direta",
+   "text": "A última venda direta de dólares com resultado publicado ocorreu em 15 de setembro de 2026, no valor de US$ 1,00 bilhões, com liquidação em 17 de setembro de 2026 e modalidade PTAX. Comunicado 45927.",
+   "source": "Histórico de atuações no mercado de câmbio (BCB)",
+   "reference_date": "2026-09-15"
+  },
+  {
+   "key": "temporary_and_swaps",
+   "title": "Operações temporárias e swaps",
+   "text": "Há 6 operação(ões) temporária(s) em aberto, somando US$ 4,00 bilhões. Essas operações têm recompra contratada e não são consumo permanente das reservas. O estoque nocional de swaps cambiais tradicionais é de US$ 90,25 bilhões e o de swaps reversos é de US$ 0. Valor nocional de swap não é dólar retirado das reservas.",
+   "source": "Histórico de atuações no mercado de câmbio (BCB)",
+   "reference_date": "2026-10-27"
+  },
+  {
+   "key": "exchange_rate",
+   "title": "Comportamento do dólar",
+   "text": "A PTAX de venda de 24 de novembro de 2026 ficou em R$ 5,8573, variação de -1,90% em relação ao dia útil anterior. Em 30 dias a variação é de +16,27% e em 365 dias, +8,57%. Na janela de 12 meses a máxima foi R$ 5,9708 e a mínima R$ 4,8973.",
+   "source": "SGS 1 (BCB)",
+   "reference_date": "2026-11-24"
+  },
+  {
+   "key": "flow",
+   "title": "Fluxo mais recente",
+   "text": "O balanço de pagamentos mais recente é de 1 de setembro de 2026. A conta financeira dos três últimos meses publicados soma US$ -25.029 milhões. Os investimentos em carteira acumulam US$ 12.416 milhões em três meses. com 0 mês(es) negativo(s) em sequência. Esse indicador não é o fluxo cambial contratado semanal. que não tem API pública.",
+   "source": "SGS 22864/22905/22969 (BCB)",
+   "reference_date": "2026-09-01"
+  },
+  {
+   "key": "reconciliation",
+   "title": "Conciliação do último dia",
+   "text": "No dia 23 de novembro de 2026 o saldo saiu de US$ 363,06 bilhões para US$ 362,95 bilhões. As atuações desse dia ainda não foram publicadas pelo Banco Central, portanto a parte explicada da variação não pode ser calculada.",
+   "source": "Conciliação desta aplicação",
+   "reference_date": "2026-11-23"
+  },
+  {
+   "key": "patterns",
+   "title": "Padrões identificados",
+   "text": "Padrões identificados: Desvalorizacao persistente do real; Saida liquida persistente de dolares; Aumento de operacoes temporarias em aberto.",
+   "source": "Análise desta aplicação",
+   "reference_date": "2026-11-23"
+  },
+  {
+   "key": "alerts",
+   "title": "Alertas",
+   "text": "1 alerta(s) ativo(s) com os limites padrão: Novo comunicado sobre intervencao.",
+   "source": "Central de alertas desta aplicação",
+   "reference_date": null
+  },
+  {
+   "key": "pressure",
+   "title": "Indicador de pressão cambial",
+   "text": "O indicador experimental de pressão cambial está em 42.7 pontos, faixa \"Pressao elevada\", com 100.0% de cobertura dos componentes. É uma metodologia desta aplicação, não uma classificação oficial do Banco Central.",
+   "source": "Metodologia desta aplicação",
+   "reference_date": null
+  }
+ ],
+ "pending_information": [
+  "O saldo das reservas de 24 de novembro de 2026 ainda não foi publicado; o último disponível é de 23 de novembro de 2026.",
+  "As atuações no mercado de câmbio posteriores a 27 de outubro de 2026 ainda não foram publicadas, porque a fonte é atualizada mensalmente.",
+  "A composição das reservas por moeda e por classe de ativo não é publicada em API pelo Banco Central."
+ ],
+ "headline": "Reservas em US$ 362,95 bilhões (-0,03% no dia) e PTAX em R$ 5,8573 (-1,90%)."
+}

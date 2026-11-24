@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mercado cambial · Brazil FX Monitor</title>
+<meta name="description" content="Monitoramento das reservas internacionais do Brasil, das intervenções cambiais do Banco Central, do fluxo de dólares e da pressão sobre o real, com dados oficiais.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/app.css?v=7676524102">
+</head>
+<body>
+<div id="app-shell"></div>
+<template id="page-template">
+<p class="page-intro">
+  O Banco Central publica a PTAX, uma taxa de referência calculada a partir de
+  quatro consultas ao mercado, divulgada por volta das 13h10 de São Paulo. Ela não
+  é cotação em tempo real. A cotação ao vivo exibida aqui vem de fonte secundária
+  e está identificada como tal.
+</p>
+
+<div class="grid grid--4" id="rate-cards"></div>
+
+<section class="section">
+  <div class="section__head"><h2>Cotação ao vivo</h2>
+    <span class="badge badge--secondary">Fonte secundária</span>
+    <div class="topbar__spacer"></div>
+    <span class="card__meta-row" id="live-updated"></span></div>
+  <div class="section__body">
+    <div class="grid grid--4" id="live-cards"></div>
+    <p class="card__meta-row" id="live-note" style="margin-top:10px"></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>PTAX de venda e de compra</h2>
+    <div class="topbar__spacer"></div><div id="rate-range"></div></div>
+  <div class="section__body">
+    <div class="chart" id="chart-ptax"></div>
+    <p class="card__meta-row" id="marker-note" style="margin-top:8px"></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Reservas internacionais versus dólar</h2></div>
+  <div class="section__body"><div class="chart" id="chart-reserves-vs-usd"></div></div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Intervenções cambiais versus dólar</h2></div>
+  <div class="section__body"><div class="chart" id="chart-interventions-vs-usd"></div></div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Boletins PTAX mais recentes</h2></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th scope="col">Data de referência</th>
+          <th scope="col">Publicado em (São Paulo)</th>
+          <th scope="col" class="right">Compra</th><th scope="col" class="right">Venda</th></tr></thead>
+        <tbody id="bulletins-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+</template>
+<script defer src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js" integrity="sha384-Mx5lkUEQPM1pOJCwFtUICyX45KNojXbkWdYhkKUKsbv391mavbfoAmONbzkgYPzR" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="../assets/js/core.js?v=7676524102"></script>
+<script defer src="../assets/js/charts.js?v=7676524102"></script>
+<script defer src="../assets/js/page-exchange-rate.js?v=7676524102"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var start = function () {
+    if (!window.BFX) { setTimeout(start, 20); return; }
+    BFX.init('exchange-rate', "Mercado cambial").then(function () {
+      if (window.PAGE && typeof window.PAGE.init === 'function') {
+        window.PAGE.init().catch(function (error) {
+          var main = document.getElementById('main');
+          if (main) {
+            var box = document.createElement('p');
+            box.className = 'notice notice--error';
+            box.textContent = 'Falha ao carregar os dados desta página: ' + error.message;
+            main.prepend(box);
+          }
+          console.error(error);
+        });
+      }
+    });
+  };
+  start();
+});
+</script>
+</body>
+</html>

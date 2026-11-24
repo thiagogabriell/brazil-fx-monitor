@@ -1,0 +1,878 @@
+{
+ "score": 42.7,
+ "classification": {
+  "band": [
+   41,
+   60
+  ],
+  "label": "Pressao elevada",
+  "key": "elevated"
+ },
+ "coverage_pct": 100.0,
+ "minimum_coverage_pct": 60.0,
+ "intended_weight": 100,
+ "available_weight": 100,
+ "components": [
+  {
+   "key": "reserves_change_30d_pct",
+   "label": "Velocidade de reducao das reservas (30 dias)",
+   "unit": "% das reservas",
+   "weight": 12,
+   "direction": "queda aumenta a pontuacao",
+   "breakpoints": [
+    [
+     1.0,
+     0
+    ],
+    [
+     0.0,
+     10
+    ],
+    [
+     -0.5,
+     30
+    ],
+    [
+     -1.0,
+     50
+    ],
+    [
+     -2.5,
+     75
+    ],
+    [
+     -5.0,
+     100
+    ]
+   ],
+   "observed_value": -0.4978,
+   "score": 29.91,
+   "available": true,
+   "justification": "As reservas variaram -0.50% em 30 dias. A escala atribui 30 pontos a essa variacao."
+  },
+  {
+   "key": "reserves_change_90d_pct",
+   "label": "Velocidade de reducao das reservas (90 dias)",
+   "unit": "% das reservas",
+   "weight": 7,
+   "direction": "queda aumenta a pontuacao",
+   "breakpoints": [
+    [
+     2.0,
+     0
+    ],
+    [
+     0.0,
+     10
+    ],
+    [
+     -1.0,
+     30
+    ],
+    [
+     -2.5,
+     55
+    ],
+    [
+     -5.0,
+     80
+    ],
+    [
+     -10.0,
+     100
+    ]
+   ],
+   "observed_value": -3.4743,
+   "score": 64.74,
+   "available": true,
+   "justification": "As reservas variaram -3.47% em 90 dias, equivalente a 65 pontos."
+  },
+  {
+   "key": "direct_sale_days_30d",
+   "label": "Frequencia de vendas diretas de dolares (30 dias)",
+   "unit": "dias com venda direta liquidada",
+   "weight": 12,
+   "direction": "mais dias aumentam a pontuacao",
+   "breakpoints": [
+    [
+     0,
+     0
+    ],
+    [
+     1,
+     20
+    ],
+    [
+     3,
+     45
+    ],
+    [
+     6,
+     70
+    ],
+    [
+     10,
+     90
+    ],
+    [
+     15,
+     100
+    ]
+   ],
+   "observed_value": 0.0,
+   "score": 0.0,
+   "available": true,
+   "justification": "Houve venda direta de dolares em 0 dia(s) nos ultimos 30 dias cobertos pela fonte, o que vale 0 pontos."
+  },
+  {
+   "key": "sold_vs_reserves_90d_pct",
+   "label": "Volume vendido em relacao as reservas (90 dias)",
+   "unit": "% das reservas",
+   "weight": 12,
+   "direction": "mais volume aumenta a pontuacao",
+   "breakpoints": [
+    [
+     0,
+     0
+    ],
+    [
+     0.25,
+     20
+    ],
+    [
+     1.0,
+     45
+    ],
+    [
+     2.5,
+     70
+    ],
+    [
+     5.0,
+     90
+    ],
+    [
+     10.0,
+     100
+    ]
+   ],
+   "observed_value": 0.8266,
+   "score": 39.22,
+   "available": true,
+   "justification": "As vendas diretas de 90 dias somam 0.83% das reservas atuais, o que vale 39 pontos."
+  },
+  {
+   "key": "intervention_acceleration_ratio",
+   "label": "Aceleracao das intervencoes",
+   "unit": "razao entre venda de 30 dias e media mensal dos 90 dias anteriores",
+   "weight": 9,
+   "direction": "razao maior que 1 indica aceleracao",
+   "breakpoints": [
+    [
+     0.0,
+     0
+    ],
+    [
+     0.5,
+     15
+    ],
+    [
+     1.0,
+     35
+    ],
+    [
+     2.0,
+     60
+    ],
+    [
+     4.0,
+     85
+    ],
+    [
+     8.0,
+     100
+    ]
+   ],
+   "observed_value": 0.0,
+   "score": 0.0,
+   "available": true,
+   "justification": "A venda direta dos ultimos 30 dias equivale a 0.00 vez(es) a media mensal dos 90 dias anteriores, o que vale 0 pontos."
+  },
+  {
+   "key": "brl_change_30d_pct",
+   "label": "Velocidade de desvalorizacao do real (30 dias)",
+   "unit": "% de variacao da PTAX",
+   "weight": 12,
+   "direction": "alta do dolar aumenta a pontuacao",
+   "breakpoints": [
+    [
+     -5.0,
+     0
+    ],
+    [
+     0.0,
+     10
+    ],
+    [
+     2.0,
+     30
+    ],
+    [
+     5.0,
+     55
+    ],
+    [
+     10.0,
+     80
+    ],
+    [
+     20.0,
+     100
+    ]
+   ],
+   "observed_value": 16.2693,
+   "score": 92.54,
+   "available": true,
+   "justification": "A PTAX variou +16.27% em 30 dias, o que vale 93 pontos."
+  },
+  {
+   "key": "brl_change_90d_pct",
+   "label": "Velocidade de desvalorizacao do real (90 dias)",
+   "unit": "% de variacao da PTAX",
+   "weight": 5,
+   "direction": "alta do dolar aumenta a pontuacao",
+   "breakpoints": [
+    [
+     -10.0,
+     0
+    ],
+    [
+     0.0,
+     10
+    ],
+    [
+     5.0,
+     35
+    ],
+    [
+     12.0,
+     60
+    ],
+    [
+     25.0,
+     85
+    ],
+    [
+     40.0,
+     100
+    ]
+   ],
+   "observed_value": 13.5048,
+   "score": 62.89,
+   "available": true,
+   "justification": "A PTAX variou +13.50% em 90 dias, o que vale 63 pontos."
+  },
+  {
+   "key": "financial_account_3m_usd_million",
+   "label": "Saida liquida de dolares (conta financeira, 3 meses)",
+   "unit": "US$ milhoes acumulados em 3 meses",
+   "weight": 9,
+   "direction": "saida liquida aumenta a pontuacao",
+   "breakpoints": [
+    [
+     30000,
+     0
+    ],
+    [
+     10000,
+     15
+    ],
+    [
+     0,
+     35
+    ],
+    [
+     -10000,
+     60
+    ],
+    [
+     -25000,
+     85
+    ],
+    [
+     -50000,
+     100
+    ]
+   ],
+   "observed_value": -25028.6,
+   "score": 85.02,
+   "available": true,
+   "justification": "A conta financeira somou US$ -25,029 milhoes em 3 meses, o que vale 85 pontos."
+  },
+  {
+   "key": "persistence_after_intervention_pct",
+   "label": "Persistencia da alta do dolar apos intervencoes",
+   "unit": "% das intervencoes seguidas de nova alta em 5 dias uteis",
+   "weight": 9,
+   "direction": "mais persistencia aumenta a pontuacao",
+   "breakpoints": [
+    [
+     0,
+     0
+    ],
+    [
+     25,
+     25
+    ],
+    [
+     50,
+     50
+    ],
+    [
+     75,
+     78
+    ],
+    [
+     100,
+     100
+    ]
+   ],
+   "observed_value": 40.13,
+   "score": 40.13,
+   "available": true,
+   "justification": "Em 40% das ultimas vendas diretas o dolar seguiu subindo cinco dias uteis depois, o que vale 40 pontos."
+  },
+  {
+   "key": "open_temporary_vs_reserves_pct",
+   "label": "Operacoes temporarias em aberto",
+   "unit": "% das reservas",
+   "weight": 6,
+   "direction": "mais operacoes em aberto aumentam a pontuacao",
+   "breakpoints": [
+    [
+     0,
+     0
+    ],
+    [
+     0.5,
+     20
+    ],
+    [
+     2.0,
+     45
+    ],
+    [
+     5.0,
+     70
+    ],
+    [
+     10.0,
+     90
+    ],
+    [
+     20.0,
+     100
+    ]
+   ],
+   "observed_value": 1.1021,
+   "score": 30.04,
+   "available": true,
+   "justification": "As operacoes temporarias em aberto somam 1.10% das reservas, o que vale 30 pontos."
+  },
+  {
+   "key": "reserves_to_short_term_debt",
+   "label": "Reservas sobre divida externa de curto prazo",
+   "unit": "razao",
+   "weight": 0,
+   "direction": "razao menor aumenta a pontuacao",
+   "breakpoints": [
+    [
+     5.0,
+     0
+    ],
+    [
+     3.0,
+     20
+    ],
+    [
+     2.0,
+     40
+    ],
+    [
+     1.0,
+     70
+    ],
+    [
+     0.5,
+     100
+    ]
+   ],
+   "observed_value": null,
+   "score": null,
+   "available": false,
+   "justification": "O BCB nao publica a divida externa de curto prazo em dolares no portal de dados abertos; a serie 28192 disponivel esta em milhoes de reais e mede a divida total, nao o curto prazo."
+  },
+  {
+   "key": "import_coverage_months",
+   "label": "Cobertura das importacoes pelas reservas",
+   "unit": "meses de importacao",
+   "weight": 7,
+   "direction": "menos meses aumenta a pontuacao",
+   "breakpoints": [
+    [
+     30,
+     0
+    ],
+    [
+     24,
+     10
+    ],
+    [
+     18,
+     25
+    ],
+    [
+     12,
+     45
+    ],
+    [
+     6,
+     80
+    ],
+    [
+     3,
+     100
+    ]
+   ],
+   "observed_value": 14.408,
+   "score": 36.97,
+   "available": true,
+   "justification": "As reservas cobrem 14.4 meses de importacoes, o que vale 37 pontos."
+  }
+ ],
+ "missing_components": [
+  {
+   "key": "reserves_to_short_term_debt",
+   "label": "Reservas sobre divida externa de curto prazo",
+   "reason": "O BCB nao publica a divida externa de curto prazo em dolares no portal de dados abertos; a serie 28192 disponivel esta em milhoes de reais e mede a divida total, nao o curto prazo."
+  }
+ ],
+ "bands": [
+  {
+   "from": 0,
+   "to": 20,
+   "label": "Normal",
+   "key": "normal"
+  },
+  {
+   "from": 21,
+   "to": 40,
+   "label": "Atencao",
+   "key": "attention"
+  },
+  {
+   "from": 41,
+   "to": 60,
+   "label": "Pressao elevada",
+   "key": "elevated"
+  },
+  {
+   "from": 61,
+   "to": 80,
+   "label": "Pressao severa",
+   "key": "severe"
+  },
+  {
+   "from": 81,
+   "to": 100,
+   "label": "Pressao critica",
+   "key": "critical"
+  }
+ ],
+ "disclaimer": "Indicador experimental desta aplicacao. Nao e classificacao oficial do Banco Central, nao e previsao de crise e nao e recomendacao financeira.",
+ "formula": "score = soma(sub_score_i * peso_i) / soma(peso_i), apenas sobre os componentes com dado disponivel. Cada sub_score vem de uma funcao linear por partes com pontos de quebra declarados.",
+ "schema": "pressure-index/v1",
+ "generated_at": "2026-11-24T19:43:15+00:00",
+ "reference_dates": {
+  "reserves": "2026-11-23",
+  "interventions": "2026-10-27",
+  "exchange_rate": "2026-11-24",
+  "exchange_flow": "2026-09-01"
+ },
+ "observed_values": {
+  "reserves_change_30d_pct": -0.4978,
+  "reserves_change_90d_pct": -3.4743,
+  "direct_sale_days_30d": 0.0,
+  "sold_vs_reserves_90d_pct": 0.8266,
+  "intervention_acceleration_ratio": 0.0,
+  "brl_change_30d_pct": 16.2693,
+  "brl_change_90d_pct": 13.5048,
+  "financial_account_3m_usd_million": -25028.6,
+  "persistence_after_intervention_pct": 40.13,
+  "open_temporary_vs_reserves_pct": 1.1021,
+  "reserves_to_short_term_debt": null,
+  "import_coverage_months": 14.408
+ },
+ "history": [
+  {
+   "date": "2021-10-31",
+   "score": 37.3,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2021-11-30",
+   "score": 21.8,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2021-12-31",
+   "score": 51.1,
+   "coverage_pct": 100.0,
+   "classification": "elevated"
+  },
+  {
+   "date": "2022-01-31",
+   "score": 31.5,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2022-02-28",
+   "score": 27.9,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2022-03-31",
+   "score": 24.7,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2022-04-30",
+   "score": 45.2,
+   "coverage_pct": 100.0,
+   "classification": "elevated"
+  },
+  {
+   "date": "2022-05-31",
+   "score": 21.3,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2022-06-30",
+   "score": 38.9,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2022-07-31",
+   "score": 17.4,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2022-08-31",
+   "score": 29.1,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2022-09-30",
+   "score": 38.3,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2022-10-31",
+   "score": 27.3,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2022-11-30",
+   "score": 22.3,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2022-12-31",
+   "score": 29.1,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2023-01-31",
+   "score": 18.9,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2023-02-28",
+   "score": 29.9,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2023-03-31",
+   "score": 17.1,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2023-04-30",
+   "score": 16.2,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2023-05-31",
+   "score": 22.9,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2023-06-30",
+   "score": 15.9,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2023-07-31",
+   "score": 16.5,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2023-08-31",
+   "score": 21.5,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2023-09-30",
+   "score": 28.3,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2023-10-31",
+   "score": 21.6,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2023-11-30",
+   "score": 15.3,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2023-12-31",
+   "score": 15.2,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2024-01-31",
+   "score": 19.5,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2024-02-29",
+   "score": 19.1,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2024-03-31",
+   "score": 18.3,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2024-04-30",
+   "score": 28.5,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2024-05-31",
+   "score": 19.1,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2024-06-30",
+   "score": 25.0,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2024-07-31",
+   "score": 19.4,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2024-08-31",
+   "score": 17.2,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2024-09-30",
+   "score": 29.1,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2024-10-31",
+   "score": 32.8,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2024-11-30",
+   "score": 36.1,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2024-12-31",
+   "score": 72.7,
+   "coverage_pct": 100.0,
+   "classification": "severe"
+  },
+  {
+   "date": "2025-01-31",
+   "score": 43.6,
+   "coverage_pct": 100.0,
+   "classification": "elevated"
+  },
+  {
+   "date": "2025-02-28",
+   "score": 37.6,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2025-03-31",
+   "score": 22.8,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2025-04-30",
+   "score": 19.4,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2025-05-31",
+   "score": 21.8,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2025-06-30",
+   "score": 32.7,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2025-07-31",
+   "score": 26.4,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2025-08-31",
+   "score": 20.9,
+   "coverage_pct": 100.0,
+   "classification": "critical"
+  },
+  {
+   "date": "2025-09-30",
+   "score": 18.3,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2025-10-31",
+   "score": 35.2,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2025-11-30",
+   "score": 21.4,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2025-12-31",
+   "score": 30.6,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2026-01-31",
+   "score": 17.9,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2026-02-28",
+   "score": 18.4,
+   "coverage_pct": 100.0,
+   "classification": "normal"
+  },
+  {
+   "date": "2026-03-31",
+   "score": 46.0,
+   "coverage_pct": 100.0,
+   "classification": "elevated"
+  },
+  {
+   "date": "2026-04-30",
+   "score": 21.3,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2026-05-31",
+   "score": 23.4,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2026-06-30",
+   "score": 40.3,
+   "coverage_pct": 100.0,
+   "classification": "critical"
+  },
+  {
+   "date": "2026-07-31",
+   "score": 21.1,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2026-08-31",
+   "score": 32.3,
+   "coverage_pct": 100.0,
+   "classification": "attention"
+  },
+  {
+   "date": "2026-09-30",
+   "score": 43.8,
+   "coverage_pct": 100.0,
+   "classification": "elevated"
+  }
+ ]
+}

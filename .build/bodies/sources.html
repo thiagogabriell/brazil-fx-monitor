@@ -1,0 +1,48 @@
+<p class="page-intro">
+  Toda fonte, endpoint, metodologia, unidade e limitação usada nesta aplicação.
+</p>
+
+<section class="section" style="margin-top:0">
+  <div class="section__head"><h2>Como os dados são classificados na interface</h2></div>
+  <div class="section__body">
+    <div class="grid grid--3" id="quality-legend"></div>
+    <p class="card__meta-row" style="margin-top:12px">
+      As datas também são distinguidas: <strong>data do evento</strong> (quando a
+      operação ocorreu), <strong>data de liquidação</strong> (quando o dinheiro se
+      move), <strong>data de publicação</strong> (quando o Banco Central divulgou)
+      e <strong>data da coleta</strong> (quando esta aplicação leu a fonte).
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Estado da coleta</h2>
+    <div class="topbar__spacer"></div>
+    <span class="card__meta-row" id="state-updated"></span></div>
+  <div class="section__body section__body--flush">
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th scope="col">Fonte</th><th scope="col">Status</th>
+          <th scope="col">Data de referência</th><th scope="col" class="right">Idade</th>
+          <th scope="col" class="right">Registros</th><th scope="col">Última coleta com dado novo</th>
+          <th scope="col" class="wrap">Detalhe</th></tr></thead>
+        <tbody id="state-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Catálogo de fontes</h2></div>
+  <div class="section__body" id="catalogue"></div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Indicadores e fórmulas</h2></div>
+  <div class="section__body" id="formulas"></div>
+</section>
+
+<section class="section">
+  <div class="section__head"><h2>Limitações conhecidas</h2></div>
+  <div class="section__body"><ul class="plain" id="limitations"></ul></div>
+</section>

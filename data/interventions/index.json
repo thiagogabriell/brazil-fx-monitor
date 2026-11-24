@@ -1,0 +1,6553 @@
+{
+ "schema": "interventions-index/v1",
+ "unit": "USD cents",
+ "unit_note": "Volumes em centavos de dolar (inteiros) para evitar erro de precisao. Divida por 100 para obter USD.",
+ "currency_note": "Todos os volumes sao publicados pelo BCB em dolares dos Estados Unidos (colunas 'Volume USD Ofertado' e 'Volume USD Aceito').",
+ "source": {
+  "name": "Histórico de Atuações no Mercado de Câmbio",
+  "publisher": "Banco Central do Brasil / Departamento das Reservas Internacionais",
+  "endpoint": "https://www.bcb.gov.br/conteudo/dadosabertos/BCBDepin/historico-atuacoes-mercado-cambio.csv",
+  "landing_page": "https://dadosabertos.bcb.gov.br/dataset/historico-de-atuacoes-no-mercado-de-cambio",
+  "documentation": "https://www.bcb.gov.br/conteudo/dadosabertos/BCBDepin/documentacao-atuacoes-mercado-cambio.pdf",
+  "license": "Open Data Commons Open Database License (ODbL)",
+  "license_url": "http://www.opendefinition.org/licenses/odc-odbl",
+  "declared_frequency": "Mensal",
+  "declared_period_start": "18/01/1999",
+  "metadata_modified": "2026-09-11T14:01:58.037243",
+  "publisher_notes": "Apresenta dados de todas as atuações do BCB no mercado de câmbio a partir da mudança para o regime de câmbio flutuante, definida pelo Comunicado 6.565, de 18 janeiro de 1999.\r\n\r\nOs dados descrevem as atuações até o momento de publicação do resultado de cada uma e, portanto, não abrangem fatos ocorridos depois da data da atuação, tais como cancelamentos e pré-pagamentos de operações negociadas nas atuações. \r\n\r\nA série é atualizada até o último dia útil do mês e apresenta dados relativos às atuações ocorridas no mês anterior, quando houver.\r\n\r\nBase de dados de origem: <strong data-lexical-text=\"true\">Leilão - Sistema de Leilão de Câmbio</strong>"
+ },
+ "official_update": "A serie e atualizada ate o ultimo dia util do mes e traz as atuacoes do mes anterior, quando houver. A ultima atuacao disponivel costuma ter de 3 a 8 semanas de defasagem.",
+ "known_limitations": [
+  "A fonte descreve as atuacoes no momento da publicacao do resultado e nao reflete cancelamentos nem pre-pagamentos posteriores, portanto o status 'cancelada' nao pode ser derivado dela.",
+  "A justificativa oficial de cada atuacao nao consta do conjunto de dados; ela aparece no comunicado correspondente.",
+  "Nao ha horario de execucao por operacao, apenas o horario de divulgacao do comunicado e do anuncio.",
+  "Quando o BCB publica linhas identicas em todos os campos nao e possivel distinguir duas operacoes iguais de uma repeticao do registro; essas linhas ficam marcadas com 'ambiguous_duplicate'."
+ ],
+ "reference_date": "2026-10-27",
+ "first_date": "1999-01-22",
+ "collected_at": "2026-11-24T19:36:46+00:00",
+ "statistics": {
+  "row_count": 10507,
+  "operation_count": 10507,
+  "unmapped": [],
+  "ambiguous_duplicate_count": 2,
+  "by_category": {
+   "spot_sale": 530,
+   "spot_purchase": 1506,
+   "sale_with_repurchase": 467,
+   "swap_traditional": 6917,
+   "swap_reverse": 1031,
+   "loan": 13,
+   "forward_purchase": 28,
+   "repurchase_agreement": 15
+  },
+  "by_status": {
+   "liquidada": 9505,
+   "anunciada": 989,
+   "pendente_de_confirmacao": 13
+  }
+ },
+ "categories": {
+  "spot_sale": {
+   "label": "Venda direta de dolares a vista",
+   "short_label": "Venda a vista",
+   "reserve_effect": "decrease",
+   "notional": false,
+   "temporary": false,
+   "color_role": "outflow",
+   "explanation": "Venda definitiva de moeda estrangeira ao mercado. Reduz as reservas internacionais na data de liquidacao."
+  },
+  "spot_purchase": {
+   "label": "Compra direta de dolares a vista",
+   "short_label": "Compra a vista",
+   "reserve_effect": "increase",
+   "notional": false,
+   "temporary": false,
+   "color_role": "inflow",
+   "explanation": "Compra definitiva de moeda estrangeira no mercado. Aumenta as reservas internacionais na data de liquidacao."
+  },
+  "forward_purchase": {
+   "label": "Compra a termo",
+   "short_label": "Compra a termo",
+   "reserve_effect": "increase",
+   "notional": false,
+   "temporary": false,
+   "color_role": "inflow",
+   "explanation": "Compra de moeda estrangeira com liquidacao futura. O efeito sobre as reservas ocorre na data de liquidacao informada."
+  },
+  "sale_with_repurchase": {
+   "label": "Venda com compromisso de recompra",
+   "short_label": "Venda com recompra",
+   "reserve_effect": "temporary_decrease",
+   "notional": false,
+   "temporary": true,
+   "color_role": "temporary",
+   "explanation": "Fornecimento temporario de dolares ao mercado. O BCB vende agora e recompra na data de vencimento, portanto nao e consumo permanente das reservas. No conceito liquidez o efeito e diferente do conceito caixa."
+  },
+  "repurchase_agreement": {
+   "label": "Operacao compromissada",
+   "short_label": "Compromissada",
+   "reserve_effect": "temporary_decrease",
+   "notional": false,
+   "temporary": true,
+   "color_role": "temporary",
+   "explanation": "Operacao compromissada com titulos soberanos. Troca temporaria de ativos por liquidez em moeda estrangeira, com retorno contratado."
+  },
+  "loan": {
+   "label": "Emprestimo em moeda estrangeira",
+   "short_label": "Emprestimo",
+   "reserve_effect": "temporary_decrease",
+   "notional": false,
+   "temporary": true,
+   "color_role": "temporary",
+   "explanation": "Linha de emprestimo em moeda estrangeira concedida pelo BCB, com devolucao contratada na data de vencimento."
+  },
+  "swap_traditional": {
+   "label": "Swap cambial tradicional",
+   "short_label": "Swap tradicional",
+   "reserve_effect": "none",
+   "notional": true,
+   "temporary": false,
+   "color_role": "notional",
+   "explanation": "Contrato de derivativo liquidado em reais. O valor e nocional: um swap cambial tradicional NAO representa venda de dolares das reservas internacionais."
+  },
+  "swap_reverse": {
+   "label": "Swap cambial reverso",
+   "short_label": "Swap reverso",
+   "reserve_effect": "none",
+   "notional": true,
+   "temporary": false,
+   "color_role": "notional",
+   "explanation": "Swap cambial na ponta inversa, tambem liquidado em reais. Valor nocional, sem saida de dolares das reservas."
+  }
+ },
+ "asset_class_undisclosed_label": "Ativo de origem nao divulgado pelo Banco Central.",
+ "asset_class_by_modality": {
+  "Títulos Soberanos (Global Bonds)": "Titulos soberanos (Global Bonds)"
+ },
+ "executed_count": 9505,
+ "operation_count": 10507,
+ "years": [
+  {
+   "year": 1999,
+   "file": "data/interventions/by-year/1999.json",
+   "operation_count": 62,
+   "executed_count": 62
+  },
+  {
+   "year": 2000,
+   "file": "data/interventions/by-year/2000.json",
+   "operation_count": 4,
+   "executed_count": 4
+  },
+  {
+   "year": 2001,
+   "file": "data/interventions/by-year/2001.json",
+   "operation_count": 131,
+   "executed_count": 131
+  },
+  {
+   "year": 2002,
+   "file": "data/interventions/by-year/2002.json",
+   "operation_count": 379,
+   "executed_count": 309
+  },
+  {
+   "year": 2003,
+   "file": "data/interventions/by-year/2003.json",
+   "operation_count": 219,
+   "executed_count": 199
+  },
+  {
+   "year": 2004,
+   "file": "data/interventions/by-year/2004.json",
+   "operation_count": 47,
+   "executed_count": 46
+  },
+  {
+   "year": 2005,
+   "file": "data/interventions/by-year/2005.json",
+   "operation_count": 225,
+   "executed_count": 223
+  },
+  {
+   "year": 2006,
+   "file": "data/interventions/by-year/2006.json",
+   "operation_count": 436,
+   "executed_count": 434
+  },
+  {
+   "year": 2007,
+   "file": "data/interventions/by-year/2007.json",
+   "operation_count": 279,
+   "executed_count": 279
+  },
+  {
+   "year": 2008,
+   "file": "data/interventions/by-year/2008.json",
+   "operation_count": 404,
+   "executed_count": 384
+  },
+  {
+   "year": 2009,
+   "file": "data/interventions/by-year/2009.json",
+   "operation_count": 249,
+   "executed_count": 228
+  },
+  {
+   "year": 2010,
+   "file": "data/interventions/by-year/2010.json",
+   "operation_count": 296,
+   "executed_count": 273
+  },
+  {
+   "year": 2011,
+   "file": "data/interventions/by-year/2011.json",
+   "operation_count": 376,
+   "executed_count": 347
+  },
+  {
+   "year": 2012,
+   "file": "data/interventions/by-year/2012.json",
+   "operation_count": 101,
+   "executed_count": 98
+  },
+  {
+   "year": 2013,
+   "file": "data/interventions/by-year/2013.json",
+   "operation_count": 268,
+   "executed_count": 248
+  },
+  {
+   "year": 2014,
+   "file": "data/interventions/by-year/2014.json",
+   "operation_count": 910,
+   "executed_count": 799
+  },
+  {
+   "year": 2015,
+   "file": "data/interventions/by-year/2015.json",
+   "operation_count": 679,
+   "executed_count": 644
+  },
+  {
+   "year": 2016,
+   "file": "data/interventions/by-year/2016.json",
+   "operation_count": 619,
+   "executed_count": 495
+  },
+  {
+   "year": 2017,
+   "file": "data/interventions/by-year/2017.json",
+   "operation_count": 295,
+   "executed_count": 254
+  },
+  {
+   "year": 2018,
+   "file": "data/interventions/by-year/2018.json",
+   "operation_count": 687,
+   "executed_count": 536
+  },
+  {
+   "year": 2019,
+   "file": "data/interventions/by-year/2019.json",
+   "operation_count": 607,
+   "executed_count": 446
+  },
+  {
+   "year": 2020,
+   "file": "data/interventions/by-year/2020.json",
+   "operation_count": 521,
+   "executed_count": 480
+  },
+  {
+   "year": 2021,
+   "file": "data/interventions/by-year/2021.json",
+   "operation_count": 515,
+   "executed_count": 506
+  },
+  {
+   "year": 2022,
+   "file": "data/interventions/by-year/2022.json",
+   "operation_count": 460,
+   "executed_count": 435
+  },
+  {
+   "year": 2023,
+   "file": "data/interventions/by-year/2023.json",
+   "operation_count": 492,
+   "executed_count": 466
+  },
+  {
+   "year": 2024,
+   "file": "data/interventions/by-year/2024.json",
+   "operation_count": 525,
+   "executed_count": 491
+  },
+  {
+   "year": 2025,
+   "file": "data/interventions/by-year/2025.json",
+   "operation_count": 390,
+   "executed_count": 376
+  },
+  {
+   "year": 2026,
+   "file": "data/interventions/by-year/2026.json",
+   "operation_count": 331,
+   "executed_count": 312
+  }
+ ],
+ "full_dataset_file": "data/interventions/operations.json",
+ "settlement_index": {
+  "1999-01-26": [
+   "4d9e7a4b0b9349fe-1"
+  ],
+  "1999-02-02": [
+   "5b321882391fa289-1"
+  ],
+  "1999-02-18": [
+   "b9e2fc5c98d37075-1"
+  ],
+  "1999-02-24": [
+   "01a258c94b6933ff-1"
+  ],
+  "1999-02-25": [
+   "ba3491bc46a04d1b-1"
+  ],
+  "1999-02-26": [
+   "9a9d3a1099568809-1"
+  ],
+  "1999-03-01": [
+   "9743b292f8896776-1"
+  ],
+  "1999-03-02": [
+   "096b4eef2bbac395-1"
+  ],
+  "1999-03-04": [
+   "b90db92e81a468e9-1"
+  ],
+  "1999-03-05": [
+   "9cd48a4ca66811ea-1"
+  ],
+  "1999-03-08": [
+   "3e0db428ffb28ca6-1"
+  ],
+  "1999-03-09": [
+   "4fc035000e26f13a-1"
+  ],
+  "1999-03-10": [
+   "cd5f40ded14eff0c-1"
+  ],
+  "1999-03-11": [
+   "f61d06c2a34aa12a-1"
+  ],
+  "1999-03-12": [
+   "6f2451da48d00844-1"
+  ],
+  "1999-03-15": [
+   "9ef7f400aee78446-1"
+  ],
+  "1999-03-16": [
+   "e8a4d3ba32d44078-1"
+  ],
+  "1999-03-17": [
+   "f4829ddc40382134-1"
+  ],
+  "1999-03-18": [
+   "3a3c4504b634e89f-1"
+  ],
+  "1999-03-19": [
+   "f4de6f5c63d45be3-1"
+  ],
+  "1999-03-22": [
+   "9f80392ca8d46c89-1"
+  ],
+  "1999-03-23": [
+   "26c337581bc0e36e-1"
+  ],
+  "1999-03-24": [
+   "38803356bdd1e213-1"
+  ],
+  "1999-03-26": [
+   "f58d8e44149414dd-1"
+  ],
+  "1999-03-29": [
+   "6515b8bf9d0831d9-1"
+  ],
+  "1999-03-30": [
+   "4af4b9158f7025e5-1",
+   "5fdb58cf59bcb26d-1"
+  ],
+  "1999-03-31": [
+   "f35bcb1bf1b4456f-1"
+  ],
+  "1999-04-05": [
+   "2e8f7c0380f75aca-1"
+  ],
+  "1999-04-06": [
+   "7aa45179835f438a-1"
+  ],
+  "1999-04-07": [
+   "2ed141c837618b28-1"
+  ],
+  "1999-04-08": [
+   "7dc014438e076c38-1"
+  ],
+  "1999-04-12": [
+   "2df9a237953bd86a-1"
+  ],
+  "1999-04-13": [
+   "3ca07012640b12dc-1"
+  ],
+  "1999-04-14": [
+   "4998c8e270abb5e5-1"
+  ],
+  "1999-04-15": [
+   "9b2425c4a674fc54-1"
+  ],
+  "1999-04-16": [
+   "25a5bf7564714c1d-1"
+  ],
+  "1999-04-19": [
+   "37d8fed99c476bc6-1"
+  ],
+  "1999-04-20": [
+   "5c700e42f1674d99-1"
+  ],
+  "1999-04-22": [
+   "3227f7db1a8f0c6a-1",
+   "632c1770a3bd42a0-1"
+  ],
+  "1999-04-23": [
+   "0b2c68fe6ffa42dc-1",
+   "4f671954b431249d-1"
+  ],
+  "1999-04-28": [
+   "91874908570f9762-1"
+  ],
+  "1999-04-29": [
+   "366b2b6301669e59-1"
+  ],
+  "1999-05-04": [
+   "5c0f638a5989c595-1"
+  ],
+  "1999-05-12": [
+   "11bb8e4017eb9b67-1"
+  ],
+  "1999-05-13": [
+   "8db7da1a56454980-1"
+  ],
+  "1999-05-27": [
+   "25a9804ee36832d2-1"
+  ],
+  "1999-08-20": [
+   "3516941034182059-1"
+  ],
+  "1999-10-14": [
+   "bd02c01db77dc416-1"
+  ],
+  "1999-10-29": [
+   "7e96cbad1ee83311-1"
+  ],
+  "1999-11-16": [
+   "a230f3a1dc3af101-1"
+  ],
+  "1999-11-19": [
+   "3671a463bb300a94-1"
+  ],
+  "1999-11-23": [
+   "d925b9e294e5a203-1"
+  ],
+  "1999-11-26": [
+   "50b26c164cdf2dcf-1"
+  ],
+  "1999-12-03": [
+   "b2c45f05164b87a0-1"
+  ],
+  "1999-12-08": [
+   "550eddb7096399b0-1"
+  ],
+  "1999-12-27": [
+   "6fb341c38ee4c3b6-1"
+  ],
+  "1999-12-29": [
+   "7c8d61b52a0b6c5f-1",
+   "944be31bc756221c-1",
+   "d82f069bbf063335-1"
+  ],
+  "2000-01-06": [
+   "306474936d9910ef-1"
+  ],
+  "2000-03-28": [
+   "6aef6349c122c753-1"
+  ],
+  "2000-11-24": [
+   "eb2cd9ee9881fed5-1"
+  ],
+  "2000-12-28": [
+   "9df1c4ee3fd08b07-1"
+  ],
+  "2001-03-19": [
+   "fd3930e890b404cc-1"
+  ],
+  "2001-05-30": [
+   "6bfccb09fb64712a-1"
+  ],
+  "2001-06-20": [
+   "9915a9bef3717def-1"
+  ],
+  "2001-06-25": [
+   "2e2c32c95e5630c9-1"
+  ],
+  "2001-06-27": [
+   "41ff2702e2f33fe4-1"
+  ],
+  "2001-06-29": [
+   "2873d042bbb12d27-1"
+  ],
+  "2001-07-05": [
+   "3caddd7eb2687197-1"
+  ],
+  "2001-07-06": [
+   "4eca079cdaba3210-1"
+  ],
+  "2001-07-09": [
+   "1c14495c148df4e8-1"
+  ],
+  "2001-07-10": [
+   "7d442ff3e8a7b1d7-1"
+  ],
+  "2001-07-11": [
+   "425bcf4f19ad7e9e-1"
+  ],
+  "2001-07-12": [
+   "598f226038b9be46-1"
+  ],
+  "2001-07-13": [
+   "d9161dcd1eca8166-1"
+  ],
+  "2001-07-16": [
+   "76de36f6a7221b9b-1"
+  ],
+  "2001-07-17": [
+   "babe8b139f128c36-1"
+  ],
+  "2001-07-18": [
+   "5e370946b6412f52-1"
+  ],
+  "2001-07-19": [
+   "89914f6ae02ad40d-1"
+  ],
+  "2001-07-20": [
+   "c4b506d69e9d1659-1"
+  ],
+  "2001-07-23": [
+   "b8cf6f5e6a4a149f-1"
+  ],
+  "2001-07-24": [
+   "4288e52aaec48a5f-1"
+  ],
+  "2001-07-25": [
+   "e8f3f9a7669d5e63-1"
+  ],
+  "2001-07-26": [
+   "0207f249075d5a3b-1"
+  ],
+  "2001-07-27": [
+   "fdbd81f73c9c501a-1"
+  ],
+  "2001-07-30": [
+   "58298fa2cec83ade-1"
+  ],
+  "2001-07-31": [
+   "8151c8b713dbdb45-1"
+  ],
+  "2001-08-01": [
+   "4984f5e42fc66871-1"
+  ],
+  "2001-08-02": [
+   "ffb51be1b6190044-1"
+  ],
+  "2001-08-03": [
+   "4a395dbca60f3e06-1"
+  ],
+  "2001-08-06": [
+   "0e16843d32ef3590-1"
+  ],
+  "2001-08-07": [
+   "00eaa97ac69db459-1"
+  ],
+  "2001-08-08": [
+   "b048e01617593e22-1"
+  ],
+  "2001-08-09": [
+   "33f92a05087179dd-1"
+  ],
+  "2001-08-10": [
+   "c9de08a5e9706cd1-1"
+  ],
+  "2001-08-13": [
+   "e00e165638106d14-1"
+  ],
+  "2001-08-14": [
+   "6a4224b2c07d74ed-1"
+  ],
+  "2001-08-15": [
+   "10a4238b7dfb3862-1"
+  ],
+  "2001-08-16": [
+   "6d745730bea82a29-1"
+  ],
+  "2001-08-17": [
+   "297708d1dad50557-1"
+  ],
+  "2001-08-20": [
+   "280629df0da5893c-1"
+  ],
+  "2001-08-21": [
+   "7c1d25bae08dfcb5-1"
+  ],
+  "2001-08-22": [
+   "7e422046927b0cb6-1"
+  ],
+  "2001-08-23": [
+   "10e8cc44a86409bf-1"
+  ],
+  "2001-08-24": [
+   "496fcf0829d2e588-1"
+  ],
+  "2001-08-27": [
+   "fd2f19974f2fdffb-1"
+  ],
+  "2001-08-28": [
+   "1f6cb0bbbb6ca333-1"
+  ],
+  "2001-08-29": [
+   "8c94efab95b8a6a6-1"
+  ],
+  "2001-08-30": [
+   "f70b0e13f6dde255-1"
+  ],
+  "2001-08-31": [
+   "84fc1f23b534b002-1"
+  ],
+  "2001-09-04": [
+   "0ae2d958e22584e3-1"
+  ],
+  "2001-09-05": [
+   "3b49089bc654ee9f-1",
+   "a52d12ec02dbadd6-1"
+  ],
+  "2001-09-06": [
+   "ecd70f8824deaff2-1"
+  ],
+  "2001-09-10": [
+   "69728d0597aac82c-1"
+  ],
+  "2001-09-11": [
+   "ae4e0ea89c6dac8e-1"
+  ],
+  "2001-09-12": [
+   "be5aab0b7da0ef24-1"
+  ],
+  "2001-09-13": [
+   "0463d1f6aea51f0a-1",
+   "a70a81c56fd89d6e-1"
+  ],
+  "2001-09-14": [
+   "720c12cd1873eb98-1",
+   "9a8269848c1a25c6-1"
+  ],
+  "2001-09-17": [
+   "bb5b68b268e4bb71-1",
+   "bb5b68b268e4bb71-2"
+  ],
+  "2001-09-18": [
+   "93b6d53f991cfd5c-1"
+  ],
+  "2001-09-19": [
+   "81a644d89a55e9f2-1"
+  ],
+  "2001-09-20": [
+   "7df7f8df799500b0-1"
+  ],
+  "2001-09-21": [
+   "fc3fb037f214d8e6-1"
+  ],
+  "2001-09-24": [
+   "d96ad781623dcca9-1"
+  ],
+  "2001-09-25": [
+   "e5b124e798b56b24-1"
+  ],
+  "2001-09-26": [
+   "0853be6f17911f09-1"
+  ],
+  "2001-09-27": [
+   "b58f7a2118854932-1"
+  ],
+  "2001-09-28": [
+   "cd982931c8df211a-1"
+  ],
+  "2001-10-01": [
+   "2b5b363de3843c9c-1"
+  ],
+  "2001-10-02": [
+   "fa4745a1beb8590a-1"
+  ],
+  "2001-10-03": [
+   "a9e098ed459bc52c-1"
+  ],
+  "2001-10-04": [
+   "69a6b195e75774ba-1"
+  ],
+  "2001-10-05": [
+   "3d22dbb10433416d-1"
+  ],
+  "2001-10-09": [
+   "a6dbedef76eec969-1"
+  ],
+  "2001-10-10": [
+   "0b163d337ec846d4-1",
+   "7b5066a4b70cee99-1"
+  ],
+  "2001-10-11": [
+   "596462ba1a0232ec-1"
+  ],
+  "2001-10-15": [
+   "68874afb17cac49a-1"
+  ],
+  "2001-10-16": [
+   "bb12e56e5275367d-1"
+  ],
+  "2001-10-17": [
+   "ef9990a5174587e4-1"
+  ],
+  "2001-10-18": [
+   "caa44df17c223ab5-1"
+  ],
+  "2001-10-19": [
+   "e974f921ed4e1a3a-1"
+  ],
+  "2001-10-22": [
+   "ef6bc3d344013d9f-1"
+  ],
+  "2001-10-23": [
+   "e8d6d62241e8cdeb-1"
+  ],
+  "2001-10-24": [
+   "9be63704f69a1f83-1"
+  ],
+  "2001-10-25": [
+   "6521261f6c133442-1"
+  ],
+  "2001-10-26": [
+   "2243f2cab968a296-1"
+  ],
+  "2001-10-29": [
+   "aa32f2443fe174ac-1"
+  ],
+  "2001-10-30": [
+   "49b6780f2330e667-1"
+  ],
+  "2001-10-31": [
+   "5c6fb32b80308b4c-1"
+  ],
+  "2001-11-01": [
+   "eb7922dd89b85c52-1"
+  ],
+  "2001-11-05": [
+   "9bd08127a68bcbc1-1"
+  ],
+  "2001-11-06": [
+   "b1a1d8bf3f4e5447-1"
+  ],
+  "2001-11-07": [
+   "809e86b1f1432f5f-1"
+  ],
+  "2001-11-08": [
+   "17e35c263e5b3b01-1"
+  ],
+  "2001-11-09": [
+   "6c2e9de4e80c8b95-1"
+  ],
+  "2001-11-13": [
+   "3baefb0448b9b33c-1"
+  ],
+  "2001-11-14": [
+   "0e253cd0453dd1ae-1",
+   "b98f7bf1048ac1c0-1"
+  ],
+  "2001-11-16": [
+   "7d9a59a0dc13aec0-1"
+  ],
+  "2001-11-19": [
+   "a327170454fea91f-1"
+  ],
+  "2001-11-20": [
+   "5f9f1f566212fef7-1"
+  ],
+  "2001-11-21": [
+   "8a80b3315793c887-1"
+  ],
+  "2001-11-23": [
+   "856762063c33e667-1"
+  ],
+  "2001-11-26": [
+   "b84957a725a0cfd0-1",
+   "c8ef108d042a09d3-1"
+  ],
+  "2001-11-27": [
+   "a632b3421781494a-1"
+  ],
+  "2001-11-28": [
+   "11566903f41757c7-1"
+  ],
+  "2001-11-29": [
+   "bc1d6b423df5dce7-1"
+  ],
+  "2001-11-30": [
+   "add02a9b73146e0c-1"
+  ],
+  "2001-12-03": [
+   "9cc84dc1b9cc0a67-1"
+  ],
+  "2001-12-04": [
+   "45d4fcf16a4254e4-1"
+  ],
+  "2001-12-05": [
+   "180b150bbab873df-1"
+  ],
+  "2001-12-06": [
+   "de43e1e6bfa63293-1"
+  ],
+  "2001-12-07": [
+   "d3c5c058d7999efa-1"
+  ],
+  "2001-12-10": [
+   "d7155275b69e5547-1"
+  ],
+  "2001-12-11": [
+   "dc849e5d1e7d6e20-1"
+  ],
+  "2001-12-12": [
+   "72c7c728d4d72c68-1"
+  ],
+  "2001-12-13": [
+   "e461c6ea3b2de69b-1"
+  ],
+  "2001-12-14": [
+   "494badaeb64447a8-1"
+  ],
+  "2001-12-17": [
+   "8d2d59cf0e23cbbf-1"
+  ],
+  "2001-12-18": [
+   "f108e2a5c181e1ff-1"
+  ],
+  "2001-12-19": [
+   "febca1f4c44cabed-1"
+  ],
+  "2001-12-20": [
+   "c9ddaaaeae869e81-1"
+  ],
+  "2001-12-21": [
+   "c2fb3d0e7a488c95-1"
+  ],
+  "2001-12-24": [
+   "670f995625272b09-1"
+  ],
+  "2001-12-26": [
+   "c8a4230e4bccd460-1"
+  ],
+  "2001-12-27": [
+   "4be788e5988dd70c-1"
+  ],
+  "2001-12-28": [
+   "4125bafa89d2d3e9-1"
+  ],
+  "2002-04-22": [
+   "75f95fdc2302aeda-1",
+   "f69227a7a2fc9580-1",
+   "fd4eb670afdb23be-1"
+  ],
+  "2002-06-18": [
+   "1ba46ea15738ba44-1"
+  ],
+  "2002-06-19": [
+   "8e1fad25d6107b60-1",
+   "ab425c4aa307139a-1",
+   "dbd066ea00c6d919-1"
+  ],
+  "2002-06-20": [
+   "c64a0c87d77d29cc-1"
+  ],
+  "2002-06-24": [
+   "f79c7165d25efbae-1"
+  ],
+  "2002-06-27": [
+   "10d794ef88b6c63e-1",
+   "822f8091f90e5136-1",
+   "b7c0247ceaa84302-1",
+   "b91664a69fb9705e-1"
+  ],
+  "2002-07-03": [
+   "0678c10ec5ae374d-1"
+  ],
+  "2002-07-08": [
+   "d04b15090ceacc82-1",
+   "d3932d8981911ed1-1"
+  ],
+  "2002-07-09": [
+   "5879918e0dd2e00f-1"
+  ],
+  "2002-07-10": [
+   "ffc4a759a0cde663-1"
+  ],
+  "2002-07-12": [
+   "4592ac9543806622-1"
+  ],
+  "2002-07-15": [
+   "22e5d40cae2e78a4-1"
+  ],
+  "2002-07-16": [
+   "5f7113975ff49602-1"
+  ],
+  "2002-07-17": [
+   "50d1960a5e451887-1"
+  ],
+  "2002-07-18": [
+   "65c5a2b4c9badf1a-1"
+  ],
+  "2002-07-19": [
+   "23405d8f649e8653-1",
+   "d24ded3e72d2af5b-1"
+  ],
+  "2002-07-22": [
+   "efadd060c6d8956b-1"
+  ],
+  "2002-07-23": [
+   "2a062f591eef97b9-1"
+  ],
+  "2002-07-24": [
+   "350602595ec9fe47-1"
+  ],
+  "2002-07-25": [
+   "1474238607d0edd9-1"
+  ],
+  "2002-07-26": [
+   "898e8dce80ee9c64-1"
+  ],
+  "2002-07-29": [
+   "83b7d6169ea8ab41-1",
+   "95f7c20563323912-1"
+  ],
+  "2002-07-30": [
+   "81afe2aa022783a2-1"
+  ],
+  "2002-07-31": [
+   "0c4201fb33dbef7e-1",
+   "1848d844be34ae81-1"
+  ],
+  "2002-08-01": [
+   "f0ad3f5f8e6c48de-1"
+  ],
+  "2002-08-02": [
+   "1b00a5c43d9d51b0-1",
+   "bae58c1e5d593dd8-1"
+  ],
+  "2002-08-05": [
+   "0db4968f4e05d3cc-1",
+   "6d016fd5e2ec1aff-1"
+  ],
+  "2002-08-06": [
+   "66bc45fd603ea712-1"
+  ],
+  "2002-08-07": [
+   "c061018a7ec9bdf8-1"
+  ],
+  "2002-08-08": [
+   "b572f5176f41576e-1"
+  ],
+  "2002-08-09": [
+   "26efe6dcc0a84bf2-1"
+  ],
+  "2002-08-12": [
+   "1c8082fe46e75daf-1",
+   "877b216a77d274bd-1"
+  ],
+  "2002-08-13": [
+   "13ae00d336b4a84a-1",
+   "851718c78f5f6741-1"
+  ],
+  "2002-08-14": [
+   "96c458673b5c8247-1"
+  ],
+  "2002-08-16": [
+   "2afc7dd5ce37ee1c-1"
+  ],
+  "2002-08-19": [
+   "e82a1b450ee5f9f1-1"
+  ],
+  "2002-08-22": [
+   "fe829f15b2a4e706-1"
+  ],
+  "2002-08-23": [
+   "50dd4759741804d4-1"
+  ],
+  "2002-08-26": [
+   "0e63b173a3a2a562-1",
+   "b72f5e01849a0895-1"
+  ],
+  "2002-08-27": [
+   "b7ec33f05cf18927-1",
+   "ecf55a778bebd9a9-1"
+  ],
+  "2002-08-28": [
+   "7635e8216719bf6f-1",
+   "89413ce76f27356a-1"
+  ],
+  "2002-08-29": [
+   "77009c0a639e473e-1",
+   "c938eef0a451099e-1"
+  ],
+  "2002-08-30": [
+   "21a066fc1e41aeb7-1",
+   "95b4ae99d425808d-1"
+  ],
+  "2002-09-03": [
+   "94f8fc037165a5a9-1"
+  ],
+  "2002-09-05": [
+   "4f2cf119f1984fdc-1",
+   "a03560d1ec56f303-1"
+  ],
+  "2002-09-06": [
+   "8dd7aeb0d3ac8c92-1",
+   "be4809d10769574e-1"
+  ],
+  "2002-09-09": [
+   "00fdc9c5b14a62ba-1",
+   "c725f1954e688d4f-1"
+  ],
+  "2002-09-10": [
+   "0a1623741098132f-1",
+   "8809f0d57c2ddd81-1"
+  ],
+  "2002-09-11": [
+   "56b60ee1d224e95e-1"
+  ],
+  "2002-09-12": [
+   "1b4cf546f3e25364-1"
+  ],
+  "2002-09-13": [
+   "4f8b4173523769c7-1"
+  ],
+  "2002-09-16": [
+   "0283844cc6979037-1",
+   "5b0902984faf7c5d-1"
+  ],
+  "2002-09-17": [
+   "0feecb53cd1c31db-1",
+   "a31ace2d8ffc5c72-1",
+   "c90a71fad8410e62-1"
+  ],
+  "2002-09-18": [
+   "bc0cf29ff26fd729-1",
+   "e2539c32b5fe22a0-1"
+  ],
+  "2002-09-19": [
+   "75a4ff6e2071e94a-1",
+   "839a43ebf1fb70fb-1"
+  ],
+  "2002-09-20": [
+   "160fba319ff17d5b-1",
+   "3937c8e2f3d2f41f-1",
+   "c23db86c2ab92dbe-1"
+  ],
+  "2002-09-23": [
+   "369d77b133f43a04-1",
+   "9282a6450ab3ee86-1",
+   "e90ea02078159c5d-1"
+  ],
+  "2002-09-24": [
+   "b99dac5ac8e1295c-1"
+  ],
+  "2002-09-25": [
+   "32da29d93433f949-1",
+   "f82cfd4cd84bfbaf-1"
+  ],
+  "2002-09-26": [
+   "a3f2ee329b7ac8e9-1",
+   "c8658b577693f35f-1"
+  ],
+  "2002-09-27": [
+   "37668d6d3320f199-1",
+   "8262a27d3c4aed40-1"
+  ],
+  "2002-09-30": [
+   "4e4fc8230a7d724b-1",
+   "f81bd1bef1876553-1"
+  ],
+  "2002-10-01": [
+   "5e4dd7bb068be04d-1",
+   "7ec8c6e13a037dc4-1"
+  ],
+  "2002-10-02": [
+   "46189e98b67957ce-1",
+   "721f8e190bf6f88c-1",
+   "a417fb242049b377-1"
+  ],
+  "2002-10-03": [
+   "1630242b2a3682c6-1",
+   "9787571dc9199ded-1"
+  ],
+  "2002-10-04": [
+   "0b9cc3f9a6f3b6fd-1",
+   "b27821959c2deea3-1"
+  ],
+  "2002-10-07": [
+   "0904a4e19dfc2061-1",
+   "df5d781836b33ec9-1"
+  ],
+  "2002-10-08": [
+   "5141b0de4f8cd620-1"
+  ],
+  "2002-10-09": [
+   "c05752062fd3fd41-1",
+   "c8eeff9deb45c5bf-1"
+  ],
+  "2002-10-10": [
+   "c12fe0fb37ad13d4-1",
+   "c6e238efbf95ff40-1"
+  ],
+  "2002-10-11": [
+   "22198c44fc38f3f1-1",
+   "83dedae157ffaf00-1"
+  ],
+  "2002-10-15": [
+   "69734aceb868f533-1",
+   "7ee492a7678b6b90-1"
+  ],
+  "2002-10-16": [
+   "6531b0e2f35e2b45-1",
+   "6637e19adb9265d5-1",
+   "6f1bba6c9c6171ca-1",
+   "81e48670649272d3-1"
+  ],
+  "2002-10-17": [
+   "774aab5800df692e-1",
+   "c441fe2c6bc7e9cd-1"
+  ],
+  "2002-10-18": [
+   "d07f3f1a5c4f2b08-1"
+  ],
+  "2002-10-21": [
+   "6d20177ac767668e-1"
+  ],
+  "2002-10-22": [
+   "48531b6ed224ba8c-1"
+  ],
+  "2002-10-23": [
+   "1b4e24578b5df2c6-1"
+  ],
+  "2002-10-24": [
+   "9eee91028aa9a359-1"
+  ],
+  "2002-10-31": [
+   "53a279f76f3d9dd8-1"
+  ],
+  "2002-11-04": [
+   "d6e065d3caf8c33f-1",
+   "de3716132c534526-1"
+  ],
+  "2002-11-05": [
+   "18639d5ae3f5cf6f-1",
+   "5b2b2ede8539922c-1"
+  ],
+  "2002-11-08": [
+   "8f27102b5d3f51cd-1"
+  ],
+  "2002-11-18": [
+   "9d0469e79e02356d-1"
+  ],
+  "2002-11-19": [
+   "b2c4e6cdd7f67054-1"
+  ],
+  "2002-11-21": [
+   "52df10cd328e60b3-1"
+  ],
+  "2002-12-02": [
+   "9f0433b68151216f-1"
+  ],
+  "2002-12-03": [
+   "3c1be3af1fcf67b5-1",
+   "3ceda331390210ba-1",
+   "acf583001000d957-1"
+  ],
+  "2002-12-09": [
+   "0913e3266e5055e1-1",
+   "37e912041e34ed9c-1",
+   "47b6c2af7b3cd941-1"
+  ],
+  "2002-12-12": [
+   "6d5463f8cdc73dcd-1"
+  ],
+  "2002-12-13": [
+   "dea0823df36924c3-1"
+  ],
+  "2002-12-16": [
+   "943326aa2782e139-1"
+  ],
+  "2002-12-18": [
+   "5b0bae2cbdd8ee42-1",
+   "63b918162630f881-1",
+   "e096fe56963d1080-1"
+  ],
+  "2002-12-20": [
+   "d3928750f3c00714-1",
+   "d9295d532f0d6350-1"
+  ],
+  "2002-12-27": [
+   "3602b50d0b20e707-1",
+   "eeff3fe1a82e5c9f-1",
+   "f7f82de22ab94fb3-1"
+  ],
+  "2002-12-30": [
+   "feebeafc2c19a29b-1"
+  ],
+  "2002-12-31": [
+   "753c091460f96df6-1"
+  ],
+  "2003-01-02": [
+   "4c614be9a3cbd95d-1",
+   "a644ee4de7094836-1",
+   "cd7397c20b191ba4-1"
+  ],
+  "2003-01-23": [
+   "eafeaf4d7145f7b5-1"
+  ],
+  "2003-01-28": [
+   "6d334b7a2b981f41-1"
+  ],
+  "2003-02-03": [
+   "2b0a4f2592eed8b5-1"
+  ],
+  "2003-02-04": [
+   "55cb9aeec6902ded-1",
+   "897a3977209ef1cb-1",
+   "988d661e1f97d6bd-1",
+   "e08401cb5ad7ca71-1"
+  ],
+  "2003-02-18": [
+   "8517f910d54ac4e8-1"
+  ],
+  "2003-02-28": [
+   "ffbeed9170f147f6-1"
+  ],
+  "2003-03-06": [
+   "44b90337421a1e9d-1",
+   "c5eac68e941dc913-1"
+  ],
+  "2003-04-02": [
+   "5826f2bb1f0d680b-1"
+  ],
+  "2004-01-12": [
+   "8cab4c4d574a95a4-1"
+  ],
+  "2004-01-13": [
+   "aa3fa9b490ff56ca-1"
+  ],
+  "2004-01-14": [
+   "1888bcf26e4fcef4-1",
+   "83c5e57494301817-1"
+  ],
+  "2004-01-15": [
+   "5989a265f20ab0e4-1",
+   "f8a63f2de12e1815-1",
+   "fe35530786f6da67-1"
+  ],
+  "2004-01-16": [
+   "e4e72ed156b13444-1"
+  ],
+  "2004-01-20": [
+   "64102bf89b178eac-1",
+   "80846136bd56e22d-1",
+   "ca5331f51260fad4-1"
+  ],
+  "2004-01-21": [
+   "13ef3f9e310b6f05-1",
+   "9a9190886d3395d3-1"
+  ],
+  "2004-01-22": [
+   "8a9eec4b9826e954-1"
+  ],
+  "2004-01-23": [
+   "85babfd44af88589-1"
+  ],
+  "2004-01-26": [
+   "d70a574df09f20a8-1",
+   "e9f104f707320fef-1"
+  ],
+  "2004-01-27": [
+   "c599d5f964cd5a76-1",
+   "dde5706bbbafc915-1"
+  ],
+  "2004-01-28": [
+   "3ba7fc5bc67f7997-1",
+   "5cb1b528474b8a6d-1"
+  ],
+  "2004-01-29": [
+   "1833580e87c882a7-1",
+   "95331e6cd1032a32-1"
+  ],
+  "2004-01-30": [
+   "4252c1c950aa7bf9-1",
+   "e8213e16703c916a-1"
+  ],
+  "2004-02-02": [
+   "5dc925022db847f7-1"
+  ],
+  "2004-02-06": [
+   "258aa014d87864ff-1"
+  ],
+  "2004-12-08": [
+   "59514d0d9b123d46-1"
+  ],
+  "2004-12-09": [
+   "6c25b64e1296c981-1"
+  ],
+  "2004-12-15": [
+   "4859edf7e5acd305-1"
+  ],
+  "2004-12-17": [
+   "2850c85c7f6cc828-1"
+  ],
+  "2004-12-20": [
+   "9e140ef1b9c89b44-1"
+  ],
+  "2004-12-21": [
+   "dc94dd6ebb2f107c-1"
+  ],
+  "2004-12-22": [
+   "237497247447599a-1"
+  ],
+  "2004-12-23": [
+   "fc22a7f5afe573e5-1"
+  ],
+  "2004-12-24": [
+   "5cf19b454cc9a950-1"
+  ],
+  "2004-12-27": [
+   "611d8f89aebedc96-1"
+  ],
+  "2004-12-29": [
+   "b0e3ea08886d6610-1"
+  ],
+  "2004-12-30": [
+   "754bea52809cc279-1"
+  ],
+  "2004-12-31": [
+   "64936de1ab1db7db-1"
+  ],
+  "2005-01-05": [
+   "48c0e1d89a4fef10-1"
+  ],
+  "2005-01-06": [
+   "b5d8d4917f4c3b37-1"
+  ],
+  "2005-01-07": [
+   "15ceb3da2a9bb992-1"
+  ],
+  "2005-01-10": [
+   "54f802fdc3337c04-1"
+  ],
+  "2005-01-11": [
+   "98eff42d53963005-1"
+  ],
+  "2005-01-12": [
+   "eadcf62e4b9381cd-1"
+  ],
+  "2005-01-14": [
+   "f947cf10bed6069b-1"
+  ],
+  "2005-01-18": [
+   "9d6dfb113d311f4a-1"
+  ],
+  "2005-01-19": [
+   "8e8f59034d580e8e-1"
+  ],
+  "2005-01-25": [
+   "45b8f42ea76db811-1"
+  ],
+  "2005-01-26": [
+   "10f74fd3bc205568-1"
+  ],
+  "2005-01-28": [
+   "7c1ad4088b42672c-1"
+  ],
+  "2005-01-31": [
+   "3db6f7a6511d6340-1"
+  ],
+  "2005-02-01": [
+   "f3d96755819fdac0-1"
+  ],
+  "2005-02-03": [
+   "48d50f90ca199d38-1"
+  ],
+  "2005-02-04": [
+   "2066fc9cd9de436c-1"
+  ],
+  "2005-02-09": [
+   "04cb9012c736e544-1"
+  ],
+  "2005-02-10": [
+   "bb08ec1feb846e0f-1"
+  ],
+  "2005-02-14": [
+   "a3aaafbf12cbb5fd-1"
+  ],
+  "2005-02-15": [
+   "4cfa4082c120f88b-1"
+  ],
+  "2005-02-16": [
+   "29f0e5c4dae3c766-1"
+  ],
+  "2005-02-17": [
+   "8b86265d5d6e25db-1"
+  ],
+  "2005-02-22": [
+   "a5181d9fb8141aad-1"
+  ],
+  "2005-02-23": [
+   "51c9e3cd04e4af68-1",
+   "f809269f33bffc11-1"
+  ],
+  "2005-02-25": [
+   "41da265af2609b27-1"
+  ],
+  "2005-02-28": [
+   "9f00c14616ea80f9-1"
+  ],
+  "2005-03-01": [
+   "4380371d126aad33-1"
+  ],
+  "2005-03-03": [
+   "c29d4c728b608684-1"
+  ],
+  "2005-03-04": [
+   "146df5599652f77b-1"
+  ],
+  "2005-03-08": [
+   "24ac6e93867dda88-1"
+  ],
+  "2005-03-09": [
+   "abb04948d527a726-1"
+  ],
+  "2005-03-10": [
+   "3b1f257a9bc70783-1"
+  ],
+  "2005-03-11": [
+   "f4b923404036ea41-1"
+  ],
+  "2005-03-15": [
+   "f916c0d02f4778e9-1"
+  ],
+  "2005-03-16": [
+   "c19c75db0cd1743b-1"
+  ],
+  "2005-03-17": [
+   "6755816b88896b29-1"
+  ],
+  "2005-03-18": [
+   "34c108c563e8bd01-1"
+  ],
+  "2005-10-05": [
+   "c5d48616c7d5bf2d-1"
+  ],
+  "2005-10-06": [
+   "c88c01005d013024-1"
+  ],
+  "2005-10-07": [
+   "e27182ca19308819-1"
+  ],
+  "2005-10-13": [
+   "785cca0c73629ebf-1",
+   "7da44837c74212ca-1"
+  ],
+  "2005-10-14": [
+   "b3d0c6df7f1c1b8c-1"
+  ],
+  "2005-10-17": [
+   "2fced7c9530107ab-1"
+  ],
+  "2005-10-18": [
+   "de8ba9714b99416e-1"
+  ],
+  "2005-10-19": [
+   "8178208e6aa85569-1"
+  ],
+  "2005-10-20": [
+   "78594cc1332cdee9-1"
+  ],
+  "2005-10-21": [
+   "dad4ca91cf229aee-1"
+  ],
+  "2005-10-24": [
+   "0e5dd3a92dd4498c-1"
+  ],
+  "2005-10-25": [
+   "07045cd3aa4949f1-1"
+  ],
+  "2005-10-26": [
+   "3d0941e0e3fec36d-1"
+  ],
+  "2005-10-27": [
+   "87a73ce70034f9d9-1"
+  ],
+  "2005-10-28": [
+   "bbcf0dd58a0859da-1"
+  ],
+  "2005-10-31": [
+   "3a4bdfeee3e512a7-1"
+  ],
+  "2005-11-01": [
+   "a895348ccfe15694-1"
+  ],
+  "2005-11-04": [
+   "26dd2f75edce599f-1"
+  ],
+  "2005-11-07": [
+   "ec51c754798e703e-1"
+  ],
+  "2005-11-08": [
+   "d8030cfdccf008a8-1"
+  ],
+  "2005-11-09": [
+   "da843cdf06415cbc-1"
+  ],
+  "2005-11-10": [
+   "86634f7ecd6e39a7-1"
+  ],
+  "2005-11-14": [
+   "4ba072e39d812ad3-1"
+  ],
+  "2005-11-16": [
+   "5abb72e46912d088-1",
+   "cde15f8a6df3813a-1"
+  ],
+  "2005-11-17": [
+   "968f6348089ad891-1"
+  ],
+  "2005-11-18": [
+   "c41e2083dd45ba93-1"
+  ],
+  "2005-11-21": [
+   "6f8a45e995778cd8-1"
+  ],
+  "2005-11-22": [
+   "4b7448adf2ddd34f-1"
+  ],
+  "2005-11-23": [
+   "0d8c78752f78ca80-1"
+  ],
+  "2005-11-25": [
+   "3650d86238c4362b-1"
+  ],
+  "2005-11-28": [
+   "08451c8788c52f1a-1",
+   "6746370e233981a9-1"
+  ],
+  "2005-11-29": [
+   "27a38ad9d7c80d3e-1"
+  ],
+  "2005-11-30": [
+   "84ec3667e233cd18-1"
+  ],
+  "2005-12-01": [
+   "92529a28155d35c6-1"
+  ],
+  "2005-12-02": [
+   "f9e64c642a8eecd1-1"
+  ],
+  "2005-12-05": [
+   "293ce9d22c30acab-1"
+  ],
+  "2005-12-06": [
+   "ed714e04b701bafe-1"
+  ],
+  "2005-12-07": [
+   "a1435391c59e7a58-1"
+  ],
+  "2005-12-08": [
+   "8f9a45d46a173d85-1"
+  ],
+  "2005-12-09": [
+   "8c674d54a40dd916-1"
+  ],
+  "2005-12-12": [
+   "68b3a1fc5ace7fc9-1"
+  ],
+  "2005-12-13": [
+   "d6d9ce069ba85201-1"
+  ],
+  "2005-12-14": [
+   "d54affb4b8e495ae-1"
+  ],
+  "2005-12-15": [
+   "fcee4119c76b0eb3-1"
+  ],
+  "2005-12-16": [
+   "eeba7d9f05973a9a-1"
+  ],
+  "2005-12-19": [
+   "d234dd9a66a91c3f-1"
+  ],
+  "2005-12-20": [
+   "3a098215caf6f6d6-1"
+  ],
+  "2005-12-21": [
+   "fdcb52b1ea45070c-1"
+  ],
+  "2005-12-22": [
+   "1ed245243db397c6-1"
+  ],
+  "2005-12-23": [
+   "30405098c2449ae2-1"
+  ],
+  "2005-12-27": [
+   "f60d9d68f00e0c65-1"
+  ],
+  "2005-12-28": [
+   "51181f759779f4b8-1",
+   "f320e9a0f48345a3-1"
+  ],
+  "2005-12-30": [
+   "0c38ee7758f97aeb-1"
+  ],
+  "2006-01-03": [
+   "8c3873d136f0200a-1"
+  ],
+  "2006-01-04": [
+   "ce98371289db5baa-1"
+  ],
+  "2006-01-05": [
+   "d94c6dd2d5b4e349-1"
+  ],
+  "2006-01-06": [
+   "cbc0701e4311b8ab-1"
+  ],
+  "2006-01-09": [
+   "39941ab60641658a-1"
+  ],
+  "2006-01-10": [
+   "a132afbcd8d153bf-1"
+  ],
+  "2006-01-11": [
+   "626ef0358a325bd1-1"
+  ],
+  "2006-01-12": [
+   "c942fa2c3dae48e8-1"
+  ],
+  "2006-01-13": [
+   "71cfc9bad600cf46-1"
+  ],
+  "2006-01-17": [
+   "3c3966085bf8cc9b-1"
+  ],
+  "2006-01-18": [
+   "21d2b1490186fa65-1",
+   "c167dee51c73ad69-1"
+  ],
+  "2006-01-19": [
+   "f066cbd8de4eacf8-1"
+  ],
+  "2006-01-20": [
+   "dd19aa6653caef80-1"
+  ],
+  "2006-01-23": [
+   "522de0579a1e5d4e-1"
+  ],
+  "2006-01-24": [
+   "ae3f84ffe05da6f0-1"
+  ],
+  "2006-01-25": [
+   "6d88af1711594ece-1"
+  ],
+  "2006-01-26": [
+   "35941ae229e17e00-1"
+  ],
+  "2006-01-30": [
+   "15c9bda8ba01611c-1"
+  ],
+  "2006-01-31": [
+   "cc9df98f80b00b5e-1"
+  ],
+  "2006-02-01": [
+   "99e52ea54149bbbc-1"
+  ],
+  "2006-02-02": [
+   "343a584e201a3e62-1"
+  ],
+  "2006-02-03": [
+   "814d18b0b958678b-1"
+  ],
+  "2006-02-06": [
+   "ff352fc62e03e310-1"
+  ],
+  "2006-02-07": [
+   "332a8291ecfaf6ef-1"
+  ],
+  "2006-02-08": [
+   "f5f9c2cf0eabeabe-1"
+  ],
+  "2006-02-09": [
+   "d304ae52b18130a0-1"
+  ],
+  "2006-02-10": [
+   "bd1d4580cf59ded6-1"
+  ],
+  "2006-02-13": [
+   "3355396d2a450f0a-1"
+  ],
+  "2006-02-14": [
+   "b25fce01f525b3f4-1"
+  ],
+  "2006-02-15": [
+   "88bd689b65861e63-1"
+  ],
+  "2006-02-16": [
+   "f3d34bc1ac4972a6-1"
+  ],
+  "2006-02-17": [
+   "90409526b5f5dd23-1"
+  ],
+  "2006-02-21": [
+   "a8b5116b73197ea3-1"
+  ],
+  "2006-02-22": [
+   "25b9f85a596c8bf5-1",
+   "9f2034e6cfdc2520-1"
+  ],
+  "2006-02-23": [
+   "a0c38dcc048c6589-1"
+  ],
+  "2006-02-24": [
+   "4089bb1ecc4dac69-1"
+  ],
+  "2006-03-01": [
+   "2b268d79a3c903ae-1"
+  ],
+  "2006-03-02": [
+   "7b107e990ff48a62-1"
+  ],
+  "2006-03-03": [
+   "a5331d654cd76218-1"
+  ],
+  "2006-03-06": [
+   "763d2c60bc381f73-1"
+  ],
+  "2006-03-07": [
+   "1d880ba6fdeffdb3-1"
+  ],
+  "2006-03-10": [
+   "f99d7cec65528d7a-1"
+  ],
+  "2006-03-13": [
+   "3ce9c32b2af52b2c-1"
+  ],
+  "2006-03-14": [
+   "39238919d1221f47-1"
+  ],
+  "2006-03-15": [
+   "f543bf0d63de9fd9-1"
+  ],
+  "2006-03-16": [
+   "b028ebc7b6999d59-1"
+  ],
+  "2006-03-17": [
+   "48ebade1ebe3af92-1"
+  ],
+  "2006-03-20": [
+   "0bebedb5f0639eb2-1"
+  ],
+  "2006-03-21": [
+   "95cac283120ff481-1"
+  ],
+  "2006-03-22": [
+   "855f60d5e1fbc693-1"
+  ],
+  "2006-03-23": [
+   "4e1a8e7f71e2f57a-1"
+  ],
+  "2006-03-24": [
+   "b743766f7bfa6c4f-1"
+  ],
+  "2006-03-27": [
+   "64167aab77b1a613-1"
+  ],
+  "2006-03-28": [
+   "b0abedde10d37713-1"
+  ],
+  "2006-04-05": [
+   "36e4535185521716-1"
+  ],
+  "2006-04-06": [
+   "9852033cbf3d80db-1"
+  ],
+  "2006-04-07": [
+   "2a0a428cdb11cc0b-1"
+  ],
+  "2006-04-10": [
+   "8e4ce612d8dca49c-1"
+  ],
+  "2006-04-11": [
+   "ebd0b223cdc5bcdf-1"
+  ],
+  "2006-04-12": [
+   "7357a1f68fae6502-1"
+  ],
+  "2006-04-13": [
+   "e5fa900f81000a8b-1"
+  ],
+  "2006-04-17": [
+   "8e6c09fd3f78e889-1"
+  ],
+  "2006-04-18": [
+   "d96f90b9ed33ffd4-1"
+  ],
+  "2006-04-19": [
+   "4a7b10e4851e050f-1"
+  ],
+  "2006-04-20": [
+   "2c72a18d80accd55-1"
+  ],
+  "2006-04-24": [
+   "9a3b8b236d5a866c-1"
+  ],
+  "2006-04-25": [
+   "399508dc7d5cb7f7-1"
+  ],
+  "2006-04-26": [
+   "8b194960341f41bc-1"
+  ],
+  "2006-04-27": [
+   "eb25fc191dd4e4b3-1"
+  ],
+  "2006-04-28": [
+   "d486761c503dac5b-1"
+  ],
+  "2006-05-02": [
+   "4ea81de98996903e-1"
+  ],
+  "2006-05-03": [
+   "0ede98cc5fda235f-1"
+  ],
+  "2006-05-04": [
+   "17dc6084e1d1af59-1"
+  ],
+  "2006-05-05": [
+   "f69e5d3e6785102d-1"
+  ],
+  "2006-05-08": [
+   "2ceaf7a7bf66f7b8-1"
+  ],
+  "2006-05-09": [
+   "3a301aa9a3b3228e-1"
+  ],
+  "2006-05-10": [
+   "d7273906cf997135-1"
+  ],
+  "2006-05-11": [
+   "8a2a8e18734cc806-1"
+  ],
+  "2006-05-12": [
+   "2c95a79993fa67ea-1"
+  ],
+  "2006-05-15": [
+   "a9662fdaaa1084ea-1"
+  ],
+  "2006-05-16": [
+   "7522fcf05df37e44-1"
+  ],
+  "2006-05-18": [
+   "19e29138c1d5e2e2-1"
+  ],
+  "2006-07-06": [
+   "0847a9ba51d5ae8f-1",
+   "99feb1678a9dbee2-1"
+  ],
+  "2006-07-10": [
+   "79d4d44011b24a71-1"
+  ],
+  "2006-07-11": [
+   "94a749ca3acd3f97-1"
+  ],
+  "2006-07-12": [
+   "28486090f29c8cac-1"
+  ],
+  "2006-07-13": [
+   "a0764044ce63975b-1"
+  ],
+  "2006-07-14": [
+   "5e2d45fe3eea840b-1"
+  ],
+  "2006-07-17": [
+   "628af6b42d6e4ee1-1"
+  ],
+  "2006-07-18": [
+   "ac549095f7a2b412-1"
+  ],
+  "2006-07-19": [
+   "9d5508f4f14de8c4-1"
+  ],
+  "2006-07-20": [
+   "b2c7eb7ddb17a3b7-1"
+  ],
+  "2006-07-21": [
+   "71f633c0eb4210b1-1"
+  ],
+  "2006-07-24": [
+   "cd1ca545121bebf7-1"
+  ],
+  "2006-07-25": [
+   "524401d80d22482b-1"
+  ],
+  "2006-07-26": [
+   "fca574b9d00e3d8b-1"
+  ],
+  "2006-07-27": [
+   "74ef2389239e2a7d-1"
+  ],
+  "2006-07-28": [
+   "4bb82794d3db095a-1"
+  ],
+  "2006-07-31": [
+   "5b2066062f8bfa8d-1"
+  ],
+  "2006-08-01": [
+   "61bbd6fbe1dc2378-1"
+  ],
+  "2006-08-02": [
+   "de94a4c8a9a5cd77-1"
+  ],
+  "2006-08-03": [
+   "60b409b7a3ea4c02-1"
+  ],
+  "2006-08-04": [
+   "32cf92716b3a7e11-1"
+  ],
+  "2006-08-07": [
+   "e408921ff6d75606-1"
+  ],
+  "2006-08-08": [
+   "9b708ffecae3cb86-1"
+  ],
+  "2006-08-09": [
+   "705177379394aad8-1"
+  ],
+  "2006-08-10": [
+   "4fad5f6b0e7719a5-1"
+  ],
+  "2006-08-11": [
+   "62b87ce2163b238e-1"
+  ],
+  "2006-08-14": [
+   "26eed0caa4f9e227-1"
+  ],
+  "2006-08-15": [
+   "5b16fb58a2d50e23-1"
+  ],
+  "2006-08-16": [
+   "3f9655a0e8805789-1"
+  ],
+  "2006-08-17": [
+   "cfbeb5851cf6d834-1"
+  ],
+  "2006-08-18": [
+   "b2df81f6286121de-1"
+  ],
+  "2006-08-21": [
+   "745a34c66285547e-1"
+  ],
+  "2006-08-22": [
+   "dfeba93d027c2cca-1"
+  ],
+  "2006-08-23": [
+   "d0b6e4d6ff1fa0f2-1"
+  ],
+  "2006-08-24": [
+   "e8fe3c0da559a176-1"
+  ],
+  "2006-08-25": [
+   "63426705fa2133a6-1"
+  ],
+  "2006-08-28": [
+   "835be9bcaf0e5581-1"
+  ],
+  "2006-08-29": [
+   "5e1d5c21e25aaeae-1"
+  ],
+  "2006-08-30": [
+   "915a30fd995b565e-1"
+  ],
+  "2006-08-31": [
+   "869f6b76ca297208-1"
+  ],
+  "2006-09-01": [
+   "d0454b3fe0db11d2-1"
+  ],
+  "2006-09-05": [
+   "9279939cdf3d7df2-1"
+  ],
+  "2006-09-06": [
+   "70dbc66453508253-1",
+   "d9ffa0d04ba2f05c-1"
+  ],
+  "2006-09-08": [
+   "3941a873cb7cae1f-1"
+  ],
+  "2006-09-11": [
+   "fea9df549f6d1289-1"
+  ],
+  "2006-09-12": [
+   "15a16356fd401da0-1"
+  ],
+  "2006-09-13": [
+   "0fd8ed296928b91c-1"
+  ],
+  "2006-09-14": [
+   "7a056ace9a059a45-1"
+  ],
+  "2006-09-15": [
+   "1084ed9c8a56c47e-1"
+  ],
+  "2006-09-18": [
+   "5bf662859147b3fe-1"
+  ],
+  "2006-09-19": [
+   "b7d5108d43c3b608-1"
+  ],
+  "2006-09-20": [
+   "b57158b5cdc61953-1"
+  ],
+  "2006-09-21": [
+   "cc84908367992494-1"
+  ],
+  "2006-09-22": [
+   "d0ea44374b56d4f4-1"
+  ],
+  "2006-09-28": [
+   "3879ee01bcf28a34-1"
+  ],
+  "2006-09-29": [
+   "19a2986a9bfa2e64-1"
+  ],
+  "2006-10-02": [
+   "9dcbcf0c828efedd-1"
+  ],
+  "2006-10-03": [
+   "d72c5feadaa51947-1"
+  ],
+  "2006-10-04": [
+   "bd378873d042d6f5-1"
+  ],
+  "2006-10-05": [
+   "f81e07e78f7b84c8-1"
+  ],
+  "2006-10-06": [
+   "2b15148448f05bbe-1"
+  ],
+  "2006-10-10": [
+   "170bd7c8223db1ac-1"
+  ],
+  "2006-10-11": [
+   "065509f7aa4d0cef-1",
+   "d4f1faa6be314c52-1"
+  ],
+  "2006-10-13": [
+   "cae0b0d6eaadd263-1"
+  ],
+  "2006-10-16": [
+   "9ea3d58e9cf4a0e6-1"
+  ],
+  "2006-10-17": [
+   "37c01a36c17ce0ef-1"
+  ],
+  "2006-10-18": [
+   "d5bfd0d9d8a885eb-1"
+  ],
+  "2006-10-19": [
+   "533fba5ae0c4884b-1"
+  ],
+  "2006-10-20": [
+   "5d1c8ed7fe6e2583-1"
+  ],
+  "2006-10-23": [
+   "d8d9f8962e3f6e7c-1"
+  ],
+  "2006-10-24": [
+   "4f1d5827625bd711-1"
+  ],
+  "2006-10-25": [
+   "cb39478c02918dfe-1"
+  ],
+  "2006-10-26": [
+   "b772cb5f73ed9c3b-1"
+  ],
+  "2006-10-27": [
+   "eee8618a7ea5869c-1"
+  ],
+  "2006-10-30": [
+   "cb42d0142ce85766-1"
+  ],
+  "2006-10-31": [
+   "05401bcdcdc0ab42-1"
+  ],
+  "2006-11-01": [
+   "9aa0563491db0474-1"
+  ],
+  "2006-11-03": [
+   "1f60213f2c615d0e-1"
+  ],
+  "2006-11-06": [
+   "10d114b6107abe4e-1"
+  ],
+  "2006-11-07": [
+   "3531d7e29a0ab09b-1"
+  ],
+  "2006-11-08": [
+   "3116a2b0a3bdded2-1"
+  ],
+  "2006-11-09": [
+   "498b1836ba4f612c-1"
+  ],
+  "2006-11-10": [
+   "6f0b365e4d74fa0c-1"
+  ],
+  "2006-11-13": [
+   "baceac50713eeb91-1"
+  ],
+  "2006-11-14": [
+   "c1d8973ea441213f-1"
+  ],
+  "2006-11-16": [
+   "077a58e2f6aa20d9-1"
+  ],
+  "2006-11-17": [
+   "030e2a86d59ef269-1"
+  ],
+  "2006-11-20": [
+   "2bb556ac31f04a2c-1"
+  ],
+  "2006-11-21": [
+   "7962e702b131183c-1"
+  ],
+  "2006-11-24": [
+   "23165141b597b9ad-1"
+  ],
+  "2006-11-27": [
+   "1cfd948872effdb6-1",
+   "44c3c690da913a11-1"
+  ],
+  "2006-11-28": [
+   "08adb230afa5825d-1"
+  ],
+  "2006-11-29": [
+   "b1a73476d50ad1f2-1"
+  ],
+  "2006-11-30": [
+   "841d13b3a99428b8-1"
+  ],
+  "2006-12-01": [
+   "f8652f86d741a3db-1"
+  ],
+  "2006-12-04": [
+   "3a0678e7e37fa170-1"
+  ],
+  "2006-12-05": [
+   "5045deae1815e6e2-1"
+  ],
+  "2006-12-06": [
+   "3539135e9c1a9536-1"
+  ],
+  "2006-12-07": [
+   "602c1a0e71347a45-1"
+  ],
+  "2006-12-08": [
+   "bf9ad273fe2606b3-1"
+  ],
+  "2006-12-11": [
+   "d420f6bd9e950212-1"
+  ],
+  "2006-12-12": [
+   "add5cd6870072859-1"
+  ],
+  "2006-12-13": [
+   "431a2d467e59ef94-1"
+  ],
+  "2006-12-14": [
+   "1c0b9c94a7f93f14-1"
+  ],
+  "2006-12-15": [
+   "f06e767271e98041-1"
+  ],
+  "2006-12-18": [
+   "5d760c9f1a0a5b3b-1"
+  ],
+  "2006-12-19": [
+   "7053cbaca9ba00fb-1"
+  ],
+  "2006-12-20": [
+   "3e9532c564bc902a-1"
+  ],
+  "2006-12-21": [
+   "57c72960eb927baa-1"
+  ],
+  "2006-12-22": [
+   "ceca7eeba0848dee-1"
+  ],
+  "2006-12-26": [
+   "b0e96e34d996ffc6-1"
+  ],
+  "2006-12-27": [
+   "4c30681e81fa1ede-1"
+  ],
+  "2006-12-28": [
+   "c03278336c15e4c9-1"
+  ],
+  "2006-12-29": [
+   "4da63eb360cdaa7a-1"
+  ],
+  "2007-01-02": [
+   "9359b66cc017a5b7-1"
+  ],
+  "2007-01-04": [
+   "7701c8bee5be7c4b-1"
+  ],
+  "2007-01-05": [
+   "3ac830c21cd6cbfa-1"
+  ],
+  "2007-01-08": [
+   "5ee0b5a416f4deeb-1"
+  ],
+  "2007-01-09": [
+   "9723592b85f15ae3-1"
+  ],
+  "2007-01-10": [
+   "67fd1520c8c1d018-1"
+  ],
+  "2007-01-11": [
+   "4c8cabe72423fc93-1"
+  ],
+  "2007-01-12": [
+   "1ea22dd90af7279c-1"
+  ],
+  "2007-01-16": [
+   "23d3af461406abb2-1"
+  ],
+  "2007-01-17": [
+   "46ddd39730130c1c-1",
+   "95b583533fda5fcc-1"
+  ],
+  "2007-01-18": [
+   "41e62ed9c9834fa2-1"
+  ],
+  "2007-01-19": [
+   "5d6a9396438bbd61-1"
+  ],
+  "2007-01-22": [
+   "439f22ffa99dae29-1"
+  ],
+  "2007-01-23": [
+   "d95d9233d41ecb6c-1"
+  ],
+  "2007-01-24": [
+   "2be58ba467551892-1"
+  ],
+  "2007-01-25": [
+   "4603c755b0ea1a8d-1"
+  ],
+  "2007-01-26": [
+   "2088b9c4e4a70fc3-1"
+  ],
+  "2007-01-30": [
+   "49a145f772976816-1"
+  ],
+  "2007-01-31": [
+   "bb72e9c5ebf9b5e4-1"
+  ],
+  "2007-02-01": [
+   "9a6a3d1d498798dc-1"
+  ],
+  "2007-02-02": [
+   "b7e1f4cadc3493f5-1"
+  ],
+  "2007-02-05": [
+   "6bbe1f032954ed09-1"
+  ],
+  "2007-02-06": [
+   "9b5e32cd4eaba841-1"
+  ],
+  "2007-02-07": [
+   "d5646c19bf1f13a5-1"
+  ],
+  "2007-02-08": [
+   "7aaf5faf49a00bf5-1"
+  ],
+  "2007-02-09": [
+   "11ac37aac14e7e62-1"
+  ],
+  "2007-02-12": [
+   "da880d1056bd88d4-1"
+  ],
+  "2007-02-13": [
+   "3794469d9d4c1017-1"
+  ],
+  "2007-02-14": [
+   "7d9dc982b2da9182-1"
+  ],
+  "2007-02-15": [
+   "036c557040d6a4a2-1"
+  ],
+  "2007-02-16": [
+   "6886770a6197df53-1"
+  ],
+  "2007-02-21": [
+   "52001477973463d9-1"
+  ],
+  "2007-02-22": [
+   "ad17c36bc756b947-1"
+  ],
+  "2007-02-23": [
+   "72b60a55f22bc36e-1"
+  ],
+  "2007-02-26": [
+   "1fc874c2537a2188-1"
+  ],
+  "2007-02-27": [
+   "19ccef196958d406-1"
+  ],
+  "2007-02-28": [
+   "473ffe8bfd92d928-1"
+  ],
+  "2007-03-01": [
+   "a19a1a1c1df5329b-1"
+  ],
+  "2007-03-02": [
+   "f9b432b4af03b679-1"
+  ],
+  "2007-03-05": [
+   "0c39400ef85f92db-1"
+  ],
+  "2007-03-06": [
+   "779054a4dd41c73c-1"
+  ],
+  "2007-03-07": [
+   "8681bf5a1afd800c-1"
+  ],
+  "2007-03-08": [
+   "5da83d2e442e9761-1"
+  ],
+  "2007-03-09": [
+   "6d20570d90812760-1"
+  ],
+  "2007-03-12": [
+   "dd3aae533b51a0c0-1"
+  ],
+  "2007-03-13": [
+   "c42265a28d958330-1"
+  ],
+  "2007-03-14": [
+   "c259d27711eb1e30-1"
+  ],
+  "2007-03-15": [
+   "1a5ba1ffb91e66e4-1"
+  ],
+  "2007-03-16": [
+   "9b7be8ae060bacca-1"
+  ],
+  "2007-03-19": [
+   "b8025c183d8bc8d7-1"
+  ],
+  "2007-03-20": [
+   "293c7bcaa2be5c85-1"
+  ],
+  "2007-03-21": [
+   "e7429919441bafec-1"
+  ],
+  "2007-03-22": [
+   "745a402a2722ac16-1"
+  ],
+  "2007-03-23": [
+   "4e4834362d806b14-1"
+  ],
+  "2007-03-26": [
+   "95d672bbac27cfdf-1"
+  ],
+  "2007-03-27": [
+   "7db91ffa895d88c6-1"
+  ],
+  "2007-03-28": [
+   "69ccb771af70fc36-1"
+  ],
+  "2007-03-29": [
+   "942a99a32b86eda1-1"
+  ],
+  "2007-03-30": [
+   "cc07987247e530bc-1"
+  ],
+  "2007-04-02": [
+   "f5f2e7518b7180dc-1"
+  ],
+  "2007-04-03": [
+   "f144c2bdddcc1555-1"
+  ],
+  "2007-04-04": [
+   "df96c80fab7b4ff8-1"
+  ],
+  "2007-04-05": [
+   "5cd169319f47f5b3-1"
+  ],
+  "2007-04-09": [
+   "e11d7f314637ab25-1"
+  ],
+  "2007-04-10": [
+   "f978f04f85960450-1"
+  ],
+  "2007-04-11": [
+   "8a66ea1e0c86e165-1"
+  ],
+  "2007-04-12": [
+   "c8d2b5c206a3a548-1"
+  ],
+  "2007-04-13": [
+   "6020ffe4bb18e262-1"
+  ],
+  "2007-04-16": [
+   "0cea3ab546baf451-1"
+  ],
+  "2007-04-17": [
+   "2c76e566adaf78cf-1"
+  ],
+  "2007-04-18": [
+   "dde6634a9317710c-1"
+  ],
+  "2007-04-19": [
+   "c601b414636b39ad-1"
+  ],
+  "2007-04-20": [
+   "8f17849d7888de76-1"
+  ],
+  "2007-04-23": [
+   "9e0ce95fd199a0f0-1"
+  ],
+  "2007-04-24": [
+   "64710cc4a48af647-1"
+  ],
+  "2007-04-25": [
+   "95f809bcd4698273-1"
+  ],
+  "2007-04-26": [
+   "814eeced97710fa0-1"
+  ],
+  "2007-04-27": [
+   "3cd11c4dcec85329-1"
+  ],
+  "2007-04-30": [
+   "d13bcb8dddfbc4d0-1"
+  ],
+  "2007-05-02": [
+   "fea254794e37f015-1"
+  ],
+  "2007-05-03": [
+   "67edf5f06fc31765-1"
+  ],
+  "2007-05-04": [
+   "eebe20c6dd4d6b5f-1"
+  ],
+  "2007-05-07": [
+   "03d85fd48d3c4ccd-1"
+  ],
+  "2007-05-08": [
+   "481d5d779d015514-1",
+   "cd9de3cdf645344c-1"
+  ],
+  "2007-05-09": [
+   "63a657bc915fe76b-1"
+  ],
+  "2007-05-10": [
+   "ad0e35dfa63dfc3c-1"
+  ],
+  "2007-05-11": [
+   "9b26a4e30d721094-1"
+  ],
+  "2007-05-14": [
+   "3572081abceaff2b-1"
+  ],
+  "2007-05-15": [
+   "132a9e85b6fb14e7-1"
+  ],
+  "2007-05-16": [
+   "7b28c80007817503-1"
+  ],
+  "2007-05-17": [
+   "dc17fb8782db0dd2-1"
+  ],
+  "2007-05-18": [
+   "8c3031fa9f297ec5-1"
+  ],
+  "2007-05-21": [
+   "85636531d3aa114f-1"
+  ],
+  "2007-05-22": [
+   "24e3d4ad4b88d318-1"
+  ],
+  "2007-05-23": [
+   "7d0257e1473f57c5-1"
+  ],
+  "2007-05-24": [
+   "995466bff7ec8c68-1"
+  ],
+  "2007-05-25": [
+   "cb27618bf069afb6-1"
+  ],
+  "2007-05-29": [
+   "049db777c894bfba-1"
+  ],
+  "2007-05-30": [
+   "08a4966e3e0bc576-1",
+   "ec63d88250be075e-1"
+  ],
+  "2007-05-31": [
+   "b75b28efab5803b3-1"
+  ],
+  "2007-06-01": [
+   "05f0cc7ef8319cce-1"
+  ],
+  "2007-06-04": [
+   "283c52520f3df209-1"
+  ],
+  "2007-06-05": [
+   "000cd61330f8d8ef-1"
+  ],
+  "2007-06-06": [
+   "b71c0a587b45ecd2-1"
+  ],
+  "2007-06-08": [
+   "831a46d3018d8d15-1"
+  ],
+  "2007-06-11": [
+   "46dad3967b895f55-1"
+  ],
+  "2007-06-12": [
+   "bdc40064725bfefd-1"
+  ],
+  "2007-06-13": [
+   "8bb980d61e5ecad0-1"
+  ],
+  "2007-06-14": [
+   "e5e89bfdd0772fe6-1"
+  ],
+  "2007-06-15": [
+   "dc14a5a04efcaca1-1"
+  ],
+  "2007-06-18": [
+   "3faf16ed1f79ebf5-1"
+  ],
+  "2007-06-19": [
+   "98b14d7fc2efbfa7-1"
+  ],
+  "2007-06-20": [
+   "6eba42bbcef7487c-1"
+  ],
+  "2007-06-21": [
+   "d53207f032ee7e3c-1"
+  ],
+  "2007-06-22": [
+   "4133a9951bf2f460-1"
+  ],
+  "2007-06-25": [
+   "106c984bd21aaf2d-1"
+  ],
+  "2007-06-26": [
+   "5529946da1b2e934-1"
+  ],
+  "2007-06-27": [
+   "a6022eaaa45d8df5-1"
+  ],
+  "2007-06-28": [
+   "14891be6cb7a5e31-1"
+  ],
+  "2007-06-29": [
+   "1b9849e710f503e3-1"
+  ],
+  "2007-07-02": [
+   "c404cc7572326d6b-1"
+  ],
+  "2007-07-03": [
+   "daa5c8d97415f6c5-1"
+  ],
+  "2007-07-05": [
+   "331cb6e47d48e602-1"
+  ],
+  "2007-07-06": [
+   "19eeca09cdf9e251-1",
+   "bfbfb70caab9d70f-1"
+  ],
+  "2007-07-09": [
+   "dd89088eb9a4e4a9-1"
+  ],
+  "2007-07-10": [
+   "221ee34f25aa0c62-1"
+  ],
+  "2007-07-12": [
+   "79d0d65ce6f09b65-1"
+  ],
+  "2007-07-13": [
+   "3dab9c188f0282cb-1"
+  ],
+  "2007-07-16": [
+   "855ea73fd94aba86-1"
+  ],
+  "2007-07-17": [
+   "0806b61bf244a5bf-1",
+   "bf5ebb1f743a159e-1"
+  ],
+  "2007-07-18": [
+   "ecbf69f65961debd-1"
+  ],
+  "2007-07-19": [
+   "be61f182e2be7cc9-1"
+  ],
+  "2007-07-20": [
+   "20ca22fba2f8af69-1"
+  ],
+  "2007-07-23": [
+   "b40fd81451746676-1"
+  ],
+  "2007-07-24": [
+   "4d1a60362080ea9b-1"
+  ],
+  "2007-07-25": [
+   "af72601594aeceb2-1"
+  ],
+  "2007-07-26": [
+   "fe5f495149784fa4-1"
+  ],
+  "2007-07-27": [
+   "07b990c49d5cbe4d-1"
+  ],
+  "2007-07-30": [
+   "ce06a3fe81f69666-1"
+  ],
+  "2007-07-31": [
+   "497196c823c782ad-1"
+  ],
+  "2007-08-01": [
+   "313248d3e924b0e3-1"
+  ],
+  "2007-08-02": [
+   "55f8f2a384b0f7a6-1"
+  ],
+  "2007-08-03": [
+   "165aaeb4405af51f-1"
+  ],
+  "2007-08-06": [
+   "51e114dba686888a-1"
+  ],
+  "2007-08-07": [
+   "1216c50e27650a6d-1"
+  ],
+  "2007-08-08": [
+   "90b67a2ada435f6e-1"
+  ],
+  "2007-08-09": [
+   "3667730241644afe-1"
+  ],
+  "2007-08-10": [
+   "61aaba31a0e794b6-1"
+  ],
+  "2007-08-13": [
+   "f9c002f32846b3cc-1"
+  ],
+  "2007-08-14": [
+   "213ad3eb37bb5aab-1"
+  ],
+  "2007-08-15": [
+   "72ec2f7e72e5c363-1"
+  ],
+  "2007-10-10": [
+   "b089fe570d51c21e-1"
+  ],
+  "2007-10-11": [
+   "3dcf3ae19e45fd5a-1"
+  ],
+  "2007-10-15": [
+   "2928429c2b7917a9-1"
+  ],
+  "2007-10-16": [
+   "a98b32c6e663b50a-1"
+  ],
+  "2007-10-17": [
+   "60bd50679108a5a1-1"
+  ],
+  "2007-10-18": [
+   "44716ba2874d9304-1"
+  ],
+  "2007-10-19": [
+   "0c044f7e3e6cbdd8-1"
+  ],
+  "2007-10-22": [
+   "0a2cf64898938a25-1"
+  ],
+  "2007-10-23": [
+   "deba8a5841304e76-1"
+  ],
+  "2007-10-24": [
+   "0aa6d212bb3f5f10-1"
+  ],
+  "2007-10-25": [
+   "8ebf29b8db03feef-1"
+  ],
+  "2007-10-26": [
+   "34c45a88dea9a3df-1"
+  ],
+  "2007-10-29": [
+   "d22c90028d421a43-1"
+  ],
+  "2007-10-30": [
+   "5c4c0232bc124704-1"
+  ],
+  "2007-10-31": [
+   "bb9fbc87f537274f-1"
+  ],
+  "2007-11-01": [
+   "dfcdf07ef6ea8cd9-1"
+  ],
+  "2007-11-05": [
+   "2d1e8ad734d77db1-1"
+  ],
+  "2007-11-06": [
+   "6f73065d6d58db29-1"
+  ],
+  "2007-11-07": [
+   "f34a106b32b19c91-1"
+  ],
+  "2007-11-08": [
+   "3726546c3b9039dd-1"
+  ],
+  "2007-11-09": [
+   "1d6bbd14f37de1ab-1"
+  ],
+  "2007-11-13": [
+   "19f6f089561e6306-1"
+  ],
+  "2007-11-14": [
+   "79aef9f6a0d2817b-1",
+   "a618266a6f986bd5-1"
+  ],
+  "2007-11-16": [
+   "1f3912f0bcfec34e-1"
+  ],
+  "2007-11-19": [
+   "7d4b03b715e22925-1"
+  ],
+  "2007-11-20": [
+   "747b08e5fd1eefbb-1"
+  ],
+  "2007-11-21": [
+   "91adfa32bedee4b9-1"
+  ],
+  "2007-11-26": [
+   "18c9636e8527dfb6-1",
+   "b194a9d2dfd9f7b6-1"
+  ],
+  "2007-11-27": [
+   "1545997749709220-1"
+  ],
+  "2007-11-28": [
+   "068228ab1203854d-1"
+  ],
+  "2007-11-29": [
+   "ed85bc83c649a4b7-1"
+  ],
+  "2007-11-30": [
+   "266867de3bcb74e3-1"
+  ],
+  "2007-12-03": [
+   "67b4ffe656db6599-1"
+  ],
+  "2007-12-04": [
+   "cdf23cb5256627a9-1"
+  ],
+  "2007-12-05": [
+   "066b09002fa19243-1"
+  ],
+  "2007-12-06": [
+   "86f03c14e31deae3-1"
+  ],
+  "2007-12-07": [
+   "29d9abc2d64d39e7-1"
+  ],
+  "2007-12-10": [
+   "38fee730a766ebda-1"
+  ],
+  "2007-12-11": [
+   "ff5794496e02957e-1"
+  ],
+  "2007-12-12": [
+   "4b04cffc2caebadf-1"
+  ],
+  "2007-12-13": [
+   "e07546c9ebec26a0-1"
+  ],
+  "2007-12-14": [
+   "89f96b60181b0e65-1"
+  ],
+  "2007-12-17": [
+   "f6967f29078c2802-1"
+  ],
+  "2007-12-18": [
+   "a304472e4104b623-1"
+  ],
+  "2007-12-19": [
+   "007ab72061ff8a38-1"
+  ],
+  "2007-12-20": [
+   "af29fd3ef9478233-1"
+  ],
+  "2007-12-21": [
+   "c79f2b2be5887562-1"
+  ],
+  "2007-12-24": [
+   "03da3844db95e54b-1"
+  ],
+  "2007-12-26": [
+   "3f99cc09ab1034b0-1"
+  ],
+  "2007-12-28": [
+   "f3973f446cf6642d-1"
+  ],
+  "2008-01-02": [
+   "84d0b896135c3268-1"
+  ],
+  "2008-01-04": [
+   "3489683891a9eaf3-1"
+  ],
+  "2008-01-07": [
+   "783dbf2d6ed30534-1"
+  ],
+  "2008-01-08": [
+   "86f50bd6c10acbdb-1"
+  ],
+  "2008-01-09": [
+   "b936b4e735de5d1b-1"
+  ],
+  "2008-01-10": [
+   "d12c24f367953579-1"
+  ],
+  "2008-01-11": [
+   "eb06e0de371d3399-1"
+  ],
+  "2008-01-14": [
+   "6f4acc3de900b233-1"
+  ],
+  "2008-01-15": [
+   "9a859756c8911ce7-1"
+  ],
+  "2008-01-16": [
+   "1dfcad65212ca4dc-1"
+  ],
+  "2008-01-17": [
+   "3152added87e7c87-1"
+  ],
+  "2008-01-18": [
+   "d014ae144510e9f3-1"
+  ],
+  "2008-01-22": [
+   "13da37619359f3f7-1"
+  ],
+  "2008-01-23": [
+   "762ed48d81416c7e-1",
+   "a70fb9874868fcca-1"
+  ],
+  "2008-01-24": [
+   "257796680455af0a-1"
+  ],
+  "2008-01-25": [
+   "e7f22e5803d63e11-1"
+  ],
+  "2008-01-28": [
+   "65779a68f87a893e-1"
+  ],
+  "2008-01-30": [
+   "e0f8d787c9a77fa1-1"
+  ],
+  "2008-01-31": [
+   "b1171ecf65cc02e0-1"
+  ],
+  "2008-02-01": [
+   "3a69db674a581011-1"
+  ],
+  "2008-02-06": [
+   "b3adcbc884226d41-1"
+  ],
+  "2008-02-07": [
+   "c5e9ecb93cb6d0b9-1"
+  ],
+  "2008-02-11": [
+   "1e41790ae692d88a-1"
+  ],
+  "2008-02-12": [
+   "b5900d55ba4469aa-1"
+  ],
+  "2008-02-13": [
+   "993987d5026b0c61-1"
+  ],
+  "2008-02-14": [
+   "5adc95e5f18b5796-1"
+  ],
+  "2008-02-15": [
+   "e27d91f701eb65a2-1"
+  ],
+  "2008-02-19": [
+   "2b0b93f68b1e803b-1"
+  ],
+  "2008-02-20": [
+   "314fa69f4d86f172-1",
+   "f2e48c1c02a084ff-1"
+  ],
+  "2008-02-21": [
+   "2a7bd95cf9da08c9-1"
+  ],
+  "2008-02-22": [
+   "e0ee3019703b90ff-1"
+  ],
+  "2008-02-25": [
+   "66b7e32109257d46-1"
+  ],
+  "2008-02-26": [
+   "8490b5ba2dfe7fa6-1"
+  ],
+  "2008-02-27": [
+   "f27296481457312f-1"
+  ],
+  "2008-02-28": [
+   "78d99102472e4b04-1"
+  ],
+  "2008-02-29": [
+   "cfd9e6058ea4157c-1"
+  ],
+  "2008-03-03": [
+   "6019242bba7b4877-1"
+  ],
+  "2008-03-04": [
+   "23bb5b726908a5aa-1"
+  ],
+  "2008-03-05": [
+   "693e1c982c2880c3-1"
+  ],
+  "2008-03-06": [
+   "21595417123c8d7d-1"
+  ],
+  "2008-03-07": [
+   "35100fe7c447531c-1"
+  ],
+  "2008-03-10": [
+   "cd982f60c5251dcc-1"
+  ],
+  "2008-03-11": [
+   "cba0bf457305af6a-1"
+  ],
+  "2008-03-12": [
+   "e9fe059a4f55a2ec-1"
+  ],
+  "2008-03-13": [
+   "44e161748917cd83-1"
+  ],
+  "2008-03-14": [
+   "2a05e727da7f53e2-1"
+  ],
+  "2008-03-17": [
+   "305e43e6031607a9-1"
+  ],
+  "2008-03-18": [
+   "3ca6a7a068ee3e2b-1"
+  ],
+  "2008-03-19": [
+   "b796c9b5c720601c-1"
+  ],
+  "2008-03-20": [
+   "d1fb6222b39345e6-1"
+  ],
+  "2008-03-24": [
+   "01b492ec064334fe-1"
+  ],
+  "2008-03-25": [
+   "9ac5d44853ef5a09-1"
+  ],
+  "2008-03-27": [
+   "fc877d761e321a1b-1"
+  ],
+  "2008-03-28": [
+   "aeaddf10571b4a60-1"
+  ],
+  "2008-03-31": [
+   "f15d64b0bd730ede-1"
+  ],
+  "2008-04-01": [
+   "ef9e73daa3ac300c-1"
+  ],
+  "2008-04-02": [
+   "bb54c86693293214-1"
+  ],
+  "2008-04-03": [
+   "64024bfc4f4adf78-1"
+  ],
+  "2008-04-04": [
+   "4fa574d70257b6f3-1"
+  ],
+  "2008-04-07": [
+   "735c62df0705a8fa-1"
+  ],
+  "2008-04-08": [
+   "680cc5e1de69f319-1"
+  ],
+  "2008-04-09": [
+   "b9fe221e9a44a69e-1"
+  ],
+  "2008-04-10": [
+   "c50a69a8fa44e050-1"
+  ],
+  "2008-04-11": [
+   "195a2a8daea5a8f9-1"
+  ],
+  "2008-04-14": [
+   "fa18c77dc045f400-1"
+  ],
+  "2008-04-15": [
+   "c705c646acb3459b-1"
+  ],
+  "2008-04-16": [
+   "a447734ceffb71e2-1"
+  ],
+  "2008-04-17": [
+   "c7c86eb4b1ddc972-1"
+  ],
+  "2008-04-18": [
+   "659f5285f8a88b73-1"
+  ],
+  "2008-04-22": [
+   "73e49da7e45bd553-1"
+  ],
+  "2008-04-23": [
+   "13b5bfdbe13215f2-1"
+  ],
+  "2008-04-24": [
+   "146344933f6f9c29-1"
+  ],
+  "2008-04-25": [
+   "8a0115b85c727b10-1"
+  ],
+  "2008-04-28": [
+   "f8ae9749ac592dd7-1"
+  ],
+  "2008-04-29": [
+   "f005883fce63e0ac-1"
+  ],
+  "2008-04-30": [
+   "88178db5fda8c335-1"
+  ],
+  "2008-05-02": [
+   "0c9f952f0be1b9d6-1"
+  ],
+  "2008-05-05": [
+   "0cc41eb212259461-1"
+  ],
+  "2008-05-06": [
+   "8fc27c48aad3cc64-1"
+  ],
+  "2008-05-07": [
+   "96e9252b70cd39e9-1"
+  ],
+  "2008-05-08": [
+   "e13c9f944d2555e7-1"
+  ],
+  "2008-05-09": [
+   "c81cc295442861d9-1"
+  ],
+  "2008-05-12": [
+   "3bb5c4dba62db7bb-1"
+  ],
+  "2008-05-13": [
+   "b13d11bbd3882b8b-1"
+  ],
+  "2008-05-14": [
+   "25fc5f67958171f8-1"
+  ],
+  "2008-05-15": [
+   "de1009ccc74ae9e9-1"
+  ],
+  "2008-05-16": [
+   "25866cd26516bc4d-1"
+  ],
+  "2008-05-19": [
+   "a1f1106a74135a66-1"
+  ],
+  "2008-05-20": [
+   "d698d709618ed5db-1"
+  ],
+  "2008-05-21": [
+   "2681d95833385b95-1"
+  ],
+  "2008-05-23": [
+   "de16efb1f1592626-1"
+  ],
+  "2008-05-27": [
+   "0ea8e1d523b3779f-1"
+  ],
+  "2008-05-28": [
+   "7e66d849f97a74d5-1",
+   "eefd142d4ff69c6d-1"
+  ],
+  "2008-05-29": [
+   "2e38500391a26f07-1"
+  ],
+  "2008-05-30": [
+   "38e3d4e99e3d13c0-1"
+  ],
+  "2008-06-02": [
+   "41dfa17de0370159-1"
+  ],
+  "2008-06-03": [
+   "f600518b664dca3d-1"
+  ],
+  "2008-06-04": [
+   "fa24e6cb06ed96a2-1"
+  ],
+  "2008-06-05": [
+   "5e0a7a95bbf3f7b9-1"
+  ],
+  "2008-06-06": [
+   "d6b1e682613e66d4-1"
+  ],
+  "2008-06-09": [
+   "d301744564fad611-1"
+  ],
+  "2008-06-10": [
+   "7db3112dae2d6af9-1"
+  ],
+  "2008-06-11": [
+   "0b1c0690e804d907-1"
+  ],
+  "2008-06-12": [
+   "a3a6a3696c3d62f8-1"
+  ],
+  "2008-06-13": [
+   "6e99452df47be512-1"
+  ],
+  "2008-06-16": [
+   "0fd8f2e8c99e821f-1"
+  ],
+  "2008-06-17": [
+   "e37e0383bb67737e-1"
+  ],
+  "2008-06-18": [
+   "2ccbb99078715242-1"
+  ],
+  "2008-06-19": [
+   "3415ad33e2140e8a-1"
+  ],
+  "2008-06-20": [
+   "a7e3df71ab14b446-1"
+  ],
+  "2008-06-23": [
+   "3f58750812029625-1"
+  ],
+  "2008-06-24": [
+   "a623265079cd9068-1"
+  ],
+  "2008-06-25": [
+   "326dfb34c04c39a9-1"
+  ],
+  "2008-06-26": [
+   "09e405fef1618071-1"
+  ],
+  "2008-06-27": [
+   "3969c5f747911b4a-1"
+  ],
+  "2008-06-30": [
+   "ebdf91ef1efa2415-1"
+  ],
+  "2008-07-01": [
+   "9aa587b98de2b7cd-1"
+  ],
+  "2008-07-02": [
+   "16ffcd6b5ff14c6a-1"
+  ],
+  "2008-07-03": [
+   "df2660f2fc2f4925-1"
+  ],
+  "2008-07-07": [
+   "570ae06316828a44-1"
+  ],
+  "2008-07-08": [
+   "41bd7d8578820a66-1",
+   "a66d4a714168dd8f-1"
+  ],
+  "2008-07-09": [
+   "28b86f85286c28d8-1"
+  ],
+  "2008-07-10": [
+   "9d2834ce31fb849e-1"
+  ],
+  "2008-07-14": [
+   "388919af8f253373-1"
+  ],
+  "2008-07-15": [
+   "e307723dcc02029c-1"
+  ],
+  "2008-07-16": [
+   "80caeaffb33e1729-1"
+  ],
+  "2008-07-17": [
+   "9a95f8a990b6a5e3-1"
+  ],
+  "2008-07-18": [
+   "64607d2ae0a90806-1"
+  ],
+  "2008-07-21": [
+   "5cff5ea3204542aa-1"
+  ],
+  "2008-07-22": [
+   "28527812f3e86709-1"
+  ],
+  "2008-07-23": [
+   "55ec0ffc37813329-1"
+  ],
+  "2008-07-24": [
+   "9781f1ebc3bb2e69-1"
+  ],
+  "2008-07-25": [
+   "f72586a6fb3c7800-1"
+  ],
+  "2008-07-28": [
+   "a20964a326e8afdd-1"
+  ],
+  "2008-07-29": [
+   "0d5474d4a70de807-1"
+  ],
+  "2008-07-30": [
+   "281ff7e83cd1b6c0-1"
+  ],
+  "2008-07-31": [
+   "f5d040c9bab5849c-1"
+  ],
+  "2008-08-01": [
+   "954f033c14c079a3-1"
+  ],
+  "2008-08-04": [
+   "6b1ce897da28ffcd-1"
+  ],
+  "2008-08-05": [
+   "539cfa44620db16a-1"
+  ],
+  "2008-08-06": [
+   "928b505f5ff7dd47-1"
+  ],
+  "2008-08-07": [
+   "7c013769dac60604-1"
+  ],
+  "2008-08-08": [
+   "10859e346de0506e-1"
+  ],
+  "2008-08-11": [
+   "deca709392914271-1"
+  ],
+  "2008-08-12": [
+   "552b1c65bead5924-1"
+  ],
+  "2008-08-13": [
+   "05051124ce0e2467-1"
+  ],
+  "2008-08-14": [
+   "f474c176e0dd1d45-1"
+  ],
+  "2008-08-15": [
+   "94dec1ae260e7d44-1"
+  ],
+  "2008-08-18": [
+   "f8f982cb31625382-1"
+  ],
+  "2008-08-19": [
+   "0f096fd575f190ad-1"
+  ],
+  "2008-08-20": [
+   "e2aed6ec5c05752d-1"
+  ],
+  "2008-08-21": [
+   "6e5d1eba3e7d7d5d-1"
+  ],
+  "2008-08-22": [
+   "e921674bc7863f7e-1"
+  ],
+  "2008-08-25": [
+   "f4770693c1e10335-1"
+  ],
+  "2008-08-26": [
+   "237f9058b81f2531-1"
+  ],
+  "2008-08-27": [
+   "60a028e8f881ad87-1"
+  ],
+  "2008-08-28": [
+   "5073bee3a4db7534-1"
+  ],
+  "2008-08-29": [
+   "07b7a08130a5a0df-1"
+  ],
+  "2008-09-02": [
+   "2419da05c498773a-1"
+  ],
+  "2008-09-03": [
+   "8fda504a0dc37fff-1",
+   "f491fbaea0c1ec0a-1"
+  ],
+  "2008-09-04": [
+   "404bf61cb59f4445-1"
+  ],
+  "2008-09-05": [
+   "cbd8c655ff82d75c-1"
+  ],
+  "2008-09-08": [
+   "2bde0e2f17ca8562-1"
+  ],
+  "2008-09-09": [
+   "c34d7687f85a3055-1"
+  ],
+  "2008-09-10": [
+   "8e4decb72c869488-1"
+  ],
+  "2008-09-11": [
+   "f3352d16c1126933-1"
+  ],
+  "2008-09-12": [
+   "d27a0aabbe3862ea-1"
+  ],
+  "2008-09-23": [
+   "687bfa01774b72fd-1",
+   "d8dc75b2cf837e08-1"
+  ],
+  "2008-09-30": [
+   "1521a28b571ab47d-1"
+  ],
+  "2008-10-09": [
+   "c03c27bae330227d-1"
+  ],
+  "2008-10-10": [
+   "220f574ac746bc3e-1",
+   "52b93172757fce29-1",
+   "57af732984243093-1"
+  ],
+  "2008-10-14": [
+   "8707683d4069e52c-1",
+   "8f258ba7cc56ff0c-1"
+  ],
+  "2008-10-15": [
+   "3a05d1f2f801ac98-1",
+   "4b4ab18e1e344c51-1",
+   "70183045e964ef57-1"
+  ],
+  "2008-10-16": [
+   "73e6c1e6fedc45b3-1"
+  ],
+  "2008-10-17": [
+   "8c934b9743fac67f-1",
+   "8dd30dca742eb1b5-1",
+   "d95ff3f92e66c28d-1"
+  ],
+  "2008-10-20": [
+   "ae79cb1513ae0b0d-1",
+   "f35ca461ed0b9e8e-1"
+  ],
+  "2008-10-22": [
+   "1e05b146bfa6a2c9-1",
+   "969e2ab1e43858a0-1"
+  ],
+  "2008-10-23": [
+   "283bbc04711d5b34-1",
+   "8fad97676d5057a4-1"
+  ],
+  "2008-10-24": [
+   "1a176b1b1d110069-1",
+   "44310d3c577a8818-1"
+  ],
+  "2008-10-27": [
+   "5be2d54c22c75871-1",
+   "7d15b03390af5d41-1",
+   "d4a31e4432c66bd2-1"
+  ],
+  "2008-10-28": [
+   "c05d9dda761b84d2-1",
+   "e5f6d5876e5b573b-1"
+  ],
+  "2008-10-29": [
+   "0073f58d851b15e7-1",
+   "8c41739557e31cd9-1"
+  ],
+  "2008-11-03": [
+   "912be0374a26cf17-1"
+  ],
+  "2008-11-05": [
+   "75d59931d52cfb66-1"
+  ],
+  "2008-11-07": [
+   "1569c989986b35d4-1"
+  ],
+  "2008-11-10": [
+   "737c9de5d9522362-1",
+   "f84863cd565ede1e-1"
+  ],
+  "2008-11-14": [
+   "c376adee03cd9d6b-1"
+  ],
+  "2008-11-17": [
+   "6733de2d0216f156-1",
+   "6ad7c4c1a02e5a81-1",
+   "a86109cc3331dc93-1"
+  ],
+  "2008-11-20": [
+   "bf8ca9e3f43a086c-1"
+  ],
+  "2008-11-21": [
+   "821cbb95eb833e74-1",
+   "8a5df99b4d83363f-1",
+   "8dd83bbf71d6130f-1",
+   "b3b6381e5acea7e7-1"
+  ],
+  "2008-12-02": [
+   "919dd81bfd5d03fb-1",
+   "ff878e48fb53ce46-1"
+  ],
+  "2008-12-05": [
+   "60b2a128e5378e42-1",
+   "c48792e9df8e851c-1"
+  ],
+  "2008-12-08": [
+   "94fcba1e53bddaca-1"
+  ],
+  "2008-12-09": [
+   "576375cd36ba1977-1",
+   "5cd514c9ddcf6e53-1",
+   "94d1cad639d66368-1"
+  ],
+  "2008-12-10": [
+   "bd8ab517650e8933-1"
+  ],
+  "2008-12-11": [
+   "b3e4dc2138faf1e7-1"
+  ],
+  "2008-12-12": [
+   "f46e9c093cb1963a-1",
+   "fa0883b91439fc7e-1"
+  ],
+  "2008-12-15": [
+   "277383efec44361d-1"
+  ],
+  "2008-12-16": [
+   "9a85f5386e5e498c-1"
+  ],
+  "2008-12-17": [
+   "4740b9f2d6efe982-1"
+  ],
+  "2008-12-18": [
+   "7b81072ad0e134a7-1"
+  ],
+  "2008-12-19": [
+   "e1cc618838d566aa-1",
+   "f0fc6db78e27d809-1",
+   "f6bbef9fe4497c37-1"
+  ],
+  "2008-12-22": [
+   "468168a7202dea8c-1"
+  ],
+  "2008-12-23": [
+   "8a0e28cef3e0750b-1"
+  ],
+  "2008-12-24": [
+   "260ab0b78df0ceca-1"
+  ],
+  "2008-12-26": [
+   "360805bddda2dc19-1"
+  ],
+  "2008-12-31": [
+   "73682e3980f0115b-1"
+  ],
+  "2009-01-02": [
+   "1e8ca338d6ad4ffc-1",
+   "8725eec0274f45c1-1"
+  ],
+  "2009-01-07": [
+   "0dc8e8fe8576ece8-1"
+  ],
+  "2009-01-14": [
+   "efb6b222efac9c9e-1"
+  ],
+  "2009-01-15": [
+   "2c40b36a96b9a481-1",
+   "4e7d3d0c2a390642-1"
+  ],
+  "2009-01-16": [
+   "0443ab75cbc855da-1",
+   "172c6358f548f78d-1",
+   "25b8480feb64973f-1",
+   "2d51f01278aff813-1"
+  ],
+  "2009-01-20": [
+   "0167dc5d9b790205-1"
+  ],
+  "2009-01-21": [
+   "5044395e0511d197-1",
+   "989acc3016415f0f-1"
+  ],
+  "2009-01-22": [
+   "bd5dcfbc0795082a-1"
+  ],
+  "2009-01-23": [
+   "37df382544987e0b-1"
+  ],
+  "2009-01-26": [
+   "b87cd65efc218d86-1"
+  ],
+  "2009-01-27": [
+   "63ce1818d7e21ea6-1"
+  ],
+  "2009-01-28": [
+   "566fca7f7328958e-1"
+  ],
+  "2009-01-29": [
+   "ce507152360c3d6b-1"
+  ],
+  "2009-01-30": [
+   "276e066f5dc65fa4-1"
+  ],
+  "2009-02-02": [
+   "9d4206f4deb34417-1",
+   "fa4b624000700fc3-1"
+  ],
+  "2009-02-03": [
+   "3db1684f0ac47e2b-1"
+  ],
+  "2009-02-04": [
+   "4e9e83646e4ba736-1"
+  ],
+  "2009-02-05": [
+   "a8d35eec2171fedf-1"
+  ],
+  "2009-02-13": [
+   "0d2d465c4f71933d-1"
+  ],
+  "2009-02-17": [
+   "a01c441a15861864-1",
+   "b98b73949d1ddabc-1"
+  ],
+  "2009-03-13": [
+   "6195fd251133e147-1"
+  ],
+  "2009-03-16": [
+   "5ba6a2d0e318a220-1"
+  ],
+  "2009-04-01": [
+   "3d719571dd260146-1",
+   "d85ed9b7f1014e8e-1"
+  ],
+  "2009-04-06": [
+   "0a5bdd97ca07351e-1"
+  ],
+  "2009-04-07": [
+   "a4620d8e504b420c-1"
+  ],
+  "2009-04-13": [
+   "f20cae1ed0cbde8b-1"
+  ],
+  "2009-04-20": [
+   "d9649ca98beb2c41-1"
+  ],
+  "2009-05-04": [
+   "8aa174762c2bde2d-1",
+   "c4613312f3e448e4-1"
+  ],
+  "2009-05-06": [
+   "01ce5ca63bf5616c-1"
+  ],
+  "2009-05-07": [
+   "9639d6ba95d6592d-1"
+  ],
+  "2009-05-12": [
+   "81b2446158e9dd9e-1"
+  ],
+  "2009-05-13": [
+   "2fef912a2ceef98b-1"
+  ],
+  "2009-05-14": [
+   "ab8cbc3752b182b6-1"
+  ],
+  "2009-05-15": [
+   "1d76b82986bcbcce-1"
+  ],
+  "2009-05-18": [
+   "50e07038271a98ec-1"
+  ],
+  "2009-05-19": [
+   "e3ec132f9396aab2-1"
+  ],
+  "2009-05-20": [
+   "1d37522d75765484-1"
+  ],
+  "2009-05-21": [
+   "5e347aec3ea0468e-1"
+  ],
+  "2009-05-22": [
+   "4c9956e396118167-1"
+  ],
+  "2009-05-26": [
+   "0c489e2b57ba310a-1"
+  ],
+  "2009-05-27": [
+   "6df902c56746eab5-1",
+   "7dad79aade8c952a-1",
+   "ce6e5a0990a81ff2-1"
+  ],
+  "2009-05-28": [
+   "353656a8a1690ed4-1"
+  ],
+  "2009-05-29": [
+   "34d2c77d02c85902-1"
+  ],
+  "2009-06-01": [
+   "c7933d4bf096ecd5-1"
+  ],
+  "2009-06-02": [
+   "a9113d31e6f99777-1"
+  ],
+  "2009-06-03": [
+   "235bf63fcb0d1b9e-1"
+  ],
+  "2009-06-04": [
+   "430ccb7e6553d69c-1"
+  ],
+  "2009-06-05": [
+   "04b0f10b75eb8ea9-1",
+   "ff0c48ccd2ccb561-1"
+  ],
+  "2009-06-08": [
+   "322b4e8b89cb2e11-1"
+  ],
+  "2009-06-09": [
+   "7e5707976de9efbb-1"
+  ],
+  "2009-06-10": [
+   "3763911ee9bc94ad-1"
+  ],
+  "2009-06-12": [
+   "bc003b9cc6048ff2-1"
+  ],
+  "2009-06-15": [
+   "4713cb06bff660c6-1"
+  ],
+  "2009-06-16": [
+   "38a030c00a86d3e8-1"
+  ],
+  "2009-06-17": [
+   "997e3786c260d182-1"
+  ],
+  "2009-06-18": [
+   "aed21361ea3ef053-1"
+  ],
+  "2009-06-19": [
+   "580fa0d8327cfbe4-1"
+  ],
+  "2009-06-22": [
+   "41682cde500fa111-1"
+  ],
+  "2009-06-23": [
+   "074af40d75139cb6-1"
+  ],
+  "2009-06-24": [
+   "52f76804d245a2b2-1"
+  ],
+  "2009-06-25": [
+   "6db4c9e195403e42-1"
+  ],
+  "2009-06-26": [
+   "bb08029250c8b625-1"
+  ],
+  "2009-06-29": [
+   "deb0e50dd2740e5a-1"
+  ],
+  "2009-06-30": [
+   "64668c801f3100b6-1"
+  ],
+  "2009-07-01": [
+   "7b681b4f1a80ea6f-1"
+  ],
+  "2009-07-02": [
+   "5b233140288b7129-1"
+  ],
+  "2009-07-03": [
+   "509e01e41d80cf9e-1"
+  ],
+  "2009-07-06": [
+   "d15797c03be925cc-1"
+  ],
+  "2009-07-07": [
+   "6f21931d479dcd96-1"
+  ],
+  "2009-07-08": [
+   "181150f9712678a9-1"
+  ],
+  "2009-07-09": [
+   "4e18317b33860174-1"
+  ],
+  "2009-07-14": [
+   "65976475185db2d9-1"
+  ],
+  "2009-07-15": [
+   "bc20a15d06c49b77-1"
+  ],
+  "2009-07-16": [
+   "e82864f7ef667eda-1"
+  ],
+  "2009-07-17": [
+   "0b1610e08707ed5a-1"
+  ],
+  "2009-07-20": [
+   "769196d1ee06c07c-1"
+  ],
+  "2009-07-22": [
+   "f4e5c9dcf927e4dd-1"
+  ],
+  "2009-07-23": [
+   "7e85060d27a6c51f-1"
+  ],
+  "2009-07-24": [
+   "a8904fb3b850971f-1"
+  ],
+  "2009-07-27": [
+   "ebacc2c041462e3e-1"
+  ],
+  "2009-07-28": [
+   "b2e8f24de16162a0-1"
+  ],
+  "2009-07-29": [
+   "d8e8a1ad1289e9b1-1"
+  ],
+  "2009-07-30": [
+   "923a84707dba5662-1"
+  ],
+  "2009-07-31": [
+   "9db807ef2551e34c-1"
+  ],
+  "2009-08-03": [
+   "7ef5d0c138ba1735-1"
+  ],
+  "2009-08-04": [
+   "003deeb2af91308e-1"
+  ],
+  "2009-08-05": [
+   "f8e8cba90018d523-1"
+  ],
+  "2009-08-06": [
+   "348ab8e858259195-1"
+  ],
+  "2009-08-07": [
+   "deadae0e6a8c6231-1"
+  ],
+  "2009-08-10": [
+   "0450d1d76aae4347-1"
+  ],
+  "2009-08-11": [
+   "a787734c5cfbb097-1"
+  ],
+  "2009-08-12": [
+   "4ffae680e7e9f4ec-1"
+  ],
+  "2009-08-13": [
+   "d76379a024d82b24-1"
+  ],
+  "2009-08-14": [
+   "05badd18e75f40ac-1"
+  ],
+  "2009-08-17": [
+   "39b50f81b17f710e-1"
+  ],
+  "2009-08-18": [
+   "b6239236df2a0a6e-1"
+  ],
+  "2009-08-19": [
+   "f310bac62fc3b97e-1"
+  ],
+  "2009-08-20": [
+   "2009e1eb6ffe1b6e-1"
+  ],
+  "2009-08-21": [
+   "0d9d908aaab3412b-1"
+  ],
+  "2009-08-24": [
+   "37edadc095193f40-1"
+  ],
+  "2009-08-25": [
+   "5052ccd1bc1cb4b3-1"
+  ],
+  "2009-08-26": [
+   "ff332e21f2da3c8a-1"
+  ],
+  "2009-08-27": [
+   "b5a3c82d4c21d7c3-1"
+  ],
+  "2009-08-28": [
+   "43833d77a0b8ced7-1"
+  ],
+  "2009-08-31": [
+   "225e3f1802c6a106-1"
+  ],
+  "2009-09-01": [
+   "78df8dace1e23aa6-1"
+  ],
+  "2009-09-02": [
+   "ce0d951bda04c669-1"
+  ],
+  "2009-09-03": [
+   "c80b9a28d410d50c-1"
+  ],
+  "2009-09-04": [
+   "4a954e6774bf875c-1"
+  ],
+  "2009-09-08": [
+   "4feacc4ad157d44b-1"
+  ],
+  "2009-09-09": [
+   "d2e02a91abb4b16b-1"
+  ],
+  "2009-09-10": [
+   "ae6d4f9f5d609fa1-1"
+  ],
+  "2009-09-11": [
+   "5456d46228164555-1"
+  ],
+  "2009-09-14": [
+   "013fbfe39215a4bf-1"
+  ],
+  "2009-09-15": [
+   "fa4ad1eeb9bb28ec-1"
+  ],
+  "2009-09-16": [
+   "8b3b7e15ed5d9ef5-1"
+  ],
+  "2009-09-17": [
+   "9c07a284259b9ee9-1"
+  ],
+  "2009-09-18": [
+   "5077a48c73c47777-1"
+  ],
+  "2009-09-21": [
+   "37e16525a80943c7-1"
+  ],
+  "2009-09-22": [
+   "a44056604b7fe89e-1"
+  ],
+  "2009-09-23": [
+   "c65bb808d2ed13a7-1"
+  ],
+  "2009-09-24": [
+   "d60b21cdcda43c67-1"
+  ],
+  "2009-09-25": [
+   "c98048661ac074b2-1"
+  ],
+  "2009-09-28": [
+   "8aa28fc0a8092086-1"
+  ],
+  "2009-09-29": [
+   "2d0a8c0b24cb851b-1"
+  ],
+  "2009-09-30": [
+   "7edf6131e273aeaf-1"
+  ],
+  "2009-10-01": [
+   "dc4fdcaf4a36f704-1"
+  ],
+  "2009-10-02": [
+   "02b18b9b94ab0185-1"
+  ],
+  "2009-10-05": [
+   "8f65adad25bde836-1"
+  ],
+  "2009-10-06": [
+   "01dc59cbfcb877b5-1"
+  ],
+  "2009-10-07": [
+   "4b3e908126d300d5-1"
+  ],
+  "2009-10-08": [
+   "f2c1a0277bbf2af7-1"
+  ],
+  "2009-10-09": [
+   "4099635e8efdf271-1"
+  ],
+  "2009-10-13": [
+   "7eb4949dd70e4d28-1"
+  ],
+  "2009-10-14": [
+   "6a51032b3e921672-1"
+  ],
+  "2009-10-15": [
+   "0ae890de0073d33a-1"
+  ],
+  "2009-10-16": [
+   "46f2899ab93b2739-1"
+  ],
+  "2009-10-19": [
+   "bd7958d86787db8a-1"
+  ],
+  "2009-10-20": [
+   "321269ba3a90a9d4-1"
+  ],
+  "2009-10-21": [
+   "699fce7855ed56ce-1"
+  ],
+  "2009-10-23": [
+   "13791326d5844010-1"
+  ],
+  "2009-10-26": [
+   "205d805bf8986c66-1"
+  ],
+  "2009-10-27": [
+   "9de20cfb10c85de0-1"
+  ],
+  "2009-10-28": [
+   "107cc7205599af10-1"
+  ],
+  "2009-10-29": [
+   "bed156db09ca4db1-1"
+  ],
+  "2009-10-30": [
+   "3519a71d829c48af-1"
+  ],
+  "2009-11-03": [
+   "ce976aea55c9b366-1"
+  ],
+  "2009-11-04": [
+   "3cecdd70bcd477ef-1"
+  ],
+  "2009-11-05": [
+   "8e33a2a1709729b6-1"
+  ],
+  "2009-11-06": [
+   "fdd7fedd7e9b2eca-1"
+  ],
+  "2009-11-09": [
+   "91c837e13506e5f8-1"
+  ],
+  "2009-11-10": [
+   "0ec3b4153c7d30b7-1"
+  ],
+  "2009-11-12": [
+   "c8c04171553c3397-1"
+  ],
+  "2009-11-13": [
+   "c6f3235ad049e7a6-1",
+   "cb6dbe4ab86a593e-1"
+  ],
+  "2009-11-16": [
+   "c43bb32adcb76280-1"
+  ],
+  "2009-11-17": [
+   "45fe1b07b9597148-1"
+  ],
+  "2009-11-18": [
+   "939764f88165c695-1"
+  ],
+  "2009-11-19": [
+   "fb97ff51e53d36ef-1"
+  ],
+  "2009-11-20": [
+   "0bd79a19ec57b82e-1"
+  ],
+  "2009-11-23": [
+   "c3eea851de7a7c95-1"
+  ],
+  "2009-11-25": [
+   "4e8aec6a4d4e6ac2-1"
+  ],
+  "2009-11-27": [
+   "72163c3b8d997e6d-1"
+  ],
+  "2009-11-30": [
+   "2c910ce01e0e6050-1",
+   "dcd8c4d2bf334199-1"
+  ],
+  "2009-12-01": [
+   "6a0dd20a42c8dbfa-1"
+  ],
+  "2009-12-02": [
+   "649c387fc6fd47c4-1"
+  ],
+  "2009-12-03": [
+   "a8ffc4692270a012-1"
+  ],
+  "2009-12-04": [
+   "3a57c967de81cde1-1"
+  ],
+  "2009-12-07": [
+   "2c5832144392db8c-1"
+  ],
+  "2009-12-08": [
+   "1b8f88c305c2ff39-1"
+  ],
+  "2009-12-09": [
+   "9d9cf5410baeb062-1"
+  ],
+  "2009-12-10": [
+   "13660c531d0cfd6f-1"
+  ],
+  "2009-12-11": [
+   "ecf17c5add7b44a0-1"
+  ],
+  "2009-12-14": [
+   "165342372cc65e20-1"
+  ],
+  "2009-12-15": [
+   "0357d64cab10ff05-1"
+  ],
+  "2009-12-16": [
+   "d261ed7637041dd1-1"
+  ],
+  "2009-12-17": [
+   "b4ca92b1b5a96d90-1"
+  ],
+  "2009-12-18": [
+   "561309ff1c948d7d-1"
+  ],
+  "2009-12-21": [
+   "8b10a23fbd0200fa-1"
+  ],
+  "2009-12-22": [
+   "1792e05a7ff3200b-1"
+  ],
+  "2009-12-23": [
+   "78bb77c3f99550ac-1"
+  ],
+  "2009-12-24": [
+   "3c0a0a899200132c-1"
+  ],
+  "2009-12-28": [
+   "0a956eb447eeb7ef-1"
+  ],
+  "2009-12-30": [
+   "1450217502bb530e-1"
+  ],
+  "2009-12-31": [
+   "5023200afbdb5c7c-1"
+  ],
+  "2010-01-04": [
+   "156cbea08cb08516-1"
+  ],
+  "2010-01-06": [
+   "19e022eb07abda62-1"
+  ],
+  "2010-01-07": [
+   "40bcee3836e7a28d-1"
+  ],
+  "2010-01-08": [
+   "1c7de06359a034bb-1"
+  ],
+  "2010-01-11": [
+   "b0965a4236879855-1"
+  ],
+  "2010-01-12": [
+   "fa7cc1bac9cfd3ab-1"
+  ],
+  "2010-01-13": [
+   "0e45854eed6af2d7-1"
+  ],
+  "2010-01-14": [
+   "22ad7f1beae5dedf-1"
+  ],
+  "2010-01-15": [
+   "73f2811600543973-1"
+  ],
+  "2010-01-19": [
+   "a28233c8c2f5f61c-1"
+  ],
+  "2010-01-20": [
+   "b9acd2175b690a96-1",
+   "c95fd2ba45cd4916-1"
+  ],
+  "2010-01-21": [
+   "fdcb4e7b0e465072-1"
+  ],
+  "2010-01-22": [
+   "fd0aa52e7652c88f-1"
+  ],
+  "2010-01-25": [
+   "4c25930140caf405-1"
+  ],
+  "2010-01-26": [
+   "a918b2f43b54eac0-1"
+  ],
+  "2010-01-28": [
+   "e7b941c197da6c2f-1"
+  ],
+  "2010-01-29": [
+   "0fa3ea20a15c78ea-1"
+  ],
+  "2010-02-01": [
+   "4b2951de566d291b-1"
+  ],
+  "2010-02-02": [
+   "62bb0afbd5d8e56d-1"
+  ],
+  "2010-02-03": [
+   "9e2ed53d75e9c3c5-1"
+  ],
+  "2010-02-04": [
+   "1a338163360f0f04-1"
+  ],
+  "2010-02-05": [
+   "2c7765676386f58b-1"
+  ],
+  "2010-02-08": [
+   "63720bd21fd735e4-1"
+  ],
+  "2010-02-09": [
+   "d1e9681e1e618575-1"
+  ],
+  "2010-02-10": [
+   "9da90e8b3efbe2bc-1"
+  ],
+  "2010-02-11": [
+   "059342c1f90fc4b8-1"
+  ],
+  "2010-02-12": [
+   "643daeb7d4e17cb0-1"
+  ],
+  "2010-02-17": [
+   "53de00fcc672bce8-1"
+  ],
+  "2010-02-18": [
+   "8679e62c78b663f4-1"
+  ],
+  "2010-02-23": [
+   "d2c38da2100ec16f-1"
+  ],
+  "2010-02-24": [
+   "b00183f844d12dc4-1"
+  ],
+  "2010-02-25": [
+   "5f4a461c57ca2511-1"
+  ],
+  "2010-02-26": [
+   "97b2c036577d7d45-1"
+  ],
+  "2010-03-01": [
+   "d1ba12e6521df056-1"
+  ],
+  "2010-03-02": [
+   "40ed02d1eb030acb-1"
+  ],
+  "2010-03-03": [
+   "81ef4baecae48539-1"
+  ],
+  "2010-03-04": [
+   "ed1de7369ae772aa-1"
+  ],
+  "2010-03-05": [
+   "4d650676746f3535-1"
+  ],
+  "2010-03-08": [
+   "a966f9fe1de9cafd-1"
+  ],
+  "2010-03-09": [
+   "fc995aa97c6b72bc-1"
+  ],
+  "2010-03-10": [
+   "60ba199b283c987e-1"
+  ],
+  "2010-03-11": [
+   "f38077a5494a2666-1"
+  ],
+  "2010-03-12": [
+   "4f6245f152662740-1"
+  ],
+  "2010-03-15": [
+   "932a240b6133a2ec-1"
+  ],
+  "2010-03-16": [
+   "3079f7a6ec7d3f8d-1"
+  ],
+  "2010-03-17": [
+   "5b40d2d678ba7c65-1"
+  ],
+  "2010-03-18": [
+   "9cab714d07fb1d04-1"
+  ],
+  "2010-03-19": [
+   "91f59b7e214044c6-1"
+  ],
+  "2010-03-22": [
+   "5bb7c89be39b8838-1"
+  ],
+  "2010-03-23": [
+   "5d1dcbe5e8056330-1"
+  ],
+  "2010-03-24": [
+   "7edfeb7eaf025d67-1"
+  ],
+  "2010-03-25": [
+   "08c90f00ca7a8196-1"
+  ],
+  "2010-03-26": [
+   "01853103e3045ad0-1"
+  ],
+  "2010-03-29": [
+   "a2576b42e9844d29-1"
+  ],
+  "2010-03-30": [
+   "eb2a49e60e423f2a-1"
+  ],
+  "2010-03-31": [
+   "1fdc408554a55491-1"
+  ],
+  "2010-04-01": [
+   "425370a801afff70-1"
+  ],
+  "2010-04-05": [
+   "fda8dff25667d38c-1"
+  ],
+  "2010-04-06": [
+   "aa68ece30527f5a3-1"
+  ],
+  "2010-04-07": [
+   "5bfdc5bc1c3bb5c8-1"
+  ],
+  "2010-04-08": [
+   "da6722902fa89597-1"
+  ],
+  "2010-04-09": [
+   "567f8f00cff1c55b-1"
+  ],
+  "2010-04-12": [
+   "62a2df91fca4a89a-1"
+  ],
+  "2010-04-13": [
+   "e44ad49feb17972d-1"
+  ],
+  "2010-04-14": [
+   "c0156391f8bb042d-1"
+  ],
+  "2010-04-15": [
+   "57ddefc0cc641563-1"
+  ],
+  "2010-04-16": [
+   "7dfe7bf6ab7af39c-1"
+  ],
+  "2010-04-19": [
+   "751605d325970604-1",
+   "b400d64890722be4-1"
+  ],
+  "2010-04-20": [
+   "b95b6ae8bf2f074c-1"
+  ],
+  "2010-04-22": [
+   "5ebdaac5fa6a15c6-1"
+  ],
+  "2010-04-23": [
+   "63defcac54374481-1"
+  ],
+  "2010-04-26": [
+   "06ad59c7a18bd94a-1"
+  ],
+  "2010-04-27": [
+   "7584633794762335-1"
+  ],
+  "2010-04-28": [
+   "8410670240f4f3a1-1"
+  ],
+  "2010-04-29": [
+   "e9bdf334e82ecc4b-1"
+  ],
+  "2010-04-30": [
+   "e34b0953c3d80545-1"
+  ],
+  "2010-05-03": [
+   "56751ec61eaa684e-1",
+   "c91089d6de64c8e9-1"
+  ],
+  "2010-05-04": [
+   "978fd467183dd4ea-1",
+   "dcfb6bb00b558b3b-1"
+  ],
+  "2010-05-05": [
+   "b69bd11f3459bb85-1",
+   "e491a729804208ad-1"
+  ],
+  "2010-05-06": [
+   "84c758e1ba80b244-1"
+  ],
+  "2010-05-07": [
+   "3048eff772aacb82-1"
+  ],
+  "2010-05-11": [
+   "ec5bec2b340ba10a-1"
+  ],
+  "2010-05-12": [
+   "317d2aa09e11a2f7-1"
+  ],
+  "2010-05-13": [
+   "22a0951e63b55590-1"
+  ],
+  "2010-05-14": [
+   "df5b8f795b93f305-1"
+  ],
+  "2010-05-17": [
+   "2f23b270515f3698-1"
+  ],
+  "2010-05-19": [
+   "c2829dcdebc540c7-1"
+  ],
+  "2010-05-20": [
+   "ab5a0b9cf01841c1-1"
+  ],
+  "2010-05-21": [
+   "63c01971db01a2d8-1"
+  ],
+  "2010-05-24": [
+   "46db471e1570c821-1"
+  ],
+  "2010-05-25": [
+   "4dbe46143d021e3e-1"
+  ],
+  "2010-05-26": [
+   "c06ce22287b8e1cd-1"
+  ],
+  "2010-05-27": [
+   "ffb5a1c2d20971bc-1"
+  ],
+  "2010-05-28": [
+   "6dad6cde0e09e495-1"
+  ],
+  "2010-06-01": [
+   "8b8e52ecfcc5aee0-1"
+  ],
+  "2010-06-02": [
+   "20604e1938a97267-1",
+   "9e90eea2b07fc0c0-1"
+  ],
+  "2010-06-04": [
+   "37b63040beff2ff5-1"
+  ],
+  "2010-06-07": [
+   "cb74dadcf4a12c26-1"
+  ],
+  "2010-06-08": [
+   "da23dc24ccae0741-1"
+  ],
+  "2010-06-09": [
+   "13926690041bbc94-1"
+  ],
+  "2010-06-10": [
+   "96aa5fea04fe7eae-1"
+  ],
+  "2010-06-11": [
+   "767f6085ada4acdf-1"
+  ],
+  "2010-06-14": [
+   "f2419f4bc0ba4c41-1"
+  ],
+  "2010-06-15": [
+   "55159c9e8cb21797-1"
+  ],
+  "2010-06-16": [
+   "adfffaf2e22de6a2-1"
+  ],
+  "2010-06-17": [
+   "5c2a502d1796680b-1"
+  ],
+  "2010-06-18": [
+   "0bb6c9bacd9d3f4e-1"
+  ],
+  "2010-06-21": [
+   "49a3894df403c57b-1"
+  ],
+  "2010-06-22": [
+   "2a177a9684144b13-1"
+  ],
+  "2010-06-23": [
+   "4e16d8bc1a2baad9-1"
+  ],
+  "2010-06-24": [
+   "7af0a9f9d0daa46d-1"
+  ],
+  "2010-06-25": [
+   "82a834e582338119-1"
+  ],
+  "2010-06-28": [
+   "a50a4fec663ff097-1"
+  ],
+  "2010-06-29": [
+   "c395b32ad337c49e-1"
+  ],
+  "2010-06-30": [
+   "daabe8685cff277f-1"
+  ],
+  "2010-07-01": [
+   "3379bf5d1f75a386-1"
+  ],
+  "2010-07-02": [
+   "9ae0156858ca980f-1"
+  ],
+  "2010-07-06": [
+   "fe07e67c7c4c2cb5-1"
+  ],
+  "2010-07-07": [
+   "029e2c4884ea6f3f-1",
+   "b528b4b23eb9ac8e-1"
+  ],
+  "2010-07-08": [
+   "6f823a04b24004ff-1"
+  ],
+  "2010-07-09": [
+   "484c83e3a43b3257-1"
+  ],
+  "2010-07-12": [
+   "ca3185ee7f9c72b6-1"
+  ],
+  "2010-07-14": [
+   "c78f98e91109fbf2-1"
+  ],
+  "2010-07-15": [
+   "eae9a32c38819b31-1"
+  ],
+  "2010-07-19": [
+   "47ca369652c4f015-1"
+  ],
+  "2010-07-20": [
+   "d2140c2f21b7cfc7-1"
+  ],
+  "2010-07-21": [
+   "9358fdf41b07fec6-1"
+  ],
+  "2010-07-22": [
+   "a23362a32c85fa2c-1"
+  ],
+  "2010-07-23": [
+   "2de2b8b13b41a34e-1"
+  ],
+  "2010-07-26": [
+   "9879a822ce058d51-1"
+  ],
+  "2010-07-27": [
+   "6d0bc0c21620db70-1"
+  ],
+  "2010-07-28": [
+   "66f818fc6f4910d0-1"
+  ],
+  "2010-07-29": [
+   "4d31d244c5348b36-1"
+  ],
+  "2010-07-30": [
+   "720d3080ea2b30b8-1"
+  ],
+  "2010-08-03": [
+   "6be0051a9f3242e1-1"
+  ],
+  "2010-08-04": [
+   "5700e406e167c0b9-1"
+  ],
+  "2010-08-05": [
+   "28fa4ac8fd62a9c5-1"
+  ],
+  "2010-08-06": [
+   "71fc631155964a52-1"
+  ],
+  "2010-08-09": [
+   "3d9eddd786708d80-1"
+  ],
+  "2010-08-10": [
+   "c65238f102361f63-1"
+  ],
+  "2010-08-11": [
+   "846f7e090b7c1215-1"
+  ],
+  "2010-08-12": [
+   "348d74dd76a47e75-1"
+  ],
+  "2010-08-13": [
+   "5ea3daf9899731ab-1"
+  ],
+  "2010-08-17": [
+   "5780b6a39ec59434-1"
+  ],
+  "2010-08-18": [
+   "ed3da34db9b9b8c9-1"
+  ],
+  "2010-08-19": [
+   "279c813990127ada-1"
+  ],
+  "2010-08-20": [
+   "dabc31a0fd13bff0-1"
+  ],
+  "2010-08-24": [
+   "7933b152c4e6f6db-1"
+  ],
+  "2010-08-25": [
+   "bcfe633645972722-1"
+  ],
+  "2010-08-26": [
+   "121becd8d8e87b74-1"
+  ],
+  "2010-08-30": [
+   "ec99b8a45ba72cc0-1"
+  ],
+  "2010-08-31": [
+   "dc26ae7242eb7c03-1"
+  ],
+  "2010-09-02": [
+   "a6e2c869638c5d68-1"
+  ],
+  "2010-09-03": [
+   "58bc2af1052e0dc9-1"
+  ],
+  "2010-09-08": [
+   "4a4fc18f56ce3b9d-1"
+  ],
+  "2010-09-09": [
+   "09773dc0fd934738-1",
+   "5d28f972d7271080-1"
+  ],
+  "2010-09-10": [
+   "1dd298c228a41498-1",
+   "be439c04579f31b3-1"
+  ],
+  "2010-09-13": [
+   "5b0007fcdda2f279-1",
+   "f3e4433f2043bef8-1"
+  ],
+  "2010-09-14": [
+   "29d93cf131df02f7-1",
+   "c6fbfca1af1281c9-1"
+  ],
+  "2010-09-15": [
+   "06c100f8151c2b45-1",
+   "3911994c87a0a0cd-1"
+  ],
+  "2010-09-16": [
+   "6d537f476594a5bb-1",
+   "b251ddde2cea028e-1"
+  ],
+  "2010-09-17": [
+   "3b6e22b7c513c8b3-1",
+   "3dd648de3b801250-1"
+  ],
+  "2010-09-20": [
+   "3d618a775bfc798a-1",
+   "58be775b212344e6-1"
+  ],
+  "2010-09-21": [
+   "381364b485790029-1",
+   "b5000e2ea12c1d20-1"
+  ],
+  "2010-09-22": [
+   "064af37eb4fda837-1",
+   "8206b838d6f30e26-1"
+  ],
+  "2010-09-23": [
+   "c1b66f954cbd8ae4-1"
+  ],
+  "2010-09-24": [
+   "1171f2f374f337b3-1",
+   "a6abc1abbd5b3ece-1"
+  ],
+  "2010-09-27": [
+   "7be83a8e0ed6bc73-1",
+   "a5975ee9ee6d8e85-1"
+  ],
+  "2010-09-28": [
+   "9a38fa236ab36a9e-1",
+   "a0d6b791d2ba92b1-1"
+  ],
+  "2010-09-29": [
+   "d3fc5292c4cd00da-1"
+  ],
+  "2010-09-30": [
+   "98eab594bf40c5f3-1",
+   "cbebd2c524f1af1f-1"
+  ],
+  "2010-10-01": [
+   "d2e389321d6c6808-1",
+   "f9acd38e2495f3c3-1"
+  ],
+  "2010-10-04": [
+   "1ef1264fb7ac404d-1",
+   "24da0369866c141b-1"
+  ],
+  "2010-10-05": [
+   "161b6dbc6f6593ae-1",
+   "77463646c11fdc43-1"
+  ],
+  "2010-10-06": [
+   "b92ba733f4eca9de-1",
+   "f1eca2f353239c06-1"
+  ],
+  "2010-10-07": [
+   "5d06ef8de3fc816a-1",
+   "89b12935fc655ebd-1"
+  ],
+  "2010-10-08": [
+   "849af9419e85a520-1",
+   "b0bbcd4fcf908c3d-1"
+  ],
+  "2010-10-13": [
+   "72a5a3a5360a3a5a-1",
+   "8362a711e4f0810c-1"
+  ],
+  "2010-10-14": [
+   "35e95382b63b51f5-1",
+   "8fbb604739040599-1",
+   "a3573fb0ca298d3e-1",
+   "bd28159463721bd5-1"
+  ],
+  "2010-10-15": [
+   "6bedb1d8cf7be3f4-1",
+   "d11037e5674fde11-1"
+  ],
+  "2010-10-18": [
+   "8a8204663607c73e-1",
+   "bd1d2534ed662a7a-1"
+  ],
+  "2010-10-19": [
+   "6a0edd40573639df-1",
+   "ae73968676ded846-1"
+  ],
+  "2010-10-20": [
+   "2b8bfb2869a1ef52-1",
+   "d588cfa8b1676ed1-1"
+  ],
+  "2010-10-21": [
+   "2d6c84ab29b55b45-1",
+   "c38c2af8e03ef2ea-1"
+  ],
+  "2010-10-22": [
+   "01ec064a17dea4de-1",
+   "f84e2ea5337c66d1-1"
+  ],
+  "2010-10-25": [
+   "4ec2f7fd1c2c3f34-1"
+  ],
+  "2010-10-26": [
+   "11c1622573d29e0c-1",
+   "42d3606866fedf56-1"
+  ],
+  "2010-10-27": [
+   "41f2aea82ba90810-1"
+  ],
+  "2010-10-28": [
+   "cba2a925866eccba-1"
+  ],
+  "2010-10-29": [
+   "2b1875727dfa338f-1",
+   "b85636852ab58def-1"
+  ],
+  "2010-11-01": [
+   "773273a510922135-1",
+   "a5a6a6e0c41a2f38-1"
+  ],
+  "2010-11-03": [
+   "1f25cd45e2dfa67d-1",
+   "9616556fe682d082-1"
+  ],
+  "2010-11-04": [
+   "998210cd2bc21e6a-1"
+  ],
+  "2010-11-05": [
+   "0a01f1099b82c7fb-1",
+   "77b19df280dee092-1"
+  ],
+  "2010-11-08": [
+   "cf22bf1f39f5d978-1",
+   "f16c2fd8dbd41048-1"
+  ],
+  "2010-11-09": [
+   "279e01ac8c2ffc49-1",
+   "6dd4cee2899c6885-1"
+  ],
+  "2010-11-10": [
+   "33d34d5919223bdd-1",
+   "aee175eab6b9d9f8-1"
+  ],
+  "2010-11-12": [
+   "e0eac15e7b3495d9-1"
+  ],
+  "2010-11-16": [
+   "4374475744264f8b-1",
+   "6566378618516cd6-1"
+  ],
+  "2010-11-17": [
+   "d7a81934d6cff609-1"
+  ],
+  "2010-11-18": [
+   "55cbaf3690f183d7-1"
+  ],
+  "2010-11-19": [
+   "7093617ef2e26393-1"
+  ],
+  "2010-11-22": [
+   "f1b251d5fdc5b585-1"
+  ],
+  "2010-11-24": [
+   "230be092e1325eaa-1"
+  ],
+  "2010-11-29": [
+   "1ab1e612347036a1-1",
+   "aac51f5a28605df0-1"
+  ],
+  "2010-11-30": [
+   "71092e0b65f35fd5-1"
+  ],
+  "2010-12-01": [
+   "0a5bbb26930793ef-1"
+  ],
+  "2010-12-02": [
+   "11f4228857b21add-1"
+  ],
+  "2010-12-03": [
+   "f48029bfea9200ed-1"
+  ],
+  "2010-12-07": [
+   "9db4ab4370fd760c-1"
+  ],
+  "2010-12-08": [
+   "2e1f71530df1db4c-1"
+  ],
+  "2010-12-09": [
+   "0b8b8c30206b0e8a-1",
+   "d159ac5fbe072aad-1"
+  ],
+  "2010-12-10": [
+   "4577332fa3d48547-1",
+   "cf71b33aae1af66f-1"
+  ],
+  "2010-12-13": [
+   "21272996509e269e-1"
+  ],
+  "2010-12-14": [
+   "2182c75c67e88aee-1"
+  ],
+  "2010-12-16": [
+   "78bcb44537bb1133-1"
+  ],
+  "2010-12-17": [
+   "d3442f4ac6e4cf04-1"
+  ],
+  "2010-12-20": [
+   "7c44222744ef3acd-1"
+  ],
+  "2010-12-22": [
+   "23a31159ff2db136-1"
+  ],
+  "2010-12-23": [
+   "49a4d3786288a6e4-1"
+  ],
+  "2010-12-27": [
+   "64ff39f308e1f7e8-1"
+  ],
+  "2010-12-30": [
+   "cd8928d91aeb315c-1"
+  ],
+  "2010-12-31": [
+   "115c25b2d55bdda2-1"
+  ],
+  "2011-01-03": [
+   "0aed23d7807b6fd0-1",
+   "682e5c57a5c4db78-1"
+  ],
+  "2011-01-05": [
+   "9d913332f447f998-1",
+   "fe221cf0850c71c0-1"
+  ],
+  "2011-01-06": [
+   "75e6474d175fd64e-1"
+  ],
+  "2011-01-07": [
+   "8bcf307623b37dfe-1",
+   "d55094d7fc94dff3-1"
+  ],
+  "2011-01-10": [
+   "2a3366567932279c-1",
+   "93503865da269d6b-1"
+  ],
+  "2011-01-11": [
+   "7431ae0f207c54d2-1"
+  ],
+  "2011-01-12": [
+   "eda25185f4528509-1"
+  ],
+  "2011-01-13": [
+   "bf845789cccbcaa8-1"
+  ],
+  "2011-01-14": [
+   "7b8279b273c1307e-1"
+  ],
+  "2011-01-18": [
+   "cff1a84b7c752ec2-1"
+  ],
+  "2011-01-19": [
+   "4b7eb99351949cf2-1",
+   "671340024561ae8d-1"
+  ],
+  "2011-01-20": [
+   "5da8c770add777dd-1",
+   "a4493c619440f16c-1"
+  ],
+  "2011-01-21": [
+   "a67166c9794d00d1-1",
+   "cc22d92838d6ecd7-1"
+  ],
+  "2011-01-24": [
+   "c636fd10a9485b56-1",
+   "e500702d7bb49a59-1"
+  ],
+  "2011-01-25": [
+   "cb77f49144f68eb8-1",
+   "d64c3665d75e9a1b-1"
+  ],
+  "2011-01-26": [
+   "229afa144285a4ce-1",
+   "2919409dcc1dba49-1"
+  ],
+  "2011-01-28": [
+   "244c8c3824d3ce7c-1",
+   "7287475d8bb66036-1"
+  ],
+  "2011-01-31": [
+   "06489f2c91d0e040-1",
+   "b476debc4bd35d68-1"
+  ],
+  "2011-02-01": [
+   "a32c1a656d5c1257-1",
+   "b1ef3ca2cc48b425-1"
+  ],
+  "2011-02-02": [
+   "236eb3d07bea48d6-1",
+   "54e34cdb6e63dbf4-1"
+  ],
+  "2011-02-03": [
+   "77bf85c9271bebf4-1",
+   "ca219d34c7829cb2-1"
+  ],
+  "2011-02-04": [
+   "1644ed94c6b6ecdb-1",
+   "d0df3722eff35ef6-1"
+  ],
+  "2011-02-07": [
+   "25089c3e10604697-1",
+   "5436c1d7599a23e1-1"
+  ],
+  "2011-02-08": [
+   "3e887c547f232f0c-1",
+   "c921293307878dae-1"
+  ],
+  "2011-02-09": [
+   "15b17350cb7d85a5-1",
+   "ccc8fff436e3f9af-1",
+   "eabf35220a090a49-1"
+  ],
+  "2011-02-10": [
+   "21acc5541a038526-1",
+   "df908df80de7c850-1"
+  ],
+  "2011-02-11": [
+   "1612a7fead1918ed-1",
+   "3ecb07962e8ceef7-1"
+  ],
+  "2011-02-14": [
+   "6c0e2e6c6448baf3-1",
+   "9ddc0ec3a47a9224-1"
+  ],
+  "2011-02-15": [
+   "9c0a441527501f76-1",
+   "d613b5b6451ed98c-1"
+  ],
+  "2011-02-16": [
+   "326944e14b5aa633-1",
+   "a719f432e65e1e95-1",
+   "d9ea9131c3ad3b68-1"
+  ],
+  "2011-02-17": [
+   "2fcd769d23e2a8a1-1",
+   "3529f2516a4cd25d-1"
+  ],
+  "2011-02-18": [
+   "329cee97efcf3c7d-1",
+   "fc0ecee3e00065ab-1"
+  ],
+  "2011-02-22": [
+   "fcd20fd3d6ddf370-1"
+  ],
+  "2011-02-23": [
+   "04d5a719b688f183-1",
+   "ae89e86dfdb3be52-1",
+   "c01f6e3eb209ab69-1",
+   "d3c9dd47937e58c5-1"
+  ],
+  "2011-02-24": [
+   "7f147e58f85cac34-1"
+  ],
+  "2011-02-25": [
+   "501d254edff16af5-1",
+   "cd45c130991169d0-1"
+  ],
+  "2011-02-28": [
+   "71cf2691fa4f6a34-1",
+   "80fb0134bd3936dd-1"
+  ],
+  "2011-03-01": [
+   "799d6b772d00c3be-1",
+   "a40b5816bfbee420-1"
+  ],
+  "2011-03-02": [
+   "0caefcaad67d7da8-1",
+   "51e27a0cca700664-1"
+  ],
+  "2011-03-03": [
+   "3131b223ca6125f3-1"
+  ],
+  "2011-03-04": [
+   "36103e0dd782baf6-1"
+  ],
+  "2011-03-09": [
+   "2bd92f68f7abfc36-1",
+   "5c53bcb738baaaba-1",
+   "9fa64de79154c534-1"
+  ],
+  "2011-03-10": [
+   "1818d9dc05341075-1",
+   "e94e2b6bd390e336-1"
+  ],
+  "2011-03-11": [
+   "2844e0d7ef5eebdf-1"
+  ],
+  "2011-03-14": [
+   "38c197379b492bab-1",
+   "99263c48f075cb46-1"
+  ],
+  "2011-03-15": [
+   "52bda828d03460e3-1",
+   "6fc79f93784b5ff2-1"
+  ],
+  "2011-03-16": [
+   "596b3d3dfbf25a53-1",
+   "5c8c955b2332faa2-1",
+   "5d34f518b64b183c-1",
+   "9256b6a8da7833f0-1",
+   "fdf38ffef9ce6839-1"
+  ],
+  "2011-03-17": [
+   "21b935adc92f58bc-1",
+   "927d258c94d396e6-1"
+  ],
+  "2011-03-18": [
+   "b1dd0265fcf758b2-1"
+  ],
+  "2011-03-21": [
+   "c9872900d0e09bfd-1"
+  ],
+  "2011-03-22": [
+   "7e75e28b6cf4da15-1"
+  ],
+  "2011-03-23": [
+   "51051e8a97ac462b-1",
+   "66532d600b7e52a6-1"
+  ],
+  "2011-03-24": [
+   "1c84bdb6b1f750eb-1"
+  ],
+  "2011-03-25": [
+   "4ea2fe47faf936f3-1"
+  ],
+  "2011-03-28": [
+   "d4a6cc261bcdaf05-1"
+  ],
+  "2011-03-29": [
+   "09ba1e8e81f2fb36-1",
+   "4565eca1b1c579af-1"
+  ],
+  "2011-03-30": [
+   "2c45ea88d8735183-1",
+   "da41f531ccb1a6c2-1"
+  ],
+  "2011-03-31": [
+   "c2b5557b08f01c54-1",
+   "f95e3dd2c3135f7a-1"
+  ],
+  "2011-04-01": [
+   "d34fd74ffd6c2f48-1",
+   "db1b5c7d294ac92f-1"
+  ],
+  "2011-04-04": [
+   "38f778857934b66e-1",
+   "3c104216c6ad2c27-1",
+   "59c78ad8d7f38cad-1",
+   "93954c2c4a57a9f2-1",
+   "9fadc35b77da9d24-1",
+   "cd8ab79ace0d52fc-1",
+   "e05d69679f86a1c0-1",
+   "e0a499ee502b96fb-1"
+  ],
+  "2011-04-05": [
+   "15107dea1768ee2f-1",
+   "935cdf023eb5ce3d-1",
+   "c47544a3061b8267-1"
+  ],
+  "2011-04-06": [
+   "d0bb8d4a1d28ed0d-1",
+   "f7b2eb058770fe05-1"
+  ],
+  "2011-04-07": [
+   "41f15faa9fb59b04-1",
+   "7609cc0e3a7e6581-1"
+  ],
+  "2011-04-08": [
+   "a3a1b6b23c244847-1",
+   "cedbc855973673ff-1"
+  ],
+  "2011-04-11": [
+   "853044146f207eb6-1",
+   "e6ba18caad000ba4-1"
+  ],
+  "2011-04-12": [
+   "4021580263d2766c-1",
+   "a3bd5bdfa43cebb3-1"
+  ],
+  "2011-04-13": [
+   "38e386aa592321af-1",
+   "d65ca6eee1742c4d-1"
+  ],
+  "2011-04-14": [
+   "8ee69463ed6792d2-1",
+   "e98fb88de7f58ba6-1"
+  ],
+  "2011-04-15": [
+   "4f8da6973a32190a-1",
+   "d94ac400e2463425-1"
+  ],
+  "2011-04-18": [
+   "a16ae8889614822f-1",
+   "d7a9eca22393387c-1"
+  ],
+  "2011-04-19": [
+   "3b7a84dddfe6ec79-1",
+   "9d19dcca2b6326d1-1"
+  ],
+  "2011-04-20": [
+   "eed59a1984801863-1",
+   "fcf607609b37c362-1"
+  ],
+  "2011-04-25": [
+   "e9cae2074822029f-1",
+   "f907cb32b2d64006-1"
+  ],
+  "2011-04-26": [
+   "37f9e5768517a0cc-1",
+   "875ebf2791ec66bb-1"
+  ],
+  "2011-04-27": [
+   "167d310521663799-1",
+   "c8d85364a01599b9-1"
+  ],
+  "2011-04-28": [
+   "12decbe5bc7a13cf-1",
+   "2bc9d5b720c94417-1"
+  ],
+  "2011-04-29": [
+   "6583f7bfa8c88d53-1",
+   "7739358a4a71b76b-1"
+  ],
+  "2011-05-02": [
+   "2d1e417d01874d23-1",
+   "c727d7d8f0ec5f86-1"
+  ],
+  "2011-05-03": [
+   "31fa2c7f85143ff8-1",
+   "89e8ef271aa703c0-1",
+   "91396ba3744db0bc-1"
+  ],
+  "2011-05-04": [
+   "7e03752a36aff96c-1",
+   "d96735fb2b39c39e-1"
+  ],
+  "2011-05-05": [
+   "931ef9afbe45291f-1",
+   "fbed85e96c34419a-1"
+  ],
+  "2011-05-06": [
+   "0d4ffb5a1be3b753-1",
+   "55b85f6423752c3d-1"
+  ],
+  "2011-05-09": [
+   "57efd7ae2b343040-1",
+   "a79b5b2fc2eec8b5-1"
+  ],
+  "2011-05-10": [
+   "34aa8d8ab0f713d7-1",
+   "8908ac0fa9bb0664-1"
+  ],
+  "2011-05-11": [
+   "876d37df8df0f9be-1",
+   "cb7843a11fe85da3-1"
+  ],
+  "2011-05-12": [
+   "2718eef394a562ec-1",
+   "7b460985ad57ab09-1"
+  ],
+  "2011-05-13": [
+   "0ed4d68bad86c3b3-1",
+   "3f45b32cec2301ec-1"
+  ],
+  "2011-05-16": [
+   "443b39fc410cb9d1-1",
+   "de8e18a58a1a2f03-1"
+  ],
+  "2011-05-17": [
+   "5fd94694c81d70b4-1",
+   "a9dfdf63964efded-1"
+  ],
+  "2011-05-18": [
+   "46b6e8dfd74b20de-1"
+  ],
+  "2011-05-19": [
+   "346cb8cfa3cdc744-1",
+   "5cbb8193ad324d57-1"
+  ],
+  "2011-05-20": [
+   "f66b70ecd5c690af-1"
+  ],
+  "2011-05-23": [
+   "598de74c67d559ad-1"
+  ],
+  "2011-05-24": [
+   "7b7060a503b201ca-1"
+  ],
+  "2011-05-25": [
+   "4aec63fe0e8d3da0-1"
+  ],
+  "2011-05-26": [
+   "e73a2aac18d7363d-1"
+  ],
+  "2011-05-27": [
+   "ba3776a6cfe4a629-1"
+  ],
+  "2011-05-31": [
+   "929d88cf94b0055e-1"
+  ],
+  "2011-06-01": [
+   "936fa46b98128b10-1",
+   "a4189e749b8c148c-1",
+   "a91b79539cfcfc32-1"
+  ],
+  "2011-06-02": [
+   "5e7048a8d8c18ccc-1",
+   "703c1d922fdfe30c-1"
+  ],
+  "2011-06-03": [
+   "2f9391aa1e56734d-1",
+   "8f8adf5fafa3da16-1"
+  ],
+  "2011-06-06": [
+   "8d831592e0839164-1",
+   "c1b75af5c0bf7942-1"
+  ],
+  "2011-06-07": [
+   "18f416ab7ff6b6aa-1",
+   "2c3e5f144d732285-1"
+  ],
+  "2011-06-08": [
+   "22e7772b256ed6c8-1"
+  ],
+  "2011-06-09": [
+   "654e374fc692c0e5-1"
+  ],
+  "2011-06-10": [
+   "4516007631a5daf1-1"
+  ],
+  "2011-06-14": [
+   "bbc25596913172b2-1"
+  ],
+  "2011-06-16": [
+   "fe3e936551fb1dec-1"
+  ],
+  "2011-06-17": [
+   "2ae3835b9859a633-1"
+  ],
+  "2011-06-20": [
+   "51d18fd9abb9a239-1"
+  ],
+  "2011-06-21": [
+   "81006c5a1cb2970a-1"
+  ],
+  "2011-06-24": [
+   "2c5b35bac3047de4-1"
+  ],
+  "2011-06-27": [
+   "e1ec995e392422a0-1"
+  ],
+  "2011-06-28": [
+   "748765b3e7bf56bf-1"
+  ],
+  "2011-06-29": [
+   "4f9c3cad6d88e99d-1"
+  ],
+  "2011-06-30": [
+   "62bd4fd1654c5a41-1"
+  ],
+  "2011-07-01": [
+   "cc20e07e9412f95d-1",
+   "f10b3a8b96574c86-1"
+  ],
+  "2011-07-05": [
+   "00abb810431dac13-1",
+   "83dbe5eeed7fbf4a-1"
+  ],
+  "2011-07-06": [
+   "78fc85783265ee0e-1",
+   "85f4ff5c2da05db1-1",
+   "e509e520a57aecb3-1"
+  ],
+  "2011-07-07": [
+   "6da59103a666c23a-1"
+  ],
+  "2011-07-08": [
+   "639ebab8ff51f3da-1",
+   "c4f298b521df7e22-1"
+  ],
+  "2011-07-11": [
+   "74e7e7d4e9fbbe4d-1",
+   "9e05689eb378991f-1"
+  ],
+  "2011-07-12": [
+   "2dc385d882846ce9-1",
+   "8979d3a965febec2-1"
+  ],
+  "2011-07-13": [
+   "e14a13667f91707e-1"
+  ],
+  "2011-07-14": [
+   "16f8962ef444121e-1"
+  ],
+  "2011-07-15": [
+   "394727a69dfdb435-1"
+  ],
+  "2011-07-18": [
+   "8ea1b16ee96705d4-1"
+  ],
+  "2011-07-19": [
+   "fa8d6c37d4feddba-1"
+  ],
+  "2011-07-20": [
+   "7bf3eda7634395eb-1"
+  ],
+  "2011-07-21": [
+   "68998d09cfe47dd5-1"
+  ],
+  "2011-07-22": [
+   "d6e1a02cbd49809e-1"
+  ],
+  "2011-07-25": [
+   "cc71c797bdf1f5e8-1",
+   "ce1059dcf32c2ea5-1"
+  ],
+  "2011-07-26": [
+   "259d921393ae4f70-1",
+   "d9b90116252be6a1-1"
+  ],
+  "2011-07-27": [
+   "0d85a5ee3dbeac0d-1",
+   "f2bbaee4f609c364-1"
+  ],
+  "2011-07-28": [
+   "82312282c212db1c-1",
+   "83a8ec3b31899f45-1"
+  ],
+  "2011-07-29": [
+   "23cd4ae932b01546-1",
+   "5050b744816fef7d-1"
+  ],
+  "2011-08-01": [
+   "ec843a7e2d36b141-1",
+   "fd161a308348a701-1"
+  ],
+  "2011-08-02": [
+   "123baeedaadfae9f-1",
+   "5e5f83f651dbf8a9-1",
+   "7f1984bbe4aed974-1",
+   "c86d00012a735aeb-1",
+   "d2742491cf1fce12-1"
+  ],
+  "2011-08-03": [
+   "40a5196f6f4b87cf-1",
+   "7ca395703a5fea5b-1"
+  ],
+  "2011-08-04": [
+   "42423574d697623c-1",
+   "5037023cfa2d1a66-1"
+  ],
+  "2011-08-05": [
+   "2a0e1f8966daf97e-1",
+   "ac8554a828ca2484-1"
+  ],
+  "2011-08-08": [
+   "2bc0231ae39d2f98-1",
+   "b041f0184f58a8bb-1"
+  ],
+  "2011-08-09": [
+   "0d6e9cab3005ae2a-1",
+   "31bc5503c59539e4-1"
+  ],
+  "2011-08-10": [
+   "6012823f0860dee5-1"
+  ],
+  "2011-08-11": [
+   "9ec5f4cfd724a0b1-1"
+  ],
+  "2011-08-12": [
+   "5689cc49e57af67d-1"
+  ],
+  "2011-08-15": [
+   "76326a9a4aadcf64-1"
+  ],
+  "2011-08-16": [
+   "997f9c8a24aa962b-1"
+  ],
+  "2011-08-17": [
+   "4cb329e9ca11c759-1"
+  ],
+  "2011-08-18": [
+   "409ca75866c68622-1"
+  ],
+  "2011-08-19": [
+   "7609bfeaa32fbb76-1"
+  ],
+  "2011-08-22": [
+   "43435bb9ea9cc059-1"
+  ],
+  "2011-08-23": [
+   "c3d27b165ccf22ea-1"
+  ],
+  "2011-08-24": [
+   "a41c0be1bb28b993-1"
+  ],
+  "2011-08-25": [
+   "486d8e97e0881f38-1"
+  ],
+  "2011-08-26": [
+   "cfefbc60a087a2ee-1"
+  ],
+  "2011-08-29": [
+   "0a6ff898f1e465a3-1"
+  ],
+  "2011-08-30": [
+   "92964371d778c752-1"
+  ],
+  "2011-08-31": [
+   "a0169d40c96d9beb-1"
+  ],
+  "2011-09-01": [
+   "eb56c4468046038d-1"
+  ],
+  "2011-09-02": [
+   "001f95bfc16418ee-1"
+  ],
+  "2011-09-06": [
+   "7504c1aecad8578e-1"
+  ],
+  "2011-09-08": [
+   "1b4c74ad406ace28-1",
+   "72845ce8a3c631df-1"
+  ],
+  "2011-09-09": [
+   "1514e90caf1bdb73-1"
+  ],
+  "2011-09-12": [
+   "e14bd326ef0f2add-1"
+  ],
+  "2011-09-13": [
+   "11aaffb223765fa8-1"
+  ],
+  "2011-09-14": [
+   "ed1628213a49688a-1"
+  ],
+  "2011-09-15": [
+   "3e049e85e91ebea7-1"
+  ],
+  "2012-02-08": [
+   "804c4cd8b1d62206-1"
+  ],
+  "2012-02-24": [
+   "118d14b20a985c0b-1"
+  ],
+  "2012-02-27": [
+   "4c1dd2f6d56a3b43-1"
+  ],
+  "2012-02-28": [
+   "be0809374a7aca0b-1",
+   "e1cc43bff1948693-1"
+  ],
+  "2012-02-29": [
+   "5d84df86e77469a5-1"
+  ],
+  "2012-03-01": [
+   "35ee29a7dfef1f2b-1"
+  ],
+  "2012-03-02": [
+   "dabd819af9a42896-1"
+  ],
+  "2012-03-05": [
+   "96a761a1937e88b0-1",
+   "d2255e3e05656475-1"
+  ],
+  "2012-03-06": [
+   "27c9a998fe395bf8-1",
+   "3d05f72634a96137-1"
+  ],
+  "2012-03-07": [
+   "e044f80467356f6f-1"
+  ],
+  "2012-03-19": [
+   "66e4b9d4d88c6de3-1",
+   "bf435ac758799465-1"
+  ],
+  "2012-03-20": [
+   "851f507b7af2ac25-1",
+   "999e6dab2a35db9e-1"
+  ],
+  "2012-03-21": [
+   "d2b3c8327bc76765-1"
+  ],
+  "2012-03-22": [
+   "0a44461d15e260c9-1"
+  ],
+  "2012-03-27": [
+   "3407e5ebf16214a1-1"
+  ],
+  "2012-03-30": [
+   "80b96a8e9d03e597-1"
+  ],
+  "2012-04-03": [
+   "3f272a7521167e86-1"
+  ],
+  "2012-04-05": [
+   "aeeafcb867b77cb0-1"
+  ],
+  "2012-04-13": [
+   "b106b0b48da7d4fd-1"
+  ],
+  "2012-04-16": [
+   "a800ab0c10bffe99-1",
+   "ad59252280bc51a1-1"
+  ],
+  "2012-04-17": [
+   "2c90b51f934bd8a3-1",
+   "317a3a4678d34fd7-1"
+  ],
+  "2012-04-18": [
+   "5811d67985e0a409-1",
+   "eea9f43ec7021438-1"
+  ],
+  "2012-04-19": [
+   "80a91e62791c738f-1",
+   "f5ea5a6fe2ecc1ab-1"
+  ],
+  "2012-04-20": [
+   "584cc7929656adf2-1",
+   "d3eb585dd8e14021-1"
+  ],
+  "2012-04-24": [
+   "2e63f93eb93163d8-1"
+  ],
+  "2012-04-26": [
+   "fe5ad57ed3eefd01-1"
+  ],
+  "2012-04-27": [
+   "bc8fcfe5629ac223-1"
+  ],
+  "2012-05-02": [
+   "b341c300f8cbcbcf-1"
+  ],
+  "2012-12-05": [
+   "189c9a1d0b57a469-1"
+  ],
+  "2012-12-14": [
+   "6cc6b32d8f3b6fa3-1",
+   "e085bb7efae11717-1"
+  ],
+  "2012-12-19": [
+   "4f292176d9d64255-1",
+   "e241d1d8534f16a9-1"
+  ],
+  "2012-12-20": [
+   "60bb09d5d655133d-1",
+   "b13876d1843572f5-1"
+  ],
+  "2012-12-21": [
+   "30c4732ff2089c1d-1"
+  ],
+  "2012-12-24": [
+   "b6a27310e0b7905f-1"
+  ],
+  "2012-12-26": [
+   "6aeade05865eeae4-1",
+   "b1316f78a2a536a6-1"
+  ],
+  "2012-12-28": [
+   "bd0d76035b7a6af8-1"
+  ],
+  "2012-12-31": [
+   "d62c8b835a2d57b9-1"
+  ],
+  "2013-01-02": [
+   "fff38962129fedef-1"
+  ],
+  "2013-06-24": [
+   "03925335d4152d77-1",
+   "ce940dd8ec479efb-1"
+  ],
+  "2013-08-22": [
+   "393c6308dfb2b7de-1",
+   "4e5dc1cb45b00ee5-1"
+  ],
+  "2013-08-26": [
+   "71855ed5ec632a93-1"
+  ],
+  "2013-08-27": [
+   "d0ccd0954c6d67b1-1"
+  ],
+  "2013-09-04": [
+   "a8e3f7796c3b64d5-1"
+  ],
+  "2013-09-10": [
+   "cdd6ee312039b5ab-1"
+  ],
+  "2013-09-17": [
+   "34bb8e74bea46eca-1"
+  ],
+  "2013-09-24": [
+   "0e71976232c7f9dc-1",
+   "34460adc37151dda-1"
+  ],
+  "2013-10-01": [
+   "1bdc953b34695e2b-1",
+   "479e495c90ae40e2-1"
+  ],
+  "2013-10-08": [
+   "09fe9cfff572eca0-1"
+  ],
+  "2013-10-16": [
+   "4d745e6d30a9a08d-1",
+   "de5450690d51efe3-1"
+  ],
+  "2013-10-22": [
+   "8c345eaaeab80faa-1"
+  ],
+  "2013-10-29": [
+   "28a95a183ed69212-1"
+  ],
+  "2013-11-05": [
+   "6a829b3624f0e386-1"
+  ],
+  "2013-11-13": [
+   "69ecc90ade1f323a-1"
+  ],
+  "2013-11-26": [
+   "9794d9d1f1f5054e-1"
+  ],
+  "2013-12-03": [
+   "7be63bd1a11c110c-1"
+  ],
+  "2013-12-10": [
+   "f95348f5811f82a3-1"
+  ],
+  "2013-12-17": [
+   "a02b51ec1de9c143-1"
+  ],
+  "2013-12-24": [
+   "a4e25ab35a6cc2d7-1"
+  ],
+  "2014-01-02": [
+   "324083f09b75bb5b-1"
+  ],
+  "2014-02-04": [
+   "403b765bfe03504b-1",
+   "e6c7b67eae1c84db-1"
+  ],
+  "2014-03-06": [
+   "339259431e36a2b3-1"
+  ],
+  "2014-04-01": [
+   "d5c37fdda4fd1c5e-1"
+  ],
+  "2014-04-02": [
+   "59848e4a2289b0bd-1"
+  ],
+  "2014-08-04": [
+   "082fe149d7d9c1c2-1",
+   "acb5396b8baa6b0f-1"
+  ],
+  "2014-12-16": [
+   "a4e374449bd145e8-1",
+   "d4fb8cd07747f221-1"
+  ],
+  "2014-12-17": [
+   "fd34284b32e50f35-1"
+  ],
+  "2014-12-18": [
+   "9f5c888a09a5217a-1"
+  ],
+  "2014-12-19": [
+   "0de674080f1c4bdc-1",
+   "4022c6fbdd84662f-1"
+  ],
+  "2014-12-22": [
+   "6b78dbc98231a23e-1",
+   "fa9a61916fdb9ba0-1"
+  ],
+  "2014-12-23": [
+   "8d6a29fcdb481da6-1",
+   "ea6a89c019fcdbae-1"
+  ],
+  "2014-12-24": [
+   "f3849c089f29e7c4-1"
+  ],
+  "2015-04-02": [
+   "3ff9eaf01f1808f9-1",
+   "df934012b2997ff3-1"
+  ],
+  "2015-09-02": [
+   "5e593c4282d61201-1",
+   "8a26ba9d80cc73ba-1"
+  ],
+  "2015-09-10": [
+   "e09063ecff66e0f6-1"
+  ],
+  "2015-09-14": [
+   "73f6f7e57d765cbe-1",
+   "e217c49287ed8e03-1"
+  ],
+  "2015-09-23": [
+   "3f4301ef93556fcc-1",
+   "945d36db7a012468-1"
+  ],
+  "2015-09-25": [
+   "4c948e663d355356-1",
+   "52b50a81dc6fa977-1"
+  ],
+  "2015-09-29": [
+   "d198f2586f7bc5de-1"
+  ],
+  "2015-10-01": [
+   "9263b66db117fbce-1",
+   "9f841a35d0209a26-1"
+  ],
+  "2015-11-05": [
+   "e9256ebd6719a2b1-1"
+  ],
+  "2015-11-09": [
+   "5d1620c207efdecc-1"
+  ],
+  "2015-11-13": [
+   "0c01564c8352f7a7-1"
+  ],
+  "2015-11-16": [
+   "717008378f7675b3-1",
+   "935b19b7b5dfd8c1-1"
+  ],
+  "2015-11-19": [
+   "af6b6fb18871140a-1"
+  ],
+  "2015-11-23": [
+   "471e6a53585570c4-1"
+  ],
+  "2015-11-27": [
+   "c4ed726f439132e1-1"
+  ],
+  "2015-12-02": [
+   "82bf0a5b95270878-1",
+   "e44f39998805d740-1"
+  ],
+  "2015-12-07": [
+   "7f2be33e4fac27cf-1"
+  ],
+  "2015-12-14": [
+   "9b98e2df4ed4a00f-1"
+  ],
+  "2015-12-17": [
+   "d08e04ebe267e1bc-1"
+  ],
+  "2015-12-21": [
+   "0b09a6cfe0b3ac02-1",
+   "3edaf1b656ea8479-1"
+  ],
+  "2015-12-24": [
+   "d019dac5962a7aaa-1"
+  ],
+  "2016-01-04": [
+   "4d29d26527388fcc-1",
+   "8e7cef58532b2791-1"
+  ],
+  "2016-02-02": [
+   "a658280499c1155d-1",
+   "cb773029d19dbee9-1"
+  ],
+  "2016-03-02": [
+   "7d0bf0c39d4baa00-1"
+  ],
+  "2016-03-11": [
+   "3261783a02f03028-1",
+   "67b715182148255b-1"
+  ],
+  "2016-03-29": [
+   "1bd4e66c5dc69632-1",
+   "9193e5db1fb1b30c-1"
+  ],
+  "2016-05-03": [
+   "3eaefff89de5c3a0-1",
+   "7a3d0cfc79b11642-1"
+  ],
+  "2016-06-02": [
+   "1f1ec958c8d5d87c-1",
+   "e3581f8ee42f7ee2-1"
+  ],
+  "2016-06-27": [
+   "29cb02f21c0a899b-1",
+   "bbe7abc0e7cb81ca-1"
+  ],
+  "2016-08-02": [
+   "866f0d69e7179abe-1",
+   "a1502bc1f905b565-1"
+  ],
+  "2016-09-02": [
+   "a2c2cb98889bbedf-1",
+   "e0893bf0a5f7946c-1"
+  ],
+  "2016-10-04": [
+   "59b975122a19333e-1",
+   "6bd466f49344ac27-1"
+  ],
+  "2016-11-03": [
+   "3908ffe39cdad2f7-1",
+   "beadb72b5c76aa53-1"
+  ],
+  "2017-01-03": [
+   "7892ae640823195f-1",
+   "dd4937e6388e71c7-1"
+  ],
+  "2017-02-02": [
+   "d7d23313c456cd64-1"
+  ],
+  "2017-04-04": [
+   "c3862169c5416367-1",
+   "d0be1b235f5e19b5-1"
+  ],
+  "2017-12-07": [
+   "744be35528d99e43-1",
+   "ef670ef406a29e34-1"
+  ],
+  "2017-12-14": [
+   "c4cd28961699781c-1",
+   "d19937169cea90e0-1"
+  ],
+  "2017-12-21": [
+   "7ada86b56a862d25-1",
+   "7c87aefa415b453d-1"
+  ],
+  "2017-12-28": [
+   "abd8cfe015d4b552-1",
+   "b2d63f387f9819b7-1"
+  ],
+  "2018-04-03": [
+   "cea140167ab79809-1"
+  ],
+  "2018-06-27": [
+   "1cc5efa105749758-1"
+  ],
+  "2018-06-29": [
+   "158aee8f29c11fec-1",
+   "7f965a7018fd1b46-1"
+  ],
+  "2018-09-05": [
+   "389f883fb1123f61-1",
+   "ebcf46e17ff30f20-1"
+  ],
+  "2018-11-29": [
+   "10c7902829e70ac6-1"
+  ],
+  "2018-11-30": [
+   "fcddc63d67384219-1",
+   "fecf8fc98bb35da0-1"
+  ],
+  "2018-12-04": [
+   "1951e151ed3f7f2a-1",
+   "9248e171f9aeee05-1"
+  ],
+  "2018-12-06": [
+   "d165e37c3933b02b-1",
+   "f5aeaf8a9632eb37-1"
+  ],
+  "2018-12-13": [
+   "0dd1263a10632991-1",
+   "6916983f8422930a-1"
+  ],
+  "2018-12-19": [
+   "2252af0fd1a64072-1",
+   "5bd21103a97820b9-1"
+  ],
+  "2018-12-24": [
+   "4256e68297562a6c-1",
+   "a458350a12cbb8af-1"
+  ],
+  "2018-12-26": [
+   "41e79447856e4c39-1",
+   "8fc33c42e1252373-1"
+  ],
+  "2018-12-28": [
+   "4b720f94ccdbf010-1",
+   "9478d5c2f7d37217-1"
+  ],
+  "2018-12-31": [
+   "cea9011552b28c35-1",
+   "f2b293af425170af-1"
+  ],
+  "2019-02-04": [
+   "439e404a719862e0-1",
+   "57efa9da9162cd17-1",
+   "6a38b81020901304-1",
+   "d14bbf109c98b9f5-1"
+  ],
+  "2019-03-06": [
+   "77af1dc6f3881a09-1",
+   "badafc9ac1b8eff3-1"
+  ],
+  "2019-04-01": [
+   "f730a28347818485-1"
+  ],
+  "2019-04-02": [
+   "073b28b440770b13-1",
+   "90cfdf43567e6a01-1"
+  ],
+  "2019-06-04": [
+   "1fc043b990e2d7d4-1",
+   "28f5d3e36253f411-1",
+   "3b8e2dcd3ec14115-1",
+   "866c9ed027300f4d-1",
+   "a7ba4394e641ca65-1",
+   "ae66f4c0f4785180-1"
+  ],
+  "2019-06-27": [
+   "66f70eed57aab734-1"
+  ],
+  "2019-06-28": [
+   "221b962910a2d599-1"
+  ],
+  "2019-07-02": [
+   "4cfafd59353e627b-1",
+   "6e1243dec0bf4543-1",
+   "8536711da2ac7c7b-1",
+   "a2138b3a25858373-1"
+  ],
+  "2019-07-30": [
+   "9c50e57596094346-1",
+   "e3dd0c110ad3ca5d-1"
+  ],
+  "2019-08-02": [
+   "4f8f16e61e07e405-1",
+   "b0a9792da5f065cf-1"
+  ],
+  "2019-08-23": [
+   "876e2a224be32820-1"
+  ],
+  "2019-08-26": [
+   "86e223e7313e2788-1"
+  ],
+  "2019-08-27": [
+   "c82bbd7339ce039d-1"
+  ],
+  "2019-08-28": [
+   "c5659b7b7e813382-1"
+  ],
+  "2019-08-29": [
+   "42a86915457761a7-1",
+   "43d00a1d64b2e728-1"
+  ],
+  "2019-08-30": [
+   "58ce829fc6f27961-1"
+  ],
+  "2019-09-03": [
+   "ddef42901351b32c-1"
+  ],
+  "2019-09-04": [
+   "9ef50c808dc177c1-1",
+   "de0a9befe806f8d6-1"
+  ],
+  "2019-09-05": [
+   "feb707c6675ce2c0-1"
+  ],
+  "2019-09-06": [
+   "561b85357713f7f1-1"
+  ],
+  "2019-09-09": [
+   "83057d2252a24dbd-1"
+  ],
+  "2019-09-10": [
+   "28bdb8026b55ae0d-1"
+  ],
+  "2019-09-11": [
+   "867ac877e1da3ef0-1"
+  ],
+  "2019-09-12": [
+   "8dc2f21d52f5cf6b-1"
+  ],
+  "2019-09-13": [
+   "9179f2cb6f7f2c7d-1"
+  ],
+  "2019-09-16": [
+   "4fc8227b2c4e19ce-1"
+  ],
+  "2019-09-17": [
+   "68036f70077acc30-1"
+  ],
+  "2019-09-18": [
+   "84a8d0c39600a613-1"
+  ],
+  "2019-09-19": [
+   "9b1ef4c26f850eda-1"
+  ],
+  "2019-09-20": [
+   "5e0072dda03d2b7e-1"
+  ],
+  "2019-09-23": [
+   "f6dca7eae4a41b6b-1"
+  ],
+  "2019-09-24": [
+   "d97dc07db9b18025-1"
+  ],
+  "2019-09-25": [
+   "b7f8e3fd72cd7715-1"
+  ],
+  "2019-09-26": [
+   "a0645b58fdf00482-1"
+  ],
+  "2019-09-27": [
+   "9a054266552dcad2-1"
+  ],
+  "2019-09-30": [
+   "a59fafc78f1e15fe-1"
+  ],
+  "2019-10-01": [
+   "ff9d564ab6ffa0d0-1"
+  ],
+  "2019-10-02": [
+   "501bbf55d26f4483-1",
+   "86f9dbb27726ffc5-1",
+   "913cbc7d604c6fc7-1",
+   "cf6b59beb520f43e-1"
+  ],
+  "2019-10-03": [
+   "5ec156a70eb868ba-1"
+  ],
+  "2019-10-04": [
+   "bacb768db776547f-1"
+  ],
+  "2019-10-07": [
+   "26c4178c82ff367c-1"
+  ],
+  "2019-10-09": [
+   "d1de9ac971bcda53-1"
+  ],
+  "2019-10-10": [
+   "8925ad32c4de98c8-1"
+  ],
+  "2019-10-11": [
+   "86a3fce355a6a06e-1"
+  ],
+  "2019-10-15": [
+   "fc41cbdd37631d4c-1"
+  ],
+  "2019-10-16": [
+   "b6263cc4659f2c47-1",
+   "c9e73aed7dd965c7-1"
+  ],
+  "2019-10-17": [
+   "2ae2557260cf5d93-1"
+  ],
+  "2019-10-18": [
+   "a1ffc4b93a293f04-1"
+  ],
+  "2019-10-21": [
+   "4e94a182a2a80a34-1"
+  ],
+  "2019-10-22": [
+   "d089d724976a7e90-1"
+  ],
+  "2019-10-23": [
+   "3924bc55c4ebb610-1"
+  ],
+  "2019-10-25": [
+   "ec39823cf8b6d792-1"
+  ],
+  "2019-10-28": [
+   "08d4db15633ba668-1"
+  ],
+  "2019-10-29": [
+   "2258b4cf7b8a40e1-1"
+  ],
+  "2019-10-30": [
+   "bd6ecf8e1066529b-1"
+  ],
+  "2019-10-31": [
+   "d8e181c367452a76-1"
+  ],
+  "2019-11-01": [
+   "7304f53026cd7034-1"
+  ],
+  "2019-11-04": [
+   "a4d013416d8e429e-1"
+  ],
+  "2019-11-05": [
+   "f5dcae3fcddefe39-1"
+  ],
+  "2019-11-06": [
+   "3c30879d88e751c2-1"
+  ],
+  "2019-11-07": [
+   "a1d5bb19f7e31d68-1"
+  ],
+  "2019-11-12": [
+   "a39d971de3b0ad02-1"
+  ],
+  "2019-11-13": [
+   "44214c2ec16777a4-1",
+   "be7c133fe7993d9d-1"
+  ],
+  "2019-11-18": [
+   "83e16cbb55a1f1ef-1"
+  ],
+  "2019-11-19": [
+   "ca44916c83e22d9b-1"
+  ],
+  "2019-11-20": [
+   "639e005a03f43abc-1"
+  ],
+  "2019-11-25": [
+   "894f57385bfd8a97-1"
+  ],
+  "2019-11-26": [
+   "34dfde9eb07efa72-1"
+  ],
+  "2019-11-29": [
+   "555c2b0e5f9610e8-1",
+   "b5c82f3d4db22c18-1",
+   "ee1db7f7ccf003c2-1"
+  ],
+  "2019-12-02": [
+   "11b0cf70db60b05b-1",
+   "7e5aafcd6f035ca3-1",
+   "9a0e7a3c4c7e289d-1"
+  ],
+  "2019-12-03": [
+   "50c658b0049a65f3-1"
+  ],
+  "2019-12-04": [
+   "d2c2ccc37d8764a9-1"
+  ],
+  "2019-12-05": [
+   "469a683ed9c96c4e-1"
+  ],
+  "2019-12-06": [
+   "85863dc5c42d566e-1"
+  ],
+  "2019-12-09": [
+   "bd9023965d5a9d65-1"
+  ],
+  "2019-12-10": [
+   "cf452f9fb2d3e109-1"
+  ],
+  "2019-12-11": [
+   "6552c7015d432fb7-1"
+  ],
+  "2019-12-12": [
+   "cb089feb763f7d22-1"
+  ],
+  "2019-12-13": [
+   "b4a4358d9490e9de-1"
+  ],
+  "2019-12-16": [
+   "dfdfd734b983299a-1"
+  ],
+  "2019-12-17": [
+   "110cd4ed3901939e-1"
+  ],
+  "2019-12-18": [
+   "2b0496bed991a053-1"
+  ],
+  "2019-12-19": [
+   "69963ed9fd4fc74f-1",
+   "8760cc9304c16153-1",
+   "a57739fd549f0663-1"
+  ],
+  "2019-12-20": [
+   "2293d7986deb11c0-1",
+   "79ba15b778ad41a3-1",
+   "f463e5da569dade7-1"
+  ],
+  "2019-12-23": [
+   "afa62b04170e75b8-1"
+  ],
+  "2019-12-24": [
+   "8027fd705eac6d6e-1"
+  ],
+  "2020-01-03": [
+   "0a5747033eb95737-1",
+   "39bdb8cb13023041-1",
+   "d89a6bb7192d879e-1"
+  ],
+  "2020-02-04": [
+   "1eedcc8cb94af4ad-1",
+   "6efb8d9250ac3461-1"
+  ],
+  "2020-03-03": [
+   "432269bc402bf511-1",
+   "62d4768731b586ed-1"
+  ],
+  "2020-03-11": [
+   "1e3f1dfc035b3efc-1",
+   "69c04af5aff4384e-1"
+  ],
+  "2020-03-12": [
+   "39e8e758e6767618-1"
+  ],
+  "2020-03-16": [
+   "9c67b96fad843375-1",
+   "aae4f432362a223c-1",
+   "bb5519b63f341dc1-1"
+  ],
+  "2020-03-17": [
+   "65119ff96b52350f-1",
+   "851778bf5c2dda74-1"
+  ],
+  "2020-03-19": [
+   "9fafef707ac11675-1"
+  ],
+  "2020-03-20": [
+   "044b8d8a9593e456-1",
+   "199e9fffb28c7d7a-1",
+   "43003a1b87a17c65-1",
+   "aa1a2a827ec338f6-1"
+  ],
+  "2020-03-23": [
+   "8ef5701cc2cf58a3-1",
+   "8fd31c7df3b618a8-1",
+   "e8976a5b7b88a9ce-1"
+  ],
+  "2020-03-24": [
+   "87215c5a3aad3f9c-1",
+   "8c9939abea0909aa-1",
+   "9bf9d2a8b1aa71c8-1"
+  ],
+  "2020-03-25": [
+   "2f01c76fc6904b0e-1",
+   "e4149e44ab318b44-1",
+   "f509a79a9f4f12bb-1"
+  ],
+  "2020-03-31": [
+   "0cfc0ebfbfe3add8-1",
+   "374b057e535ffc7c-1",
+   "61abc0f5efb83273-1",
+   "af2d2e1e3553bc1b-1"
+  ],
+  "2020-04-01": [
+   "ab7fd1e9f3d1c655-1"
+  ],
+  "2020-04-02": [
+   "0b1806c524f471a0-1",
+   "5a1abc3cf36457d5-1",
+   "6f5fb15271b89d81-1"
+  ],
+  "2020-04-03": [
+   "1d7cb322bf61e95e-1"
+  ],
+  "2020-04-06": [
+   "2678ceaaa8e2691e-1"
+  ],
+  "2020-04-07": [
+   "5a64b0883f560592-1",
+   "7e9b1f862118dd87-1"
+  ],
+  "2020-04-08": [
+   "33455978461bee90-1"
+  ],
+  "2020-04-15": [
+   "6a3e9babd90d7ef0-1"
+  ],
+  "2020-04-23": [
+   "2e6bbb2bd3aeb09b-1",
+   "c6341232c9d74caa-1"
+  ],
+  "2020-04-28": [
+   "535329e384f66dec-1",
+   "8a529201881bcc90-1",
+   "a240f217776bba01-1",
+   "f637cc9920aef440-1"
+  ],
+  "2020-04-29": [
+   "c486d881a0f5e81b-1"
+  ],
+  "2020-04-30": [
+   "5ead333fde35ae2d-1"
+  ],
+  "2020-05-05": [
+   "2e1dba9c886adc99-1",
+   "6041247a6a942b77-1"
+  ],
+  "2020-05-06": [
+   "2f0ee60151f94729-1"
+  ],
+  "2020-05-13": [
+   "a4c277abbb20573f-1"
+  ],
+  "2020-05-18": [
+   "03e8834ed1dde38e-1"
+  ],
+  "2020-05-20": [
+   "554aff2579328949-1"
+  ],
+  "2020-05-27": [
+   "f6c87a973682832a-1"
+  ],
+  "2020-06-02": [
+   "35cd7b0155427c53-1"
+  ],
+  "2020-06-03": [
+   "51b52709c981be4a-1",
+   "70e8b0f459e0213e-1",
+   "ee0ab12656054830-1"
+  ],
+  "2020-06-10": [
+   "dd189b3df3ff3ab4-1"
+  ],
+  "2020-06-30": [
+   "908b5e3ee926dbfd-1"
+  ],
+  "2020-07-02": [
+   "482784cebf3a2851-1",
+   "67be214f2bae6e6d-1",
+   "9c3b769e808a444e-1",
+   "d64557ef1b3af330-1",
+   "e03436dadf293c37-1"
+  ],
+  "2020-08-04": [
+   "877ec1f9c0b6af92-1"
+  ],
+  "2020-08-24": [
+   "50dec28888ac866e-1",
+   "627c16b3e92fbf1c-1"
+  ],
+  "2020-08-25": [
+   "76107538e28fe981-1"
+  ],
+  "2020-09-02": [
+   "5acc1ff556cc9c74-1",
+   "a43f1c2f1224c573-1"
+  ],
+  "2020-09-30": [
+   "98540a3c22ed7829-1"
+  ],
+  "2020-10-02": [
+   "0ea5af00a83684fe-1",
+   "0f3857aa9c822a3c-1"
+  ],
+  "2020-10-15": [
+   "bc73a0fa9e447c64-1"
+  ],
+  "2020-10-30": [
+   "0eed45e42f21ca17-1"
+  ],
+  "2020-11-04": [
+   "9c6f54f7744ddc8a-1"
+  ],
+  "2020-12-02": [
+   "54f1f5259f290314-1"
+  ],
+  "2020-12-22": [
+   "370da1ddbc4e7243-1"
+  ],
+  "2020-12-30": [
+   "a48b4a5aedf4a6f0-1"
+  ],
+  "2021-02-02": [
+   "ab6ffe7418b18a2c-1"
+  ],
+  "2021-03-01": [
+   "3815906ec2574fc4-1",
+   "8e0f1fcd617d82c0-1"
+  ],
+  "2021-03-02": [
+   "6e9fc25cf265da4a-1",
+   "8ba84ae3dda6f92b-1",
+   "8fa3a7d940bbe21c-1"
+  ],
+  "2021-03-04": [
+   "3151abd3d7bad021-1",
+   "b166f9270c6504f2-1"
+  ],
+  "2021-03-12": [
+   "62545d9772de0cff-1"
+  ],
+  "2021-03-17": [
+   "90afab9801e7ca17-1"
+  ],
+  "2021-03-29": [
+   "056f710fc395a6d3-1",
+   "35de9bf98c86194c-1",
+   "8e7feb8b56590cf2-1"
+  ],
+  "2021-04-05": [
+   "5ee1ecacd3c25e30-1",
+   "88ba4ce808666e5d-1"
+  ],
+  "2021-10-21": [
+   "b15dc899ef17f320-1"
+  ],
+  "2021-12-03": [
+   "851d24b62558b942-1"
+  ],
+  "2021-12-14": [
+   "4675fc12d672dd19-1"
+  ],
+  "2021-12-15": [
+   "3c3dc602c0cd5a82-1"
+  ],
+  "2021-12-16": [
+   "956abe87a8bc1163-1"
+  ],
+  "2021-12-17": [
+   "af80f33d606e17c1-1"
+  ],
+  "2021-12-20": [
+   "4447a06d656b9a9d-1"
+  ],
+  "2021-12-23": [
+   "0992dfc19336db31-1"
+  ],
+  "2021-12-27": [
+   "a590f06c6178a8ec-1",
+   "e5edd5ebc2b69be0-1"
+  ],
+  "2022-02-02": [
+   "7c05815a6bb71ab8-1"
+  ],
+  "2022-04-26": [
+   "8c9448b0ad609c89-1"
+  ],
+  "2022-09-27": [
+   "49a442700a015990-1"
+  ],
+  "2022-09-29": [
+   "bf2903745c8c6cb4-1"
+  ],
+  "2022-10-21": [
+   "23125424e7e46864-1"
+  ],
+  "2022-11-03": [
+   "ab548b0255e4c0a9-1"
+  ],
+  "2022-12-05": [
+   "d3e462e7ca8152dc-1",
+   "fb88239488ec0cbe-1"
+  ],
+  "2022-12-12": [
+   "b24f92ba0470df16-1",
+   "c9035b2f0c0c3963-1"
+  ],
+  "2022-12-27": [
+   "0d07a33d7545caa8-1"
+  ],
+  "2022-12-29": [
+   "125193ebd30f4b79-1",
+   "bae830fac9fb1866-1"
+  ],
+  "2023-02-02": [
+   "3f5109d71a6f1090-1",
+   "8821f143936a0b3e-1"
+  ],
+  "2024-09-04": [
+   "f65e5c4ff5bca9ec-1"
+  ],
+  "2024-11-18": [
+   "6b586cb4d29e82d8-1",
+   "74eecbedcd7d0f49-1"
+  ],
+  "2024-12-16": [
+   "560c24c3d83148e8-1",
+   "6a7d9849932485b6-1"
+  ],
+  "2024-12-17": [
+   "75a8a778ecd1bbb2-1"
+  ],
+  "2024-12-18": [
+   "326666bd307b13d4-1",
+   "aa1897d80990017c-1"
+  ],
+  "2024-12-19": [
+   "e42ae8ae86b728e3-1",
+   "f8bb2a7e168d17ab-1"
+  ],
+  "2024-12-23": [
+   "1fbed388d3447978-1",
+   "42e6cc629108eee9-1"
+  ],
+  "2024-12-24": [
+   "21fa7789cfbe85f5-1",
+   "32cc391f38045e99-1",
+   "b3d30f51b0d49e87-1"
+  ],
+  "2024-12-30": [
+   "f50413d4eed256c7-1"
+  ],
+  "2025-01-02": [
+   "01cebbf2f733f756-1"
+  ],
+  "2025-01-22": [
+   "596dbc8dc533c221-1",
+   "aa8c42de76849d97-1"
+  ],
+  "2025-02-04": [
+   "b15f9000a8b1d80c-1"
+  ],
+  "2025-03-06": [
+   "434d652b6004dbb7-1"
+  ],
+  "2025-04-02": [
+   "9f66b88c7b083897-1",
+   "bad47586e5c4b460-1",
+   "d07b3ffc0f954ac7-1",
+   "eae30afcf91e3f37-1"
+  ],
+  "2025-06-27": [
+   "d40dbf30a751f88d-1"
+  ],
+  "2025-07-02": [
+   "3e27f8c5e0df4374-1",
+   "4dee10f1bfefae11-1",
+   "abbd109a2b59e872-1",
+   "e1e1f41f20918781-1"
+  ],
+  "2025-08-04": [
+   "6031acb85381ce25-1",
+   "9888d6abe9c997a9-1",
+   "e9c674be39ee130b-1"
+  ],
+  "2025-09-03": [
+   "a26f24bda63771d9-1"
+  ],
+  "2025-10-02": [
+   "3258889e485104d1-1",
+   "6c01dbbf3a5c47f9-1",
+   "6f9603a3ca7931ce-1",
+   "a40cf093f41c2346-1",
+   "d74f925508ad79e1-1"
+  ],
+  "2025-10-29": [
+   "a48c04ec2d930a84-1"
+  ],
+  "2025-11-04": [
+   "2d82cbafc054d713-1",
+   "c9d7efddea4d863e-1",
+   "eed057dff5886e3d-1"
+  ],
+  "2025-12-02": [
+   "5f4ac9f928ba5274-1"
+  ],
+  "2025-12-23": [
+   "8fb419cbf1c6f779-1",
+   "9f628b8f02d4d822-1"
+  ],
+  "2025-12-26": [
+   "4e0454e0827d0083-1",
+   "abb21298bba798c3-1"
+  ],
+  "2025-12-30": [
+   "321427e26f6a99a3-1",
+   "e681ae9d577a86fc-1"
+  ],
+  "2026-01-05": [
+   "08ae80b01fe40b88-1",
+   "0acc6d6120c4278b-1"
+  ],
+  "2026-02-03": [
+   "0ca544861b1e4c34-1",
+   "761e8e1716dfa6e3-1"
+  ],
+  "2026-03-03": [
+   "15e7c41fb3868fbb-1",
+   "f013aebe25e04ffc-1"
+  ],
+  "2026-03-17": [
+   "bc2c605aaac4f1be-1"
+  ],
+  "2026-03-23": [
+   "5bb3337071217972-1"
+  ],
+  "2026-03-26": [
+   "406cd96d00fea3a6-1"
+  ],
+  "2026-03-30": [
+   "083279cd5f4fd95e-1",
+   "a6866228c806949c-1"
+  ],
+  "2026-04-02": [
+   "eef971f6d85779af-1"
+  ],
+  "2026-06-02": [
+   "180810d3ad72d74a-1",
+   "361ecc2b8835385d-1",
+   "6d1f4c7e1132963b-1",
+   "c87a865933b4e0bf-1"
+  ],
+  "2026-06-24": [
+   "52b8be72add3de53-1"
+  ],
+  "2026-06-30": [
+   "8b6cf111d5dd183d-1"
+  ],
+  "2026-08-31": [
+   "378c153b9cfd9fc1-1"
+  ],
+  "2026-09-02": [
+   "482c13c17c0621db-1"
+  ],
+  "2026-09-14": [
+   "d2e4994f1246fb4d-1"
+  ],
+  "2026-09-17": [
+   "5123b05173ac0889-1"
+  ],
+  "2026-09-22": [
+   "4f83074c7da1d50f-1"
+  ],
+  "2026-09-28": [
+   "6738498ee65e6f60-1",
+   "d4ed0eb28a9847dd-1"
+  ]
+ }
+}
