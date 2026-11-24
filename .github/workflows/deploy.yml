@@ -89,7 +89,11 @@ jobs:
           echo "verificando $url"
           for attempt in 1 2 3 4 5 6; do
             code=$(curl -sS -o /tmp/page.html -w '%{http_code}' --max-time 30 "$url" || echo 000)
-            if [ "$code" = "200" ] && grep -q "Brazil FX Monitor" /tmp/page.html; then
+            # Marcadores estaveis: o carregador comum a todas as paginas e o
+            # titulo da pagina inicial. Nao depende de texto editorial.
+            if [ "$code" = "200" ] \
+               && grep -q "assets/js/core.js" /tmp/page.html \
+               && grep -q "Reservas do Brasil" /tmp/page.html; then
               data_code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 \
                 "${url}data/indicators/summary.json" || echo 000)
               echo "pagina $code, dados $data_code"
