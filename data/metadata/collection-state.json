@@ -5,36 +5,36 @@
    "reference_date": "2026-11-23",
    "record_count": 7003,
    "detail": null,
-   "collected_at": "2026-11-24T20:30:59+00:00",
+   "collected_at": "2026-11-24T20:34:10+00:00",
    "last_successful_reference_date": "2026-11-23",
-   "last_successful_at": "2026-11-24T20:30:59+00:00"
+   "last_successful_at": "2026-11-24T20:34:10+00:00"
   },
   "reserves_liquidity": {
    "status": "ok",
    "reference_date": "2026-11-23",
    "record_count": 4745,
    "detail": null,
-   "collected_at": "2026-11-24T20:31:02+00:00",
+   "collected_at": "2026-11-24T20:34:13+00:00",
    "last_successful_reference_date": "2026-11-23",
-   "last_successful_at": "2026-11-24T20:31:02+00:00"
+   "last_successful_at": "2026-11-24T20:34:13+00:00"
   },
   "exchange_rate_ptax": {
    "status": "ok",
    "reference_date": "2026-11-24",
    "record_count": 7004,
    "detail": null,
-   "collected_at": "2026-11-24T20:30:53+00:00",
+   "collected_at": "2026-11-24T20:34:05+00:00",
    "last_successful_reference_date": "2026-11-24",
-   "last_successful_at": "2026-11-24T20:30:53+00:00"
+   "last_successful_at": "2026-11-24T20:34:05+00:00"
   },
   "exchange_rate_olinda": {
    "status": "ok",
    "reference_date": "2026-11-24",
    "record_count": 15,
    "detail": null,
-   "collected_at": "2026-11-24T20:30:54+00:00",
+   "collected_at": "2026-11-24T20:34:06+00:00",
    "last_successful_reference_date": "2026-11-24",
-   "last_successful_at": "2026-11-24T20:30:54+00:00"
+   "last_successful_at": "2026-11-24T20:34:06+00:00"
   },
   "interventions": {
    "status": "ok",
@@ -77,37 +77,37 @@
    "reference_date": "2026-11-23",
    "record_count": 11748,
    "detail": null,
-   "collected_at": "2026-11-24T20:31:03+00:00",
+   "collected_at": "2026-11-24T20:34:14+00:00",
    "last_successful_reference_date": "2026-11-23",
-   "last_successful_at": "2026-11-24T20:31:03+00:00"
+   "last_successful_at": "2026-11-24T20:34:14+00:00"
   },
   "indicators": {
    "status": "ok",
    "reference_date": "2026-11-23",
    "record_count": 4589,
    "detail": null,
-   "collected_at": "2026-11-24T20:31:03+00:00",
+   "collected_at": "2026-11-24T20:34:15+00:00",
    "last_successful_reference_date": "2026-11-23",
-   "last_successful_at": "2026-11-24T20:31:03+00:00"
+   "last_successful_at": "2026-11-24T20:34:15+00:00"
   },
   "alerts": {
    "status": "ok",
    "reference_date": "2026-11-23",
    "record_count": 1,
    "detail": null,
-   "collected_at": "2026-11-24T20:31:03+00:00",
+   "collected_at": "2026-11-24T20:34:15+00:00",
    "last_successful_reference_date": "2026-11-23",
-   "last_successful_at": "2026-11-24T20:31:03+00:00"
+   "last_successful_at": "2026-11-24T20:34:15+00:00"
   },
   "daily_summary": {
    "status": "ok",
    "reference_date": "2026-11-23",
    "record_count": 11,
    "detail": null,
-   "collected_at": "2026-11-24T20:31:03+00:00",
+   "collected_at": "2026-11-24T20:34:15+00:00",
    "last_successful_reference_date": "2026-11-23",
-   "last_successful_at": "2026-11-24T20:31:03+00:00"
+   "last_successful_at": "2026-11-24T20:34:15+00:00"
   }
  },
- "updated_at": "2026-11-24T20:31:03+00:00"
+ "updated_at": "2026-11-24T20:34:15+00:00"
 }
