@@ -61,7 +61,9 @@ jobs:
 
   deploy:
     needs: collect
-    if: needs.collect.outputs.changed == 'true'
+    # Em execucao manual publica mesmo sem dado novo, o que permite
+    # revalidar a publicacao sem esperar uma mudanca de dados.
+    if: needs.collect.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
     permissions:
       actions: read
       contents: read
