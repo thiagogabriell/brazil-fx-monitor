@@ -336,3 +336,72 @@ def test_reconciliation_follows_a_revised_balance():
     assert rows[1]["direct_sold_usd_cents"] == 100_000_000_000
     assert rows[1]["explained_variation_usd"] == -1_000_000_000
     assert rows[1]["unidentified_variation_usd"] == 0
+
+
+# --- conferência ------------------------------------------------------------
+
+def test_a_spot_sale_with_a_maturity_date_is_not_permanent_spending(operations):
+    """The BCB publishes some spot sales with a maturity date: they come back."""
+    from intervention_model import CATEGORIES as SPEC, classify
+
+    category, _ = classify("Venda a Vista", "ACC/ACE", has_maturity=True)
+    assert category == "spot_sale_with_return"
+    assert SPEC[category]["temporary"] is True
+    assert SPEC[category]["reserve_effect"] == "temporary_decrease"
+
+    category, _ = classify("Venda a Vista", "PTAX", has_maturity=False)
+    assert category == "spot_sale"
+    assert SPEC[category]["reserve_effect"] == "decrease"
+
+    # Nothing classified as permanent spending may carry a maturity date.
+    for operation in operations:
+        if operation["category"] == "spot_sale":
+            assert operation["maturity_date"] is None, operation["id"]
+
+
+def test_spending_days_file_is_complete_and_consistent(operations):
+    """The headline number must come from the whole series, not from a window."""
+    import json
+    from pathlib import Path
+
+    path = Path(__file__).resolve().parent.parent / "data" / "indicators" / "spending-days.json"
+    document = json.loads(path.read_text(encoding="utf-8"))
+
+    expected = {}
+    for operation in operations:
+        if operation["category"] != "spot_sale" or not operation["counts_as_executed"]:
+            continue
+        date = operation["settlement_date"] or operation["trade_date"]
+        expected[date] = expected.get(date, 0) + (operation["volume_accepted_usd_cents"] or 0)
+    expected = {date: value for date, value in expected.items() if value > 0}
+
+    published = {day["date"]: day["sold_usd_cents"] for day in document["days"]}
+    assert published == expected
+    assert document["day_count"] == len(expected)
+    assert document["total_usd_cents"] == sum(expected.values())
+    assert document["days"] == sorted(document["days"], key=lambda d: d["date"])
+    assert document["first_date"] == min(expected)
+
+    # Yearly totals must add back up to the overall total.
+    assert sum(year["sold_usd_cents"] for year in document["by_year"]) == document["total_usd_cents"]
+    assert sum(year["days"] for year in document["by_year"]) == document["day_count"]
+
+
+def test_spending_day_balances_match_the_reserve_series(reserves_cash):
+    import json
+    from pathlib import Path
+
+    path = Path(__file__).resolve().parent.parent / "data" / "indicators" / "spending-days.json"
+    document = json.loads(path.read_text(encoding="utf-8"))
+    balances = {o["date"]: o["value_usd"] for o in reserves_cash["observations"]}
+
+    checked = 0
+    for day in document["days"]:
+        if day["closing_usd"] is None:
+            continue
+        assert day["closing_usd"] == balances[day["date"]], day["date"]
+        if day["opening_usd"] is not None:
+            assert day["opening_usd"] == balances[day["opening_date"]]
+            assert day["variation_usd"] == day["closing_usd"] - day["opening_usd"]
+        checked += 1
+    assert checked > 300

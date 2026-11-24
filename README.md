@@ -15,9 +15,9 @@ zero.
 
 Responde uma pergunta só: **quanto o governo está gastando das reservas de dólar.**
 
-Por padrão a tabela mostra apenas os dias em que houve gasto, porque são poucos.
-Em quase três anos foram dezessete dias; em todos os outros dias úteis o gasto
-publicado foi zero.
+Por padrão a tabela mostra apenas os dias em que houve gasto, porque são poucos:
+**426 dias desde 1999**, somando US$ 143,36 bilhões. Em todos os outros dias
+úteis o gasto publicado foi zero.
 
 | Coluna | O que é |
 |---|---|

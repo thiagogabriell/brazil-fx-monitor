@@ -17,6 +17,19 @@ move the international reserves balance, and in which direction?
 from __future__ import annotations
 
 CATEGORIES: dict[str, dict] = {
+    "spot_sale_with_return": {
+        "label": "Venda a vista com retorno contratado",
+        "short_label": "Venda com retorno",
+        "reserve_effect": "temporary_decrease",
+        "notional": False,
+        "temporary": True,
+        "color_role": "temporary",
+        "explanation": (
+            "Venda a vista que o proprio Banco Central publica com data de "
+            "vencimento, ou seja, com retorno contratado. Sai agora e volta na "
+            "data informada, portanto nao e consumo permanente das reservas."
+        ),
+    },
     "spot_sale": {
         "label": "Venda direta de dolares a vista",
         "short_label": "Venda a vista",
@@ -142,10 +155,21 @@ ASSET_CLASS_BY_MODALITY: dict[str, str] = {
 ASSET_CLASS_UNDISCLOSED = "Ativo de origem nao divulgado pelo Banco Central."
 
 
-def classify(instrument: str, modality: str) -> tuple[str | None, str | None]:
-    """Return ``(category_key, reason_when_unknown)``."""
+def classify(
+    instrument: str, modality: str, *, has_maturity: bool = False
+) -> tuple[str | None, str | None]:
+    """Return ``(category_key, reason_when_unknown)``.
+
+    ``has_maturity`` comes from the ``Data de Vencimento`` column. A spot sale
+    that the Banco Central publishes with a maturity date is a sale with a
+    contracted return, not a permanent use of the reserves, so it is classified
+    as temporary. This is read from the data, never assumed from the modality.
+    """
     instrument = (instrument or "").strip()
     modality = (modality or "").strip()
+
+    if instrument == "Venda a Vista" and has_maturity:
+        return "spot_sale_with_return", None
 
     if instrument == "Swap Cambial":
         key = _SWAP_MODALITY_MAP.get(modality)

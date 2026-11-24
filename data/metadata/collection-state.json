@@ -41,9 +41,9 @@
    "reference_date": "2026-10-27",
    "record_count": 10507,
    "detail": "9505 operacoes com resultado publicado",
-   "collected_at": "2026-11-24T20:37:12+00:00",
+   "collected_at": "2026-11-24T21:09:07+00:00",
    "last_successful_reference_date": "2026-10-27",
-   "last_successful_at": "2026-11-24T20:37:12+00:00"
+   "last_successful_at": "2026-11-24T21:09:07+00:00"
   },
   "announcements": {
    "status": "ok",
@@ -77,18 +77,18 @@
    "reference_date": "2026-11-23",
    "record_count": 11748,
    "detail": null,
-   "collected_at": "2026-11-24T20:37:14+00:00",
+   "collected_at": "2026-11-24T21:09:26+00:00",
    "last_successful_reference_date": "2026-11-23",
-   "last_successful_at": "2026-11-24T20:37:14+00:00"
+   "last_successful_at": "2026-11-24T21:09:26+00:00"
   },
   "indicators": {
    "status": "ok",
    "reference_date": "2026-11-23",
    "record_count": 4589,
    "detail": null,
-   "collected_at": "2026-11-24T20:37:14+00:00",
+   "collected_at": "2026-11-24T21:09:27+00:00",
    "last_successful_reference_date": "2026-11-23",
-   "last_successful_at": "2026-11-24T20:37:14+00:00"
+   "last_successful_at": "2026-11-24T21:09:27+00:00"
   },
   "alerts": {
    "status": "ok",
@@ -109,5 +109,5 @@
    "last_successful_at": "2026-11-24T20:37:14+00:00"
   }
  },
- "updated_at": "2026-11-24T20:37:14+00:00"
+ "updated_at": "2026-11-24T21:09:27+00:00"
 }

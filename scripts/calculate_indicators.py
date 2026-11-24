@@ -1008,6 +1008,68 @@ def _import_coverage_months(flow: dict, reserves_value: float | None) -> float |
     return round(reserves_value / monthly_average_usd, 3)
 
 
+def build_spending_days(daily: dict[str, dict], reserves: Series, anchor: str) -> dict:
+    """Every single day the Banco Central actually spent reserves, since 1999.
+
+    "Spending" here means a definitive sale of dollars settling on that date.
+    Sales that the source publishes with a maturity date are excluded, because
+    they come back, and so are swaps, which never move the reserves.
+    """
+    rows = []
+    for date in sorted(daily):
+        sold = daily[date]["sold_cents"]
+        if sold <= 0:
+            continue
+        closing = reserves.at(date)
+        previous = reserves.previous(date) if closing is not None else None
+        variation = (
+            closing - previous[1] if closing is not None and previous else None
+        )
+        rows.append(
+            {
+                "date": date,
+                "sold_usd_cents": sold,
+                "temporary_out_usd_cents": daily[date]["temporary_out_cents"],
+                "operation_count": daily[date]["sale_operations"],
+                "opening_date": previous[0] if previous else None,
+                "opening_usd": previous[1] if previous else None,
+                "closing_usd": closing,
+                "variation_usd": variation,
+                "variation_pct": _pct(closing, previous[1]) if previous else None,
+            }
+        )
+
+    total = sum(row["sold_usd_cents"] for row in rows)
+    by_year: dict[str, dict] = defaultdict(lambda: {"sold_usd_cents": 0, "days": 0})
+    for row in rows:
+        bucket = by_year[row["date"][:4]]
+        bucket["sold_usd_cents"] += row["sold_usd_cents"]
+        bucket["days"] += 1
+
+    return {
+        "schema": "spending-days/v1",
+        "generated_at": utc_now_iso(),
+        "unit": "USD cents",
+        "concept": (
+            "Dias em que o Banco Central vendeu dolares de forma definitiva, "
+            "pela data de liquidacao. Nao inclui swaps, que sao nocionais, nem "
+            "vendas com retorno contratado, nem operacoes temporarias."
+        ),
+        "reference_date": anchor,
+        "coverage_note": (
+            "Lista completa desde o inicio da serie. Depois de "
+            f"{anchor} as atuacoes ainda nao foram publicadas."
+        ),
+        "first_date": rows[0]["date"] if rows else None,
+        "day_count": len(rows),
+        "total_usd_cents": total,
+        "by_year": [
+            {"year": int(year), **values} for year, values in sorted(by_year.items())
+        ],
+        "days": rows,
+    }
+
+
 # --------------------------------------------------------------------------- #
 # summary
 # --------------------------------------------------------------------------- #
@@ -1326,6 +1388,11 @@ def main() -> int:
         operations,
     )
 
+    write_json(
+        DATA / "indicators" / "spending-days.json",
+        build_spending_days(daily, reserves_cash, anchor_interventions),
+        compact=True,
+    )
     write_json(DATA / "indicators" / "summary.json", summary)
     write_json(DATA / "indicators" / "flow.json", flow_summary, compact=True)
     write_json(DATA / "indicators" / "effectiveness.json", effectiveness, compact=True)

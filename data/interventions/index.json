@@ -25,17 +25,18 @@
  ],
  "reference_date": "2026-10-27",
  "first_date": "1999-01-22",
- "collected_at": "2026-11-24T19:36:46+00:00",
+ "collected_at": "2026-11-24T21:09:06+00:00",
  "statistics": {
   "row_count": 10507,
   "operation_count": 10507,
   "unmapped": [],
   "ambiguous_duplicate_count": 2,
   "by_category": {
-   "spot_sale": 530,
+   "spot_sale": 493,
    "spot_purchase": 1506,
    "sale_with_repurchase": 467,
    "swap_traditional": 6917,
+   "spot_sale_with_return": 37,
    "swap_reverse": 1031,
    "loan": 13,
    "forward_purchase": 28,
@@ -48,6 +49,15 @@
   }
  },
  "categories": {
+  "spot_sale_with_return": {
+   "label": "Venda a vista com retorno contratado",
+   "short_label": "Venda com retorno",
+   "reserve_effect": "temporary_decrease",
+   "notional": false,
+   "temporary": true,
+   "color_role": "temporary",
+   "explanation": "Venda a vista que o proprio Banco Central publica com data de vencimento, ou seja, com retorno contratado. Sai agora e volta na data informada, portanto nao e consumo permanente das reservas."
+  },
   "spot_sale": {
    "label": "Venda direta de dolares a vista",
    "short_label": "Venda a vista",

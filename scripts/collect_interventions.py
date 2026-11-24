@@ -169,7 +169,9 @@ def build_operations(csv_text: str, today: str) -> tuple[list[dict], dict]:
 
         instrument = _clean(row.get("Instrumento"))
         modality = _clean(row.get("Modalidade"))
-        category, problem = classify(instrument, modality)
+        category, problem = classify(
+            instrument, modality, has_maturity=bool(_date(row.get("Data de Vencimento")))
+        )
         if category is None:
             unmapped.append(
                 {"instrument": instrument, "modality": modality, "reason": problem}

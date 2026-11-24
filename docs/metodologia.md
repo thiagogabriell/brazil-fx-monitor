@@ -73,6 +73,7 @@ Derivada exclusivamente das colunas `Instrumento` e `Modalidade`:
 | Categoria | Efeito | Nocional | Temporária |
 |---|---|---|---|
 | `spot_sale` | reduz | não | não |
+| `spot_sale_with_return` | reduz temporariamente | não | sim |
 | `spot_purchase` | aumenta | não | não |
 | `forward_purchase` | aumenta | não | não |
 | `sale_with_repurchase` | reduz temporariamente | não | sim |
@@ -80,6 +81,12 @@ Derivada exclusivamente das colunas `Instrumento` e `Modalidade`:
 | `loan` | reduz temporariamente | não | sim |
 | `swap_traditional` | nenhum | sim | não |
 | `swap_reverse` | nenhum | sim | não |
+
+Uma venda à vista que o Banco Central publica **com data de vencimento** é uma
+venda com retorno contratado, não gasto permanente, e por isso entra como
+temporária. São 37 operações de 2002, US$ 1,485 bilhão, todas na modalidade
+ACC/ACE. A regra lê a coluna `Data de Vencimento`; não é uma exceção presa à
+modalidade.
 
 Um instrumento ou modalidade desconhecido **não** é encaixado numa categoria
 próxima: a operação é reportada como não mapeada, o coletor termina com código

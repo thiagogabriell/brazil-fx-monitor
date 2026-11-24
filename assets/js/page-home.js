@@ -9,7 +9,7 @@
 'use strict';
 
 window.PAGE = (() => {
-  let summary, statement, days = [], visible = 30;
+  let summary, statement, spending, days = [], visible = 30;
 
   const cents = (value) => BFX.usdCents(value);
 
@@ -25,20 +25,35 @@ window.PAGE = (() => {
     return null;
   }
 
+  /** Every day with a definitive sale, over the whole series, not a window. */
   function spendingDays() {
-    return days.filter((day) => day.direct_sold_usd_cents > 0);
+    return spending.days.map((day) => ({
+      date: day.date,
+      direct_sold_usd_cents: day.sold_usd_cents,
+      temporary_out_usd_cents: day.temporary_out_usd_cents,
+      opening_date: day.opening_date,
+      opening_usd: day.opening_usd,
+      closing_usd: day.closing_usd,
+      variation_usd: day.variation_usd,
+      variation_pct: day.variation_pct,
+      interventions_coverage: 'covered'
+    }));
   }
 
   function totalSold(fromDate) {
-    return days
+    return spending.days
       .filter((day) => !fromDate || day.date >= fromDate)
-      .reduce((total, day) => total + day.direct_sold_usd_cents, 0);
+      .reduce((total, day) => total + day.sold_usd_cents, 0);
+  }
+
+  function countSold(fromDate) {
+    return spending.days.filter((day) => !fromDate || day.date >= fromDate).length;
   }
 
   function renderHeadline() {
     const reserves = summary.reserves.cash;
-    const spending = spendingDays();
-    const last = spending[spending.length - 1] || null;
+    const all = spending.days;
+    const last = all[all.length - 1] || null;
     const anchor = summary.interventions.anchor_date;
     const yearStart = anchor.slice(0, 4) + '-01-01';
     const twelveMonths = new Date(Date.parse(anchor) - 365 * 86400000)
@@ -47,7 +62,7 @@ window.PAGE = (() => {
     document.getElementById('headline').innerHTML = `
       <div class="box box--wide">
         <p class="label">Quanto o governo gastou das reservas no último dia de gasto</p>
-        <div class="big neg">${last ? cents(last.direct_sold_usd_cents) : 'US$ 0'}</div>
+        <div class="big neg">${last ? cents(last.sold_usd_cents) : 'US$ 0'}</div>
         <p class="sub">
           ${last
             ? `Foi em <strong>${BFX.date(last.date, { withWeekday: true })}</strong>,
@@ -61,8 +76,8 @@ window.PAGE = (() => {
         <p class="label">Gasto em 12 meses</p>
         <div class="mid neg">${cents(totalSold(twelveMonths))}</div>
         <p class="sub">
-          Em ${BFX.number(spending.filter((d) => d.date >= twelveMonths).length)}
-          dia(s) de gasto. Nos demais dias úteis, zero.
+          Em ${BFX.number(countSold(twelveMonths))} dia(s) de gasto.
+          Nos demais dias úteis, zero.
         </p>
       </div>
 
@@ -70,8 +85,10 @@ window.PAGE = (() => {
         <p class="label">Gasto em ${anchor.slice(0, 4)}</p>
         <div class="mid neg">${cents(totalSold(yearStart))}</div>
         <p class="sub">
-          Em ${BFX.number(spending.filter((d) => d.date >= yearStart).length)}
-          dia(s) de gasto no ano.
+          Em ${BFX.number(countSold(yearStart))} dia(s) de gasto no ano.
+          Desde ${BFX.date(spending.first_date)} o total gasto foi
+          ${cents(spending.total_usd_cents)}, em
+          ${BFX.number(spending.day_count)} dias.
         </p>
       </div>
 
@@ -132,7 +149,7 @@ window.PAGE = (() => {
       : '<tr><td colspan="5" class="pending">Nenhum dia de gasto no período.</td></tr>';
 
     document.getElementById('row-count').textContent = onlySpending
-      ? `${BFX.number(rows.length)} dia(s) de gasto desde ${BFX.date(days[0].date)}.`
+      ? `${BFX.number(rows.length)} dia(s) de gasto desde ${BFX.date(spending.first_date)}, toda a série.`
       : `${BFX.number(rows.length)} dias, do mais recente para o mais antigo.`;
 
     document.getElementById('day-buttons').hidden = onlySpending;
@@ -155,9 +172,10 @@ window.PAGE = (() => {
   }
 
   async function reload() {
-    [summary, statement] = await Promise.all([
+    [summary, statement, spending] = await Promise.all([
       BFX.reload('data/indicators/summary.json'),
-      BFX.reload('data/reserves/statement-latest-cash.json')
+      BFX.reload('data/reserves/statement-latest-cash.json'),
+      BFX.reload('data/indicators/spending-days.json')
     ]);
     days = statement.days;
     renderHeadline();
