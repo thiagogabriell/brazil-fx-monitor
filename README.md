@@ -227,7 +227,8 @@ segredo é necessário.
 ## Licença
 
 Código sob [MIT](LICENSE). Os dados em `data/` vêm do Banco Central do Brasil e
-estão sob Open Data Commons Open Database License (ODbL).
+estão sob Open Data Commons Open Database License (ODbL). Detalhes em
+[NOTICE](NOTICE).
 
 ## Aviso
 

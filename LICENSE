@@ -19,10 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Os dados publicados em data/ são obtidos do Banco Central do Brasil e estão
-sujeitos à Open Data Commons Open Database License (ODbL), conforme declarado
-no Portal de Dados Abertos do Banco Central. A licença MIT acima cobre o
-código desta aplicação, não os dados de origem.

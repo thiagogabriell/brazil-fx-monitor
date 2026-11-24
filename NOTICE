@@ -1,0 +1,20 @@
+Brazil FX Monitor
+=================
+
+O codigo desta aplicacao esta sob a licenca MIT, em LICENSE.
+
+Os dados publicados no diretorio data/ sao obtidos do Banco Central do
+Brasil, pelo Sistema Gerenciador de Series Temporais (SGS), pelo Portal de
+Dados Abertos e pelo servico Olinda, e estao sujeitos a Open Data Commons
+Open Database License (ODbL), conforme declarado pelo proprio Banco
+Central nos metadados dos conjuntos de dados.
+
+Fonte: https://dadosabertos.bcb.gov.br
+
+A cotacao de mercado exibida ao vivo vem de fonte secundaria, consultada
+diretamente pelo navegador do usuario e identificada como tal na
+interface. Nenhum valor dessa fonte e gravado neste repositorio.
+
+Esta aplicacao nao e um produto do Banco Central do Brasil, nao constitui
+recomendacao de investimento e nao deve ser usada como base para decisoes
+financeiras.
