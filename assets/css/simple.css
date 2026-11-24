@@ -70,6 +70,8 @@ body.simple {
 }
 .day-controls .btn { padding: 4px 10px; font-size: 12px; }
 .day-controls .spacer { flex: 1; }
+/* display:flex na classe venceria o [hidden] padrao do navegador. */
+.day-controls[hidden] { display: none; }
 
 table.simple {
   width: 100%;

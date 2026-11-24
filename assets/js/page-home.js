@@ -25,102 +25,117 @@ window.PAGE = (() => {
     return null;
   }
 
+  function spendingDays() {
+    return days.filter((day) => day.direct_sold_usd_cents > 0);
+  }
+
+  function totalSold(fromDate) {
+    return days
+      .filter((day) => !fromDate || day.date >= fromDate)
+      .reduce((total, day) => total + day.direct_sold_usd_cents, 0);
+  }
+
   function renderHeadline() {
     const reserves = summary.reserves.cash;
-    const interventions = summary.interventions;
-    const latest = days[days.length - 1];
-    const sale = lastConfirmedSale();
-    const window30 = interventions.windows['30'];
-    const trend = BFX.trend(latest ? latest.variation_usd : null);
+    const spending = spendingDays();
+    const last = spending[spending.length - 1] || null;
+    const anchor = summary.interventions.anchor_date;
+    const yearStart = anchor.slice(0, 4) + '-01-01';
+    const twelveMonths = new Date(Date.parse(anchor) - 365 * 86400000)
+      .toISOString().slice(0, 10);
 
     document.getElementById('headline').innerHTML = `
       <div class="box box--wide">
-        <p class="label">O que o Brasil tem de reservas</p>
-        <div class="big">${BFX.usd(reserves.current_usd)}</div>
+        <p class="label">Quanto o governo gastou das reservas no último dia de gasto</p>
+        <div class="big neg">${last ? cents(last.direct_sold_usd_cents) : 'US$ 0'}</div>
         <p class="sub">
-          Saldo de <strong>${BFX.date(reserves.reference_date, { withWeekday: true })}</strong>,
-          o mais recente publicado pelo Banco Central (${conceptNote()}).
-          Equivale a ${BFX.number(reserves.current_usd / 1e9, 1)} bilhões de dólares.
+          ${last
+            ? `Foi em <strong>${BFX.date(last.date, { withWeekday: true })}</strong>,
+               há ${BFX.number(BFX.daysBetween(last.date, BFX.todaySaoPaulo()))} dias.
+               Em todos os dias úteis desde então o gasto publicado foi zero.`
+            : 'Nenhum dia de gasto no período carregado.'}
         </p>
       </div>
 
       <div class="box">
-        <p class="label">Quanto mudou no último dia</p>
-        <div class="mid ${trend.cls}">
-          ${latest ? BFX.usd(latest.variation_usd, { sign: true }) : BFX.naText()}
-        </div>
+        <p class="label">Gasto em 12 meses</p>
+        <div class="mid neg">${cents(totalSold(twelveMonths))}</div>
         <p class="sub">
-          ${latest ? BFX.pct(latest.variation_pct) : ''} entre
-          ${latest ? BFX.date(latest.opening_date) : '—'} e
-          ${latest ? BFX.date(latest.date) : '—'}.
-          Variação do saldo, que inclui rendimento e variação cambial, não só venda.
+          Em ${BFX.number(spending.filter((d) => d.date >= twelveMonths).length)}
+          dia(s) de gasto. Nos demais dias úteis, zero.
         </p>
       </div>
 
       <div class="box">
-        <p class="label">Última venda de dólares confirmada</p>
-        <div class="mid neg">${sale ? cents(sale.direct_sold_usd_cents) : BFX.naText()}</div>
+        <p class="label">Gasto em ${anchor.slice(0, 4)}</p>
+        <div class="mid neg">${cents(totalSold(yearStart))}</div>
         <p class="sub">
-          ${sale
-            ? `Liquidada em <strong>${BFX.date(sale.date)}</strong>, há
-               ${BFX.number(BFX.daysBetween(sale.date, BFX.todaySaoPaulo()))} dias.`
-            : 'Nenhuma venda direta no período carregado.'}
+          Em ${BFX.number(spending.filter((d) => d.date >= yearStart).length)}
+          dia(s) de gasto no ano.
         </p>
       </div>
 
       <div class="box">
-        <p class="label">Vendido nos 30 dias cobertos pela fonte</p>
-        <div class="mid">${cents(window30.sold_usd_cents)}</div>
+        <p class="label">Quanto ainda tem</p>
+        <div class="mid">${BFX.usd(reserves.current_usd)}</div>
         <p class="sub">
-          Janela de ${BFX.date(window30.from_date)} a ${BFX.date(window30.to_date)},
-          com ${BFX.number(window30.days_with_direct_sale)} dia(s) de venda.
+          Saldo de ${BFX.date(reserves.reference_date)}.
+          Em 12 meses a reserva
+          ${reserves.changes['365'].change_pct >= 0 ? 'subiu' : 'caiu'}
+          ${BFX.usd(Math.abs(reserves.changes['365'].change))}
+          (${BFX.pct(reserves.changes['365'].change_pct)}), porque rende juros.
         </p>
       </div>`;
   }
 
   function renderLag() {
-    const anchors = summary.anchors;
-    const lag = BFX.daysBetween(anchors.interventions, BFX.todaySaoPaulo());
+    const anchor = summary.anchors.interventions;
+    const lag = BFX.daysBetween(anchor, BFX.todaySaoPaulo());
     document.getElementById('lag').innerHTML = `
-      <strong>Por que a venda do dia de hoje não aparece.</strong>
-      O Banco Central publica o saldo das reservas todo dia útil, mas publica as
-      operações de câmbio <strong>uma vez por mês</strong>. Hoje a lista de
-      operações vai até ${BFX.date(anchors.interventions)}, ou seja ${lag} dias
-      atrás. Os dias mais recentes mostram a variação do saldo, que é dado
-      diário, e a coluna de venda fica como <em>ainda não publicado</em> até o
-      Banco Central divulgar. A cotação do dólar no topo é a única informação em
-      tempo real desta página.`;
+      <strong>Gasto é venda definitiva de dólares.</strong>
+      O saldo das reservas sobe e desce todo dia por rendimento dos
+      investimentos e por variação entre as moedas guardadas. Isso não é o
+      governo gastando. Gasto é o Banco Central vender dólar de vez, e isso
+      acontece em dias contados.
+      O Banco Central publica essas vendas <strong>uma vez por mês</strong>:
+      hoje a lista vai até ${BFX.date(anchor)}, ou seja ${lag} dias atrás.
+      Depois dessa data ainda não dá para saber, e estimar seria inventar.`;
   }
 
   function renderTable() {
-    const rows = days.slice(-visible).reverse();
-    document.getElementById('rows').innerHTML = rows.map((day) => {
-      const trend = BFX.trend(day.variation_usd);
-      const pending = day.interventions_coverage !== 'covered';
-      return `<tr>
-        <td>${BFX.date(day.date, { withWeekday: true })}</td>
-        <td>${BFX.usd(day.closing_usd)}</td>
-        <td class="${trend.cls}">${BFX.usd(day.variation_usd, { sign: true })}</td>
-        <td class="${trend.cls}">${BFX.pct(day.variation_pct)}</td>
-        <td class="${pending ? 'pending' : day.direct_sold_usd_cents ? 'neg' : 'neutral'}">
-          ${pending
-            ? 'ainda não publicado'
-            : day.direct_sold_usd_cents
-              ? cents(day.direct_sold_usd_cents)
-              : '—'}
-        </td>
-        <td class="${pending ? 'pending' : day.temporary_out_usd_cents ? '' : 'neutral'}">
-          ${pending
-            ? '—'
-            : day.temporary_out_usd_cents
-              ? cents(day.temporary_out_usd_cents)
-              : '—'}
-        </td>
-      </tr>`;
-    }).join('');
+    const onlySpending = document.getElementById('only-spending').checked;
+    const source = onlySpending ? spendingDays() : days.slice(-visible);
+    const rows = source.slice().reverse();
 
-    document.getElementById('row-count').textContent =
-      `${BFX.number(rows.length)} dias, do mais recente para o mais antigo.`;
+    document.getElementById('rows').innerHTML = rows.length
+      ? rows.map((day) => {
+          const pending = day.interventions_coverage !== 'covered';
+          const trend = BFX.trend(day.variation_usd);
+          return `<tr>
+            <td>${BFX.date(day.date, { withWeekday: true })}</td>
+            <td class="${day.direct_sold_usd_cents ? 'neg' : 'neutral'}"
+                style="font-size:15px">
+              ${pending
+                ? '<span class="pending">ainda não publicado</span>'
+                : day.direct_sold_usd_cents
+                  ? cents(day.direct_sold_usd_cents)
+                  : 'US$ 0'}
+            </td>
+            <td>${BFX.usd(day.closing_usd)}</td>
+            <td class="${trend.cls}">${BFX.usd(day.variation_usd, { sign: true })}</td>
+            <td class="${pending ? 'pending' : day.temporary_out_usd_cents ? '' : 'neutral'}">
+              ${pending ? '—' : day.temporary_out_usd_cents
+                ? cents(day.temporary_out_usd_cents) : '—'}
+            </td>
+          </tr>`;
+        }).join('')
+      : '<tr><td colspan="5" class="pending">Nenhum dia de gasto no período.</td></tr>';
+
+    document.getElementById('row-count').textContent = onlySpending
+      ? `${BFX.number(rows.length)} dia(s) de gasto desde ${BFX.date(days[0].date)}.`
+      : `${BFX.number(rows.length)} dias, do mais recente para o mais antigo.`;
+
+    document.getElementById('day-buttons').hidden = onlySpending;
     document.querySelectorAll('[data-days]').forEach((button) => {
       button.classList.toggle('btn--active', Number(button.dataset.days) === visible);
     });
@@ -166,13 +181,25 @@ window.PAGE = (() => {
     });
     const stored = Number(BFX.recall('homeDays', 30));
     if ([7, 30, 90, 540].includes(stored)) visible = stored;
+
+    const onlySpending = document.getElementById('only-spending');
+    onlySpending.checked = BFX.recall('onlySpending', true);
+    onlySpending.addEventListener('change', () => {
+      BFX.store('onlySpending', onlySpending.checked);
+      renderTable();
+    });
     renderTable();
 
     document.getElementById('export').addEventListener('click', () => {
-      BFX.exportCsv('reservas-por-dia.csv', days.slice().reverse(), [
+      const onlySpending = document.getElementById('only-spending').checked;
+      const data = (onlySpending ? spendingDays() : days).slice().reverse();
+      BFX.exportCsv('gasto-das-reservas-por-dia.csv', data, [
         { label: 'data', value: 'date' },
+        { label: 'gasto_venda_de_dolares_usd',
+          value: (row) => (row.interventions_coverage === 'covered'
+            ? row.direct_sold_usd_cents / 100 : '') },
         { label: 'saldo_usd', value: 'closing_usd' },
-        { label: 'variacao_usd', value: 'variation_usd' },
+        { label: 'variacao_do_saldo_usd', value: 'variation_usd' },
         { label: 'variacao_pct', value: 'variation_pct' },
         { label: 'vendido_pelo_bc_usd',
           value: (row) => (row.interventions_coverage === 'covered'

@@ -13,14 +13,20 @@ zero.
 
 ## A página inicial
 
-Uma pergunta só: **quanto o Brasil tem de reservas e quanto saiu em cada dia.**
+Responde uma pergunta só: **quanto o governo está gastando das reservas de dólar.**
+
+Por padrão a tabela mostra apenas os dias em que houve gasto, porque são poucos.
+Em quase três anos foram dezessete dias; em todos os outros dias úteis o gasto
+publicado foi zero.
 
 | Coluna | O que é |
 |---|---|
-| Quanto sobrou | saldo das reservas naquele dia |
-| Mudou no dia | variação do saldo. Inclui rendimento e variação entre moedas, não é só venda |
-| Vendido pelo BC | venda definitiva de dólares, liquidada naquele dia. Sai das reservas de vez |
-| Operação temporária | o BC empresta dólares e recebe de volta na data combinada. Não é gasto permanente |
+| Gasto das reservas | o Banco Central vendeu dólar de vez. Esse dinheiro saiu e não volta |
+| Quanto ainda tinha | saldo das reservas naquele dia |
+| Mudança do saldo no dia | sobe e desce sozinho por rendimento e por variação entre as moedas guardadas. **Não é gasto** |
+| Empréstimo | o Banco Central empresta dólar e recebe de volta na data combinada. Também não é gasto |
+
+Há uma caixa para ver todos os dias, não só os de gasto.
 
 Três relógios diferentes, porque o Banco Central publica em ritmos diferentes, e
 a página diz qual é qual em vez de misturar:
@@ -28,12 +34,12 @@ a página diz qual é qual em vez de misturar:
 | Informação | Atraso |
 |---|---|
 | Cotação do dólar | tempo real, fonte de mercado |
-| Saldo das reservas e variação do dia | um dia útil |
-| Venda confirmada pelo BC | **uma publicação por mês**, de três a oito semanas |
+| Saldo das reservas | um dia útil |
+| Gasto confirmado | **uma publicação por mês**, de três a oito semanas |
 
-Por isso a coluna "Vendido pelo BC" aparece como *ainda não publicado* nos dias
-recentes. Não é falta de dado nesta aplicação: é o ritmo de divulgação do Banco
-Central, e preencher esse espaço com estimativa seria inventar.
+Por isso o gasto dos dias recentes aparece como *ainda não publicado*. Não é
+falta de dado nesta aplicação: é o ritmo de divulgação do Banco Central, e
+preencher esse espaço com estimativa seria inventar.
 
 ## As outras páginas
 

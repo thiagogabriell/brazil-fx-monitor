@@ -7,14 +7,14 @@
 <meta name="description" content="Quanto o Brasil tem de reservas internacionais, quanto mudou em cada dia e quanto o Banco Central vendeu, com dados oficiais.">
 <meta name="color-scheme" content="dark light">
 <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./assets/css/app.css?v=c429661627">
-<link rel="stylesheet" href="./assets/css/simple.css?v=c429661627">
+<link rel="stylesheet" href="./assets/css/app.css?v=076718a197">
+<link rel="stylesheet" href="./assets/css/simple.css?v=076718a197">
 </head>
 <body class="simple">
 <main id="main"></main>
 <template id="page-template">
 <div class="simple-top">
-  <h1>Reservas internacionais do Brasil</h1>
+  <h1>Quanto o governo está gastando das reservas de dólar</h1>
   <span class="usd" id="usd">buscando o dólar…</span>
   <span class="spacer"></span>
   <span style="font-size:11px;color:var(--text-dim)" id="checked"></span>
@@ -27,15 +27,22 @@
 
 <p class="lag" id="lag"></p>
 
-<div class="day-controls" id="day-buttons">
+<div class="day-controls">
+  <label class="toggle-row">
+    <input type="checkbox" id="only-spending" checked>
+    Mostrar só os dias em que houve gasto
+  </label>
+  <span class="spacer"></span>
+  <span style="font-size:11.5px;color:var(--text-dim)" id="row-count"></span>
+  <button class="btn" type="button" id="export">Baixar CSV</button>
+</div>
+
+<div class="day-controls" id="day-buttons" hidden>
   <span style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)">Mostrar</span>
   <button class="btn" type="button" data-days="7">7 dias</button>
   <button class="btn" type="button" data-days="30">30 dias</button>
   <button class="btn" type="button" data-days="90">90 dias</button>
   <button class="btn" type="button" data-days="540">tudo</button>
-  <span class="spacer"></span>
-  <span style="font-size:11.5px;color:var(--text-dim)" id="row-count"></span>
-  <button class="btn" type="button" id="export">Baixar CSV</button>
 </div>
 
 <div style="overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius)">
@@ -43,24 +50,24 @@
     <thead>
       <tr>
         <th scope="col">Dia</th>
-        <th scope="col">Quanto sobrou</th>
-        <th scope="col">Mudou no dia</th>
-        <th scope="col">%</th>
-        <th scope="col">Vendido pelo BC</th>
-        <th scope="col">Operação temporária</th>
+        <th scope="col">Gasto das reservas</th>
+        <th scope="col">Quanto ainda tinha</th>
+        <th scope="col">Mudança do saldo no dia</th>
+        <th scope="col">Empréstimo (volta depois)</th>
       </tr>
     </thead>
-    <tbody id="rows"><tr><td colspan="6" class="loading">Carregando…</td></tr></tbody>
+    <tbody id="rows"><tr><td colspan="5" class="loading">Carregando…</td></tr></tbody>
   </table>
 </div>
 
 <div class="foot">
-  <span><strong style="color:var(--text-muted)">Vendido pelo BC</strong>: venda
-    definitiva de dólares, liquidada naquele dia. Sai das reservas de vez.</span>
-  <span><strong style="color:var(--text-muted)">Operação temporária</strong>: o BC
-    empresta dólares e recebe de volta na data combinada. Não é gasto permanente.</span>
-  <span><strong style="color:var(--text-muted)">Mudou no dia</strong>: variação do
-    saldo. Inclui rendimento dos investimentos e variação entre moedas, não só venda.</span>
+  <span><strong style="color:var(--text-muted)">Gasto das reservas</strong>: o Banco
+    Central vendeu dólar de vez. Esse dinheiro saiu e não volta.</span>
+  <span><strong style="color:var(--text-muted)">Mudança do saldo no dia</strong>: sobe
+    e desce sozinho por rendimento e por variação entre as moedas guardadas.
+    <em>Não é gasto.</em></span>
+  <span><strong style="color:var(--text-muted)">Empréstimo</strong>: o Banco Central
+    empresta dólar e recebe de volta na data combinada. Também não é gasto.</span>
 </div>
 
 <div class="foot">
@@ -69,8 +76,8 @@
   <span><a href="pages/reserves.html">Ver tudo em detalhe</a></span>
 </div>
 </template>
-<script defer src="./assets/js/core.js?v=c429661627"></script>
-<script defer src="./assets/js/page-home.js?v=c429661627"></script>
+<script defer src="./assets/js/core.js?v=076718a197"></script>
+<script defer src="./assets/js/page-home.js?v=076718a197"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var start = function () {
