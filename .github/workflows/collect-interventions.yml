@@ -35,6 +35,7 @@ jobs:
           set -euo pipefail
           python3 scripts/collect_interventions.py
           python3 scripts/collect_announcements.py
+          python3 scripts/collect_recent_auctions.py
 
       - name: Processar e publicar
         id: process

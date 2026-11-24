@@ -35,7 +35,8 @@ jobs:
           # isso uma falha isolada não interrompe as demais.
           failed=0
           for script in collect_reserves collect_exchange_rates collect_exchange_flow \
-                        collect_interventions collect_announcements collect_composition; do
+                        collect_interventions collect_announcements collect_composition \
+                        collect_recent_auctions; do
             echo "::group::$script"
             python3 "scripts/$script.py" || { echo "$script falhou"; failed=1; }
             echo "::endgroup::"

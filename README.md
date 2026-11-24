@@ -34,12 +34,16 @@ a página diz qual é qual em vez de misturar:
 | Informação | Atraso |
 |---|---|
 | Cotação do dólar | tempo real, fonte de mercado |
+| Gasto, pelo comunicado do leilão | **mesmo dia**, poucos minutos após o leilão |
 | Saldo das reservas | um dia útil |
-| Gasto confirmado | **uma publicação por mês**, de três a oito semanas |
+| Gasto, pelo arquivo mensal consolidado | de três a oito semanas |
 
-Por isso o gasto dos dias recentes aparece como *ainda não publicado*. Não é
-falta de dado nesta aplicação: é o ritmo de divulgação do Banco Central, e
-preencher esse espaço com estimativa seria inventar.
+O Banco Central publica **cada leilão no mesmo dia**, como Comunicado numerado,
+e consolida tudo num arquivo aberto uma vez por mês. A aplicação usa as duas
+fontes: até a data coberta pelo arquivo mensal vale o consolidado; depois dela
+valem os comunicados do dia, marcados como **provisórios** e com link para o
+documento oficial. Quando o arquivo mensal alcança a data, as linhas deixam de
+ser provisórias sozinhas.
 
 ## As outras páginas
 
@@ -138,7 +142,8 @@ O workflow de testes falha se as páginas estiverem dessincronizadas.
 |---|---|---|---|---|
 | Reservas, conceito caixa (SGS 13621) | `api.bcb.gov.br/dados/serie/bcdata.sgs.13621/dados` | US$ milhões | Diária, dias úteis | desde 04/01/1999 |
 | Reservas, conceito liquidez (SGS 13982) | `api.bcb.gov.br/dados/serie/bcdata.sgs.13982/dados` | US$ milhões | Diária, dias úteis | desde 02/01/2008 |
-| Atuações no mercado de câmbio | `bcb.gov.br/conteudo/dadosabertos/BCBDepin/historico-atuacoes-mercado-cambio.csv` | US$ | **Mensal** | desde 18/01/1999 |
+| Atuações no mercado de câmbio (consolidado) | `bcb.gov.br/conteudo/dadosabertos/BCBDepin/historico-atuacoes-mercado-cambio.csv` | US$ | **Mensal** | desde 18/01/1999 |
+| Comunicados de leilão (mesmo dia) | `bcb.gov.br/api/conteudo/app/normativos/exibeoutrasnormas?p1=COMUNICADO&p2=<n>` | US$ | A cada leilão | janela recente |
 | PTAX venda (SGS 1) e compra (SGS 10813) | `api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados` | R$/US$ | Diária, dias úteis | desde 04/01/1999 |
 | Boletins PTAX (Olinda OData) | `olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata` | R$/US$ | Diária | janela consultada |
 | Balanço de pagamentos (SGS 22701, 22707-22709, 22864, 22885, 22905, 22924, 22969) | `api.bcb.gov.br/dados/serie/bcdata.sgs.22701/dados` | US$ milhões | Mensal | desde 01/1995 |

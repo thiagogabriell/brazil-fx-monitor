@@ -43,7 +43,7 @@ jobs:
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Coletar câmbio e reservas
+      - name: Coletar câmbio, reservas e leilões do dia
         if: steps.guard.outputs.skip == 'false'
         env:
           PYTHONUNBUFFERED: "1"
@@ -51,6 +51,7 @@ jobs:
           set -euo pipefail
           python3 scripts/collect_exchange_rates.py
           python3 scripts/collect_reserves.py
+          python3 scripts/collect_recent_auctions.py
 
       - name: Processar e publicar
         id: process

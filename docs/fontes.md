@@ -139,6 +139,44 @@ Séries mensais em US$ milhões, desde 01/1995:
 A data de referência é o **primeiro dia do mês medido**, não a data de
 publicação, que ocorre cerca de 25 dias após o fim do mês.
 
+## Resultados de leilão no mesmo dia
+
+O arquivo mensal não é a única divulgação. O Banco Central publica **cada
+leilão de câmbio no mesmo dia**, como Comunicado numerado, e o site expõe o
+texto completo por um endpoint JSON público:
+
+```
+https://www.bcb.gov.br/api/conteudo/app/normativos/exibeoutrasnormas
+    ?p1=COMUNICADO&p2=<numero>
+```
+
+A página HTML do comunicado depende de JavaScript e não serve para leitura
+automática; o endpoint acima devolve `Titulo`, `Data`, `DataTexto`, `Assunto` e
+`Texto` em JSON.
+
+Cada leilão gera, no mesmo dia, um par de comunicados:
+
+- **Aviso de Abertura do Leilão de Câmbio N/AAAA**, com `Moeda`, `Natureza`
+  (`Venda À vista`, `Compra À vista`, `Venda Conjugada com Compra Pós-Fixado
+  Selic`) e `Data de Liquidação`;
+- **Resultado do Leilão de Câmbio N/AAAA**, com a taxa de corte e o
+  `valor total de USD $...` aceito.
+
+Swaps seguem o mesmo padrão com `Leilão de Swap Cambial N/AAAA`, e o resultado
+traz o nocional entre parênteses, em contratos e em dólares.
+
+Verificação feita em 24/11/2026: o arquivo mensal cobria até 27/10/2026, mas os
+comunicados já traziam 27 leilões posteriores, incluindo uma **venda à vista de
+USD 1.000.000.000,00 em 19/11/2026**, comunicado 46.328, com liquidação em
+24/11/2026. Sem essa fonte a aplicação afirmaria, erradamente, que o último
+gasto tinha sido em 17/09/2026.
+
+O coletor `collect_recent_auctions.py` lê esses comunicados, emparelha aviso e
+resultado pelo número do leilão e publica apenas as operações posteriores à
+cobertura do arquivo mensal, marcadas como provisórias. Um leilão cujo texto não
+permita ler a natureza ou o valor fica registrado como não interpretado e não
+entra em nenhum total.
+
 ## O que não existe em formato aberto
 
 ### Composição das reservas por moeda e por classe de ativo

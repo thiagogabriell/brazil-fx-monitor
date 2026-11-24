@@ -1,0 +1,616 @@
+{
+ "schema": "recent-auctions/v1",
+ "unit": "USD cents",
+ "concept": "Leiloes de cambio divulgados pelo Banco Central por comunicado, no mesmo dia, que ainda nao entraram no arquivo mensal de atuacoes.",
+ "covers_after": "2026-10-27",
+ "reference_date": "2026-11-24",
+ "collected_at": "2026-11-24T21:24:50+00:00",
+ "source": {
+  "name": "Banco Central do Brasil - Comunicados",
+  "endpoint": "https://www.bcb.gov.br/api/conteudo/app/normativos/exibeoutrasnormas?p1=COMUNICADO&p2=<numero>",
+  "landing_page": "https://www.bcb.gov.br/estabilidadefinanceira/buscanormas"
+ },
+ "limitations": [
+  "Os valores vem do texto do comunicado de resultado. Quando o comunicado nao permite ler a natureza ou o valor, a operacao fica registrada como nao interpretada e nao entra em nenhum total.",
+  "O arquivo mensal continua sendo a fonte oficial consolidada; estas operacoes saem daqui assim que ele as incorpora."
+ ],
+ "auction_count": 27,
+ "unparsed_count": 0,
+ "unparsed": [],
+ "auctions": [
+  {
+   "auction": "332/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-04",
+   "settlement_date": null,
+   "maturity_date": "2027-02-01",
+   "accepted_usd_cents": 155000000000,
+   "cut_rate": 5.679,
+   "announcement": {
+    "communication_number": 46224,
+    "published_at_sao_paulo": "4/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46224"
+   },
+   "result": {
+    "communication_number": 46226,
+    "published_at_sao_paulo": "4/11/2026 11:46",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46226"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "333/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-04",
+   "settlement_date": null,
+   "maturity_date": "2027-03-01",
+   "accepted_usd_cents": 220000000000,
+   "cut_rate": 5.669,
+   "announcement": {
+    "communication_number": 46225,
+    "published_at_sao_paulo": "4/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46225"
+   },
+   "result": {
+    "communication_number": 46226,
+    "published_at_sao_paulo": "4/11/2026 11:46",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46226"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "334/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-05",
+   "settlement_date": null,
+   "maturity_date": "2027-02-01",
+   "accepted_usd_cents": 130000000000,
+   "cut_rate": 5.648,
+   "announcement": {
+    "communication_number": 46234,
+    "published_at_sao_paulo": "5/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46234"
+   },
+   "result": {
+    "communication_number": 46236,
+    "published_at_sao_paulo": "5/11/2026 11:47",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46236"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "335/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-05",
+   "settlement_date": null,
+   "maturity_date": "2027-03-01",
+   "accepted_usd_cents": 245000000000,
+   "cut_rate": 5.649,
+   "announcement": {
+    "communication_number": 46235,
+    "published_at_sao_paulo": "5/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46235"
+   },
+   "result": {
+    "communication_number": 46236,
+    "published_at_sao_paulo": "5/11/2026 11:47",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46236"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "336/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-06",
+   "settlement_date": null,
+   "maturity_date": "2027-02-01",
+   "accepted_usd_cents": 210000000000,
+   "cut_rate": 5.689,
+   "announcement": {
+    "communication_number": 46242,
+    "published_at_sao_paulo": "6/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46242"
+   },
+   "result": {
+    "communication_number": 46244,
+    "published_at_sao_paulo": "6/11/2026 11:46",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46244"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "337/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-06",
+   "settlement_date": null,
+   "maturity_date": "2027-03-01",
+   "accepted_usd_cents": 165000000000,
+   "cut_rate": 5.689,
+   "announcement": {
+    "communication_number": 46243,
+    "published_at_sao_paulo": "6/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46243"
+   },
+   "result": {
+    "communication_number": 46244,
+    "published_at_sao_paulo": "6/11/2026 11:46",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46244"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "338/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-09",
+   "settlement_date": null,
+   "maturity_date": "2027-02-01",
+   "accepted_usd_cents": 210000000000,
+   "cut_rate": 5.708,
+   "announcement": {
+    "communication_number": 46251,
+    "published_at_sao_paulo": "9/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46251"
+   },
+   "result": {
+    "communication_number": 46253,
+    "published_at_sao_paulo": "9/11/2026 11:44",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46253"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "339/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-09",
+   "settlement_date": null,
+   "maturity_date": "2027-03-01",
+   "accepted_usd_cents": 165000000000,
+   "cut_rate": 5.698,
+   "announcement": {
+    "communication_number": 46252,
+    "published_at_sao_paulo": "9/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46252"
+   },
+   "result": {
+    "communication_number": 46253,
+    "published_at_sao_paulo": "9/11/2026 11:44",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46253"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "340/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-10",
+   "settlement_date": null,
+   "maturity_date": "2027-02-01",
+   "accepted_usd_cents": 100000000000,
+   "cut_rate": 5.815,
+   "announcement": {
+    "communication_number": 46262,
+    "published_at_sao_paulo": "10/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46262"
+   },
+   "result": {
+    "communication_number": 46264,
+    "published_at_sao_paulo": "10/11/2026 11:44",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46264"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "341/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-10",
+   "settlement_date": null,
+   "maturity_date": "2027-03-01",
+   "accepted_usd_cents": 275000000000,
+   "cut_rate": 5.845,
+   "announcement": {
+    "communication_number": 46263,
+    "published_at_sao_paulo": "10/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46263"
+   },
+   "result": {
+    "communication_number": 46264,
+    "published_at_sao_paulo": "10/11/2026 11:44",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46264"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "342/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-11",
+   "settlement_date": null,
+   "maturity_date": "2027-02-01",
+   "accepted_usd_cents": 50000000000,
+   "cut_rate": 5.769,
+   "announcement": {
+    "communication_number": 46270,
+    "published_at_sao_paulo": "11/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46270"
+   },
+   "result": {
+    "communication_number": 46273,
+    "published_at_sao_paulo": "11/11/2026 11:47",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46273"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "343/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-11",
+   "settlement_date": null,
+   "maturity_date": "2027-03-01",
+   "accepted_usd_cents": 325000000000,
+   "cut_rate": 5.845,
+   "announcement": {
+    "communication_number": 46271,
+    "published_at_sao_paulo": "11/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46271"
+   },
+   "result": {
+    "communication_number": 46273,
+    "published_at_sao_paulo": "11/11/2026 11:47",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46273"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "344/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-12",
+   "settlement_date": null,
+   "maturity_date": "2027-02-01",
+   "accepted_usd_cents": 210000000000,
+   "cut_rate": 5.835,
+   "announcement": {
+    "communication_number": 46282,
+    "published_at_sao_paulo": "12/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46282"
+   },
+   "result": {
+    "communication_number": 46284,
+    "published_at_sao_paulo": "12/11/2026 11:47",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46284"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "345/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-12",
+   "settlement_date": null,
+   "maturity_date": "2027-03-01",
+   "accepted_usd_cents": 165000000000,
+   "cut_rate": 5.875,
+   "announcement": {
+    "communication_number": 46283,
+    "published_at_sao_paulo": "12/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46283"
+   },
+   "result": {
+    "communication_number": 46284,
+    "published_at_sao_paulo": "12/11/2026 11:47",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46284"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "346/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-13",
+   "settlement_date": null,
+   "maturity_date": "2027-02-01",
+   "accepted_usd_cents": 75000000000,
+   "cut_rate": 5.885,
+   "announcement": {
+    "communication_number": 46289,
+    "published_at_sao_paulo": "13/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46289"
+   },
+   "result": {
+    "communication_number": 46291,
+    "published_at_sao_paulo": "13/11/2026 11:47",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46291"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "347/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-13",
+   "settlement_date": null,
+   "maturity_date": "2027-03-01",
+   "accepted_usd_cents": 300000000000,
+   "cut_rate": 5.941,
+   "announcement": {
+    "communication_number": 46290,
+    "published_at_sao_paulo": "13/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46290"
+   },
+   "result": {
+    "communication_number": 46291,
+    "published_at_sao_paulo": "13/11/2026 11:47",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46291"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "348/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-16",
+   "settlement_date": null,
+   "maturity_date": "2027-02-01",
+   "accepted_usd_cents": 290000000000,
+   "cut_rate": 5.919,
+   "announcement": {
+    "communication_number": 46299,
+    "published_at_sao_paulo": "16/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46299"
+   },
+   "result": {
+    "communication_number": 46302,
+    "published_at_sao_paulo": "16/11/2026 11:48",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46302"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "349/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-16",
+   "settlement_date": null,
+   "maturity_date": "2027-03-01",
+   "accepted_usd_cents": 85000000000,
+   "cut_rate": 5.949,
+   "announcement": {
+    "communication_number": 46300,
+    "published_at_sao_paulo": "16/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46300"
+   },
+   "result": {
+    "communication_number": 46302,
+    "published_at_sao_paulo": "16/11/2026 11:48",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46302"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "350/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-17",
+   "settlement_date": null,
+   "maturity_date": "2027-02-01",
+   "accepted_usd_cents": 175000000000,
+   "cut_rate": 5.939,
+   "announcement": {
+    "communication_number": 46308,
+    "published_at_sao_paulo": "17/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46308"
+   },
+   "result": {
+    "communication_number": 46310,
+    "published_at_sao_paulo": "17/11/2026 11:46",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46310"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "351/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-17",
+   "settlement_date": null,
+   "maturity_date": "2027-03-01",
+   "accepted_usd_cents": 100000000000,
+   "cut_rate": 5.982,
+   "announcement": {
+    "communication_number": 46309,
+    "published_at_sao_paulo": "17/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46309"
+   },
+   "result": {
+    "communication_number": 46310,
+    "published_at_sao_paulo": "17/11/2026 11:46",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46310"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "352/2026",
+   "kind": "cambio",
+   "category": "sale_with_repurchase",
+   "nature_published": "Venda Conjugada com Compra Pós-Fixado Selic",
+   "trade_date": "2026-11-18",
+   "settlement_date": "2026-11-23",
+   "maturity_date": "2027-04-02",
+   "accepted_usd_cents": 25000000000,
+   "cut_rate": 5.865,
+   "announcement": {
+    "communication_number": 46317,
+    "published_at_sao_paulo": "18/11/2026 10:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46317"
+   },
+   "result": {
+    "communication_number": 46318,
+    "published_at_sao_paulo": "18/11/2026 10:41",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46318"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "353/2026",
+   "kind": "cambio",
+   "category": "sale_with_repurchase",
+   "nature_published": "Venda Conjugada com Compra Pós-Fixado Selic",
+   "trade_date": "2026-11-18",
+   "settlement_date": "2026-11-23",
+   "maturity_date": "2027-07-02",
+   "accepted_usd_cents": 75000000000,
+   "cut_rate": 6.07,
+   "announcement": {
+    "communication_number": 46316,
+    "published_at_sao_paulo": "18/11/2026 10:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46316"
+   },
+   "result": {
+    "communication_number": 46319,
+    "published_at_sao_paulo": "18/11/2026 10:41",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46319"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "354/2026",
+   "kind": "cambio",
+   "category": "spot_sale",
+   "nature_published": "Venda À vista",
+   "trade_date": "2026-11-19",
+   "settlement_date": "2026-11-24",
+   "maturity_date": null,
+   "accepted_usd_cents": 100000000000,
+   "cut_rate": 5.86,
+   "announcement": {
+    "communication_number": 46327,
+    "published_at_sao_paulo": "19/11/2026 12:03",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46327"
+   },
+   "result": {
+    "communication_number": 46328,
+    "published_at_sao_paulo": "19/11/2026 12:12",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46328"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "355/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-23",
+   "settlement_date": null,
+   "maturity_date": "2027-02-01",
+   "accepted_usd_cents": 175000000000,
+   "cut_rate": 5.995,
+   "announcement": {
+    "communication_number": 46336,
+    "published_at_sao_paulo": "23/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46336"
+   },
+   "result": {
+    "communication_number": 46338,
+    "published_at_sao_paulo": "23/11/2026 11:49",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46338"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "356/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-23",
+   "settlement_date": null,
+   "maturity_date": "2027-03-01",
+   "accepted_usd_cents": 200000000000,
+   "cut_rate": 6.081,
+   "announcement": {
+    "communication_number": 46337,
+    "published_at_sao_paulo": "23/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46337"
+   },
+   "result": {
+    "communication_number": 46338,
+    "published_at_sao_paulo": "23/11/2026 11:49",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46338"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "357/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-24",
+   "settlement_date": null,
+   "maturity_date": "2027-02-01",
+   "accepted_usd_cents": 140000000000,
+   "cut_rate": 6.005,
+   "announcement": {
+    "communication_number": 46345,
+    "published_at_sao_paulo": "24/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46345"
+   },
+   "result": {
+    "communication_number": 46347,
+    "published_at_sao_paulo": "24/11/2026 11:45",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46347"
+   },
+   "parsed": true
+  },
+  {
+   "auction": "358/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-24",
+   "settlement_date": null,
+   "maturity_date": "2027-03-01",
+   "accepted_usd_cents": 235000000000,
+   "cut_rate": 6.019,
+   "announcement": {
+    "communication_number": 46346,
+    "published_at_sao_paulo": "24/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46346"
+   },
+   "result": {
+    "communication_number": 46347,
+    "published_at_sao_paulo": "24/11/2026 11:45",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46347"
+   },
+   "parsed": true
+  }
+ ]
+}

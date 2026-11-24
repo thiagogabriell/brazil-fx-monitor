@@ -1008,13 +1008,44 @@ def _import_coverage_months(flow: dict, reserves_value: float | None) -> float |
     return round(reserves_value / monthly_average_usd, 3)
 
 
-def build_spending_days(daily: dict[str, dict], reserves: Series, anchor: str) -> dict:
+def build_spending_days(
+    daily: dict[str, dict],
+    reserves: Series,
+    anchor: str,
+    recent: dict | None = None,
+) -> dict:
     """Every single day the Banco Central actually spent reserves, since 1999.
 
     "Spending" here means a definitive sale of dollars settling on that date.
     Sales that the source publishes with a maturity date are excluded, because
     they come back, and so are swaps, which never move the reserves.
     """
+    # Auctions the Banco Central already published by comunicado but that have
+    # not reached the monthly file yet. They are the only way to know about
+    # spending in the last few weeks, and are flagged as provisional.
+    provisional: dict[str, dict] = defaultdict(
+        lambda: {"sold": 0, "temporary": 0, "count": 0, "sources": []}
+    )
+    for auction in (recent or {}).get("auctions", []):
+        if not auction.get("parsed"):
+            continue
+        date = auction.get("settlement_date") or auction.get("trade_date")
+        if not date or date <= anchor:
+            continue
+        bucket = provisional[date]
+        amount = auction.get("accepted_usd_cents") or 0
+        if auction["category"] == "spot_sale":
+            bucket["sold"] += amount
+            bucket["count"] += 1
+        elif auction["category"] in TEMPORARY:
+            bucket["temporary"] += amount
+        else:
+            continue
+        for leg in ("result", "announcement"):
+            reference = auction.get(leg)
+            if reference and reference not in bucket["sources"]:
+                bucket["sources"].append(reference)
+
     rows = []
     for date in sorted(daily):
         sold = daily[date]["sold_cents"]
@@ -1036,8 +1067,36 @@ def build_spending_days(daily: dict[str, dict], reserves: Series, anchor: str) -
                 "closing_usd": closing,
                 "variation_usd": variation,
                 "variation_pct": _pct(closing, previous[1]) if previous else None,
+                "source": "dados_abertos",
+                "provisional": False,
             }
         )
+
+    for date in sorted(provisional):
+        bucket = provisional[date]
+        if bucket["sold"] <= 0:
+            continue
+        closing = reserves.at(date)
+        previous = reserves.previous(date) if closing is not None else None
+        rows.append(
+            {
+                "date": date,
+                "sold_usd_cents": bucket["sold"],
+                "temporary_out_usd_cents": bucket["temporary"],
+                "operation_count": bucket["count"],
+                "opening_date": previous[0] if previous else None,
+                "opening_usd": previous[1] if previous else None,
+                "closing_usd": closing,
+                "variation_usd": (
+                    closing - previous[1] if closing is not None and previous else None
+                ),
+                "variation_pct": _pct(closing, previous[1]) if previous else None,
+                "source": "comunicado",
+                "provisional": True,
+                "communications": bucket["sources"],
+            }
+        )
+    rows.sort(key=lambda row: row["date"])
 
     total = sum(row["sold_usd_cents"] for row in rows)
     by_year: dict[str, dict] = defaultdict(lambda: {"sold_usd_cents": 0, "days": 0})
@@ -1055,10 +1114,16 @@ def build_spending_days(daily: dict[str, dict], reserves: Series, anchor: str) -
             "pela data de liquidacao. Nao inclui swaps, que sao nocionais, nem "
             "vendas com retorno contratado, nem operacoes temporarias."
         ),
-        "reference_date": anchor,
+        "reference_date": max(
+            [anchor] + [row["date"] for row in rows if row["provisional"]]
+        ),
+        "consolidated_until": anchor,
+        "provisional_count": sum(1 for row in rows if row["provisional"]),
         "coverage_note": (
-            "Lista completa desde o inicio da serie. Depois de "
-            f"{anchor} as atuacoes ainda nao foram publicadas."
+            "Lista completa desde o inicio da serie. Ate "
+            f"{anchor} vem do arquivo mensal consolidado; depois dessa data vem "
+            "dos comunicados que o Banco Central publica no mesmo dia do "
+            "leilao, marcados como provisorios."
         ),
         "first_date": rows[0]["date"] if rows else None,
         "day_count": len(rows),
@@ -1388,9 +1453,12 @@ def main() -> int:
         operations,
     )
 
+    recent_auctions = read_json(DATA / "interventions" / "recent-auctions.json")
     write_json(
         DATA / "indicators" / "spending-days.json",
-        build_spending_days(daily, reserves_cash, anchor_interventions),
+        build_spending_days(
+            daily, reserves_cash, anchor_interventions, recent_auctions
+        ),
         compact=True,
     )
     write_json(DATA / "indicators" / "summary.json", summary)

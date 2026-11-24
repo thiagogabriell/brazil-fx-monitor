@@ -36,7 +36,10 @@ window.PAGE = (() => {
       closing_usd: day.closing_usd,
       variation_usd: day.variation_usd,
       variation_pct: day.variation_pct,
-      interventions_coverage: 'covered'
+      interventions_coverage: 'covered',
+      source: day.source,
+      provisional: day.provisional,
+      communications: day.communications || []
     }));
   }
 
@@ -65,9 +68,14 @@ window.PAGE = (() => {
         <div class="big neg">${last ? cents(last.sold_usd_cents) : 'US$ 0'}</div>
         <p class="sub">
           ${last
-            ? `Foi em <strong>${BFX.date(last.date, { withWeekday: true })}</strong>,
-               há ${BFX.number(BFX.daysBetween(last.date, BFX.todaySaoPaulo()))} dias.
-               Em todos os dias úteis desde então o gasto publicado foi zero.`
+            ? `Foi em <strong>${BFX.date(last.date, { withWeekday: true })}</strong>`
+              + (BFX.daysBetween(last.date, BFX.todaySaoPaulo()) === 0
+                ? ', hoje.'
+                : `, há ${BFX.number(BFX.daysBetween(last.date, BFX.todaySaoPaulo()))} dias.`)
+              + (last.provisional
+                ? ' Vem do comunicado que o Banco Central publicou no dia do leilão.'
+                : '')
+              + ' Em todos os dias úteis desde então o gasto publicado foi zero.'
             : 'Nenhum dia de gasto no período carregado.'}
         </p>
       </div>
@@ -106,17 +114,20 @@ window.PAGE = (() => {
   }
 
   function renderLag() {
-    const anchor = summary.anchors.interventions;
-    const lag = BFX.daysBetween(anchor, BFX.todaySaoPaulo());
+    const consolidated = spending.consolidated_until;
     document.getElementById('lag').innerHTML = `
       <strong>Gasto é venda definitiva de dólares.</strong>
       O saldo das reservas sobe e desce todo dia por rendimento dos
       investimentos e por variação entre as moedas guardadas. Isso não é o
       governo gastando. Gasto é o Banco Central vender dólar de vez, e isso
       acontece em dias contados.
-      O Banco Central publica essas vendas <strong>uma vez por mês</strong>:
-      hoje a lista vai até ${BFX.date(anchor)}, ou seja ${lag} dias atrás.
-      Depois dessa data ainda não dá para saber, e estimar seria inventar.`;
+      <br><br>
+      <strong>De onde vem cada linha.</strong>
+      Até ${BFX.date(consolidated)} os valores vêm do arquivo mensal
+      consolidado do Banco Central. Depois dessa data vêm do
+      <strong>comunicado que o próprio Banco Central publica no mesmo dia do
+      leilão</strong>, marcado aqui como provisório, com link para o documento.
+      Os dois batem quando o arquivo mensal alcança a data.`;
   }
 
   function renderTable() {
@@ -128,8 +139,14 @@ window.PAGE = (() => {
       ? rows.map((day) => {
           const pending = day.interventions_coverage !== 'covered';
           const trend = BFX.trend(day.variation_usd);
+          const link = (day.communications || []).find((c) => c && c.url);
           return `<tr>
-            <td>${BFX.date(day.date, { withWeekday: true })}</td>
+            <td>${BFX.date(day.date, { withWeekday: true })}
+              ${day.provisional
+                ? `<a href="${BFX.escapeHtml(link ? link.url : '#')}" target="_blank"
+                     rel="noopener noreferrer" class="badge badge--preliminary"
+                     title="Vem do comunicado do dia, ainda não do arquivo mensal">provisório</a>`
+                : ''}</td>
             <td class="${day.direct_sold_usd_cents ? 'neg' : 'neutral'}"
                 style="font-size:15px">
               ${pending
@@ -149,7 +166,10 @@ window.PAGE = (() => {
       : '<tr><td colspan="5" class="pending">Nenhum dia de gasto no período.</td></tr>';
 
     document.getElementById('row-count').textContent = onlySpending
-      ? `${BFX.number(rows.length)} dia(s) de gasto desde ${BFX.date(spending.first_date)}, toda a série.`
+      ? `${BFX.number(rows.length)} dia(s) de gasto desde ${BFX.date(spending.first_date)}, toda a série`
+        + (spending.provisional_count
+          ? `, incluindo ${BFX.number(spending.provisional_count)} provisório(s).`
+          : '.')
       : `${BFX.number(rows.length)} dias, do mais recente para o mais antigo.`;
 
     document.getElementById('day-buttons').hidden = onlySpending;

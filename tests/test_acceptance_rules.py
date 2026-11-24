@@ -375,10 +375,16 @@ def test_spending_days_file_is_complete_and_consistent(operations):
         expected[date] = expected.get(date, 0) + (operation["volume_accepted_usd_cents"] or 0)
     expected = {date: value for date, value in expected.items() if value > 0}
 
-    published = {day["date"]: day["sold_usd_cents"] for day in document["days"]}
-    assert published == expected
-    assert document["day_count"] == len(expected)
-    assert document["total_usd_cents"] == sum(expected.values())
+    consolidated = {
+        day["date"]: day["sold_usd_cents"]
+        for day in document["days"]
+        if not day["provisional"]
+    }
+    assert consolidated == expected
+    assert document["day_count"] == len(document["days"])
+    assert document["total_usd_cents"] == sum(
+        day["sold_usd_cents"] for day in document["days"]
+    )
     assert document["days"] == sorted(document["days"], key=lambda d: d["date"])
     assert document["first_date"] == min(expected)
 
@@ -405,3 +411,52 @@ def test_spending_day_balances_match_the_reserve_series(reserves_cash):
             assert day["variation_usd"] == day["closing_usd"] - day["opening_usd"]
         checked += 1
     assert checked > 300
+
+
+def test_provisional_spending_comes_only_from_a_same_day_communication():
+    """Days past the monthly file must cite the comunicado they came from."""
+    import json
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parent.parent
+    document = json.loads(
+        (root / "data" / "indicators" / "spending-days.json").read_text(encoding="utf-8")
+    )
+    cutoff = document["consolidated_until"]
+
+    for day in document["days"]:
+        if day["provisional"]:
+            assert day["date"] > cutoff, day["date"]
+            assert day["source"] == "comunicado"
+            links = day.get("communications") or []
+            assert links, day["date"]
+            assert any("bcb.gov.br" in (link.get("url") or "") for link in links)
+        else:
+            assert day["date"] <= cutoff
+            assert day["source"] == "dados_abertos"
+
+    assert document["provisional_count"] == sum(
+        1 for day in document["days"] if day["provisional"]
+    )
+
+
+def test_recent_auctions_never_overlap_the_monthly_file(operations_document):
+    import json
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parent.parent
+    path = root / "data" / "interventions" / "recent-auctions.json"
+    if not path.exists():
+        pytest.skip("recent auctions not collected")
+    recent = json.loads(path.read_text(encoding="utf-8"))
+
+    assert recent["covers_after"] == operations_document["reference_date"]
+    for auction in recent["auctions"]:
+        assert auction["trade_date"] > recent["covers_after"], auction["auction"]
+        assert auction["parsed"] is True
+        assert auction["accepted_usd_cents"] is not None
+        assert auction["category"] in CATEGORIES
+
+    # An auction that could not be read is kept aside, never counted.
+    for auction in recent["unparsed"]:
+        assert auction["parsed"] is False
