@@ -56,6 +56,29 @@ jobs:
         with:
           path: _site
 
+      # O upload termina com "Finalizing artifact upload" e o deploy consulta a
+      # API de artefatos menos de um segundo depois. Quando a finalizacao ainda
+      # nao propagou, a consulta devolve zero artefatos e o deploy falha com
+      # "No artifacts named github-pages were found". Esperar o artefato
+      # aparecer elimina essa corrida.
+      - name: Aguardar o artefato ficar visível na API
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          api="repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts"
+          for attempt in $(seq 1 20); do
+            found=$(gh api "$api" --jq '[.artifacts[] | select(.name == "github-pages")] | length' || echo 0)
+            if [ "${found:-0}" -ge 1 ]; then
+              echo "artefato disponível após $attempt tentativa(s)"
+              exit 0
+            fi
+            echo "tentativa $attempt: artefato ainda não visível"
+            sleep 6
+          done
+          echo "o artefato github-pages não ficou visível na API" >&2
+          exit 1
+
       - id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
 
