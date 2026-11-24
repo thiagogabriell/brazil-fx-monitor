@@ -15,7 +15,8 @@ const BFX = (() => {
 
   const NAV = [
     { group: 'Panorama', items: [
-      { href: 'index.html', label: 'Visão geral', icon: '◧', key: 'overview' },
+      { href: 'index.html', label: 'Painel simples', icon: '●', key: 'home' },
+      { href: 'pages/overview.html', label: 'Visão geral', icon: '◧', key: 'overview' },
       { href: 'pages/reserves.html', label: 'Extrato das reservas', icon: '▤', key: 'reserves' },
       { href: 'pages/calendar.html', label: 'Calendário de intervenções', icon: '▦', key: 'calendar' },
       { href: 'pages/composition.html', label: 'Composição das reservas', icon: '◴', key: 'composition' }
@@ -106,6 +107,12 @@ const BFX = (() => {
     })();
     cache.set(relativePath, promise);
     return promise;
+  }
+
+  /** Same as load, but ignores the cache so a page can refresh itself. */
+  function reload(relativePath, options) {
+    cache.delete(relativePath);
+    return load(relativePath, options);
   }
 
   /* ----------------------------------------------------------- formatting */
@@ -385,20 +392,31 @@ const BFX = (() => {
   }
 
   function startLiveQuote() {
+    // The element only exists on the pages that render the sidebar shell; the
+    // standalone panel listens to the bfx:quote event and paints it itself.
     const element = document.getElementById('live-quote');
-    if (!element) return;
     const enabled = recall('liveQuote', true);
     const intervalSeconds = Number(recall('liveQuoteInterval', 60)) || 60;
     if (!enabled) {
-      element.innerHTML = '<span class="na">cotação ao vivo desligada</span>';
+      lastQuote = { ok: false, error: 'cotação ao vivo desligada', disabled: true };
+      if (element) {
+        element.innerHTML = '<span class="na">cotação ao vivo desligada</span>';
+      }
+      window.dispatchEvent(new CustomEvent('bfx:quote', { detail: lastQuote }));
       return;
     }
     const tick = async () => {
       const quote = await fetchLiveQuote();
       lastQuote = quote;
       if (!quote.ok) {
-        element.innerHTML = '<span class="na" title="' + escapeHtml(quote.error) +
-          '">cotação ao vivo indisponível</span>';
+        if (element) {
+          element.innerHTML = '<span class="na" title="' + escapeHtml(quote.error) +
+            '">cotação ao vivo indisponível</span>';
+        }
+        window.dispatchEvent(new CustomEvent('bfx:quote', { detail: quote }));
+        return;
+      }
+      if (!element) {
         window.dispatchEvent(new CustomEvent('bfx:quote', { detail: quote }));
         return;
       }
@@ -540,9 +558,28 @@ const BFX = (() => {
     startLiveQuote();
   }
 
+  /** Boot for a page that draws its own layout instead of the sidebar shell. */
+  async function initStandalone() {
+    applyTheme(recall('theme', 'dark'));
+    const body = document.getElementById('page-template');
+    const target = document.getElementById('main');
+    if (body && target) {
+      target.innerHTML = body.innerHTML;
+      body.remove();
+    }
+    const toggle = document.getElementById('theme-toggle');
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+      });
+      applyTheme(recall('theme', 'dark'));
+    }
+    startLiveQuote();
+  }
+
   return {
     base, NAV, RANGES, LIVE_SOURCE,
-    init, load, store, recall, forget,
+    init, initStandalone, load, reload, store, recall, forget,
     usd, usdCents, brl, pct, number, naText, date, stamp, utcToSaoPaulo,
     daysBetween, todaySaoPaulo, trend, deltaHtml, qualityBadge, freshness,
     escapeHtml, exportCsv, exportJson, downloadBlob, toCsv,

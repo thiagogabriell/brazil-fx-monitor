@@ -14,7 +14,10 @@ ECHARTS = (
 
 PAGES = [
     # (output path, page key, browser title, h1 title, needs charts, script)
-    ("index.html", "overview", "Visão geral", "Visão geral", True, "page-overview.js"),
+    # A pagina inicial e autonoma: desenha o proprio layout, sem a barra
+    # lateral, porque existe para responder uma pergunta so.
+    ("index.html", "home", "Reservas do Brasil", "Reservas do Brasil", False, "page-home.js"),
+    ("pages/overview.html", "overview", "Visão geral", "Visão geral", True, "page-overview.js"),
     ("pages/reserves.html", "reserves", "Extrato das reservas", "Extrato das reservas", True, "page-reserves.js"),
     ("pages/transactions.html", "transactions", "Movimentações diárias", "Movimentações diárias das reservas", False, "page-transactions.js"),
     ("pages/calendar.html", "calendar", "Calendário de intervenções", "Calendário de intervenções", True, "page-calendar.js"),
@@ -29,6 +32,46 @@ PAGES = [
     ("pages/sources.html", "sources", "Fontes e metodologia", "Fontes e metodologia", False, "page-sources.js"),
     ("pages/settings.html", "settings", "Configurações", "Configurações", False, "page-settings.js"),
 ]
+
+STANDALONE = """<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{browser_title}</title>
+<meta name="description" content="Quanto o Brasil tem de reservas internacionais, quanto mudou em cada dia e quanto o Banco Central vendeu, com dados oficiais.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="{base}assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="{base}assets/css/app.css?v={version}">
+<link rel="stylesheet" href="{base}assets/css/simple.css?v={version}">
+</head>
+<body class="simple">
+<main id="main"></main>
+<template id="page-template">
+{body}
+</template>
+<script defer src="{base}assets/js/core.js?v={version}"></script>
+<script defer src="{base}assets/js/{script}?v={version}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {{
+  var start = function () {{
+    if (!window.BFX) {{ setTimeout(start, 20); return; }}
+    BFX.initStandalone().then(function () {{
+      window.PAGE.init().catch(function (error) {{
+        var box = document.createElement('p');
+        box.className = 'notice notice--error';
+        box.textContent = 'Falha ao carregar os dados: ' + error.message;
+        document.getElementById('main').prepend(box);
+        console.error(error);
+      }});
+    }});
+  }};
+  start();
+}});
+</script>
+</body>
+</html>
+"""
 
 TEMPLATE = """<!doctype html>
 <html lang="pt-BR" data-theme="dark">
@@ -95,7 +138,8 @@ def main() -> None:
         base = "../" if "/" in output else "./"
         body_file = BODIES / (Path(output).stem + ".html")
         body = body_file.read_text(encoding="utf-8").rstrip() if body_file.exists() else ""
-        html = TEMPLATE.format(
+        template = STANDALONE if key == "home" else TEMPLATE
+        html = template.format(
             version=version,
             browser_title=browser_title,
             base=base,

@@ -25,7 +25,8 @@ def test_each_page_boots_its_own_module():
     for page in PAGES:
         text = page.read_text(encoding="utf-8")
         assert "window.PAGE" in text or "page-" in text, page.name
-        assert "BFX.init(" in text, page.name
+        # index.html is the standalone panel; the rest use the sidebar shell.
+        assert "BFX.init(" in text or "BFX.initStandalone(" in text, page.name
 
 
 def test_each_page_script_exists():
@@ -269,17 +270,18 @@ def test_theme_preference_persists(site_url):
     reason="set BFX_BROWSER_TESTS=1 and install playwright to run browser tests",
 )
 def test_navigation_between_pages_works(site_url):
+    """Navigation is exercised from a shell page, not from the simple panel."""
     playwright_api = pytest.importorskip("playwright.sync_api")
     with playwright_api.sync_playwright() as p:
         browser = p.chromium.launch()
         try:
             page = browser.new_page()
             _stub_live_quote(page, fulfil=True)
-            page.goto(f"{site_url}/index.html", wait_until="networkidle")
+            page.goto(f"{site_url}/pages/overview.html", wait_until="networkidle")
             page.wait_for_timeout(1200)
             links = page.locator(".nav a")
-            assert links.count() == 14
-            page.click('.nav a[href$="pages/calendar.html"]')
+            assert links.count() == 15
+            page.click('.nav a[href$="calendar.html"]')
             page.wait_for_load_state("networkidle")
             page.wait_for_timeout(1800)
             assert "Calendário" in page.title()

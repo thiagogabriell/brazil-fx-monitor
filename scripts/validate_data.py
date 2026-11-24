@@ -317,7 +317,7 @@ def validate_frequency_mixing(report: Report) -> None:
 def validate_html(report: Report) -> None:
     """Every page must exist and use relative paths so Pages subpaths work."""
     pages = [ROOT / "index.html"] + sorted((ROOT / "pages").glob("*.html"))
-    report.check(len(pages) >= 14, f"expected at least 14 pages, found {len(pages)}")
+    report.check(len(pages) >= 15, f"expected at least 15 pages, found {len(pages)}")
     for page in pages:
         text = page.read_text(encoding="utf-8")
         report.check(

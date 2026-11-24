@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visão geral · Brazil FX Monitor</title>
+<meta name="description" content="Monitoramento das reservas internacionais do Brasil, das intervenções cambiais do Banco Central, do fluxo de dólares e da pressão sobre o real, com dados oficiais.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/app.css?v=c429661627">
+</head>
+<body>
+<div id="app-shell"></div>
+<template id="page-template">
+<p class="page-intro">
+  Situação cambial do Brasil com dados oficiais do Banco Central. Cada bloco
+  informa a própria fonte, a data de referência e a frequência oficial de
+  atualização, porque as séries não são publicadas no mesmo ritmo.
+</p>
+
+<div id="anchor-notice"></div>
+
+<section class="section" aria-labelledby="h-reserves">
+  <div class="section__head"><h2 id="h-reserves">Reservas internacionais</h2>
+    <span id="reserves-badge"></span>
+    <div class="topbar__spacer"></div>
+    <div class="field" style="min-width:0">
+      <label for="concept-select">Conceito</label>
+      <select id="concept-select"></select>
+    </div>
+  </div>
+  <div class="section__body">
+    <div class="grid grid--4" id="reserves-cards"><p class="loading">Carregando…</p></div>
+    <p class="card__meta-row" id="concept-explanation" style="margin-top:10px"></p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="h-interventions">
+  <div class="section__head"><h2 id="h-interventions">Intervenções cambiais</h2>
+    <span id="interventions-badge"></span></div>
+  <div class="section__body">
+    <div id="interventions-notice"></div>
+    <div class="grid grid--4" id="interventions-cards"><p class="loading">Carregando…</p></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="h-market">
+  <div class="section__head"><h2 id="h-market">Mercado cambial</h2>
+    <span id="market-badge"></span></div>
+  <div class="section__body">
+    <div class="grid grid--4" id="market-cards"><p class="loading">Carregando…</p></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="h-flow">
+  <div class="section__head"><h2 id="h-flow">Fluxo cambial</h2>
+    <span id="flow-badge"></span></div>
+  <div class="section__body">
+    <div id="flow-notice"></div>
+    <div class="grid grid--4" id="flow-cards"><p class="loading">Carregando…</p></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="h-chart">
+  <div class="section__head"><h2 id="h-chart">Reservas e dólar</h2>
+    <div class="topbar__spacer"></div>
+    <div id="overview-range"></div></div>
+  <div class="section__body">
+    <div class="chart" id="chart-overview"></div>
+    <p class="card__meta-row" id="chart-overview-note"></p>
+  </div>
+</section>
+
+<div class="grid grid--2" style="margin-top:22px">
+  <section class="section" style="margin-top:0" aria-labelledby="h-summary">
+    <div class="section__head"><h2 id="h-summary">Resumo do dia</h2>
+      <div class="topbar__spacer"></div>
+      <span class="badge badge--official" id="summary-stamp"></span></div>
+    <div class="section__body" id="daily-summary"><p class="loading">Carregando…</p></div>
+  </section>
+
+  <section class="section" style="margin-top:0" aria-labelledby="h-alerts">
+    <div class="section__head"><h2 id="h-alerts">Alertas e padrões</h2>
+      <div class="topbar__spacer"></div>
+      <a href="alerts.html" id="alerts-link">Ver central de alertas</a></div>
+    <div class="section__body" id="overview-alerts"><p class="loading">Carregando…</p></div>
+  </section>
+</div>
+
+<section class="section" aria-labelledby="h-pressure-mini">
+  <div class="section__head"><h2 id="h-pressure-mini">Pressão cambial (indicador experimental desta aplicação)</h2>
+    <div class="topbar__spacer"></div>
+    <a href="pressure-index.html" id="pressure-link">Ver metodologia</a></div>
+  <div class="section__body" id="pressure-mini"><p class="loading">Carregando…</p></div>
+</section>
+</template>
+<script defer src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js" integrity="sha384-Mx5lkUEQPM1pOJCwFtUICyX45KNojXbkWdYhkKUKsbv391mavbfoAmONbzkgYPzR" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="../assets/js/core.js?v=c429661627"></script>
+<script defer src="../assets/js/charts.js?v=c429661627"></script>
+<script defer src="../assets/js/page-overview.js?v=c429661627"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var start = function () {
+    if (!window.BFX) { setTimeout(start, 20); return; }
+    BFX.init('overview', "Visão geral").then(function () {
+      if (window.PAGE && typeof window.PAGE.init === 'function') {
+        window.PAGE.init().catch(function (error) {
+          var main = document.getElementById('main');
+          if (main) {
+            var box = document.createElement('p');
+            box.className = 'notice notice--error';
+            box.textContent = 'Falha ao carregar os dados desta página: ' + error.message;
+            main.prepend(box);
+          }
+          console.error(error);
+        });
+      }
+    });
+  };
+  start();
+});
+</script>
+</body>
+</html>

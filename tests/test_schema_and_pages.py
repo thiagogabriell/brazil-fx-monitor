@@ -130,7 +130,7 @@ def test_layout_change_is_detected():
 def test_every_menu_entry_has_a_page():
     core = (ROOT / "assets" / "js" / "core.js").read_text(encoding="utf-8")
     hrefs = set(re.findall(r"href: '([^']+)'", core))
-    assert len(hrefs) == 14
+    assert len(hrefs) == 15
     for href in hrefs:
         assert (ROOT / href).exists(), href
 

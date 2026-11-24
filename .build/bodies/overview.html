@@ -1,0 +1,81 @@
+<p class="page-intro">
+  Situação cambial do Brasil com dados oficiais do Banco Central. Cada bloco
+  informa a própria fonte, a data de referência e a frequência oficial de
+  atualização, porque as séries não são publicadas no mesmo ritmo.
+</p>
+
+<div id="anchor-notice"></div>
+
+<section class="section" aria-labelledby="h-reserves">
+  <div class="section__head"><h2 id="h-reserves">Reservas internacionais</h2>
+    <span id="reserves-badge"></span>
+    <div class="topbar__spacer"></div>
+    <div class="field" style="min-width:0">
+      <label for="concept-select">Conceito</label>
+      <select id="concept-select"></select>
+    </div>
+  </div>
+  <div class="section__body">
+    <div class="grid grid--4" id="reserves-cards"><p class="loading">Carregando…</p></div>
+    <p class="card__meta-row" id="concept-explanation" style="margin-top:10px"></p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="h-interventions">
+  <div class="section__head"><h2 id="h-interventions">Intervenções cambiais</h2>
+    <span id="interventions-badge"></span></div>
+  <div class="section__body">
+    <div id="interventions-notice"></div>
+    <div class="grid grid--4" id="interventions-cards"><p class="loading">Carregando…</p></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="h-market">
+  <div class="section__head"><h2 id="h-market">Mercado cambial</h2>
+    <span id="market-badge"></span></div>
+  <div class="section__body">
+    <div class="grid grid--4" id="market-cards"><p class="loading">Carregando…</p></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="h-flow">
+  <div class="section__head"><h2 id="h-flow">Fluxo cambial</h2>
+    <span id="flow-badge"></span></div>
+  <div class="section__body">
+    <div id="flow-notice"></div>
+    <div class="grid grid--4" id="flow-cards"><p class="loading">Carregando…</p></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="h-chart">
+  <div class="section__head"><h2 id="h-chart">Reservas e dólar</h2>
+    <div class="topbar__spacer"></div>
+    <div id="overview-range"></div></div>
+  <div class="section__body">
+    <div class="chart" id="chart-overview"></div>
+    <p class="card__meta-row" id="chart-overview-note"></p>
+  </div>
+</section>
+
+<div class="grid grid--2" style="margin-top:22px">
+  <section class="section" style="margin-top:0" aria-labelledby="h-summary">
+    <div class="section__head"><h2 id="h-summary">Resumo do dia</h2>
+      <div class="topbar__spacer"></div>
+      <span class="badge badge--official" id="summary-stamp"></span></div>
+    <div class="section__body" id="daily-summary"><p class="loading">Carregando…</p></div>
+  </section>
+
+  <section class="section" style="margin-top:0" aria-labelledby="h-alerts">
+    <div class="section__head"><h2 id="h-alerts">Alertas e padrões</h2>
+      <div class="topbar__spacer"></div>
+      <a href="alerts.html" id="alerts-link">Ver central de alertas</a></div>
+    <div class="section__body" id="overview-alerts"><p class="loading">Carregando…</p></div>
+  </section>
+</div>
+
+<section class="section" aria-labelledby="h-pressure-mini">
+  <div class="section__head"><h2 id="h-pressure-mini">Pressão cambial (indicador experimental desta aplicação)</h2>
+    <div class="topbar__spacer"></div>
+    <a href="pressure-index.html" id="pressure-link">Ver metodologia</a></div>
+  <div class="section__body" id="pressure-mini"><p class="loading">Carregando…</p></div>
+</section>

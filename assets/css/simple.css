@@ -1,0 +1,114 @@
+/* Painel simples: uma página só. Reaproveita os tokens de app.css. */
+
+body.simple {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 18px 16px 48px;
+}
+
+.simple-top {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+.simple-top h1 { font-size: 17px; margin: 0; font-weight: 700; letter-spacing: -0.01em; }
+.simple-top .spacer { flex: 1; }
+.simple-top .usd { font-family: var(--mono); font-size: 14px; }
+
+.headline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.headline .box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+.headline .box--wide { grid-column: 1 / -1; }
+.headline .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+.headline .big {
+  font-family: var(--mono);
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.headline .mid { font-family: var(--mono); font-size: 24px; font-weight: 600; }
+.headline .sub { font-size: 12px; color: var(--text-muted); margin-top: 7px; }
+
+.lag {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--warn);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  margin-bottom: 18px;
+}
+.lag strong { color: var(--text); }
+
+.day-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.day-controls .btn { padding: 4px 10px; font-size: 12px; }
+.day-controls .spacer { flex: 1; }
+
+table.simple {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+table.simple th, table.simple td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: right;
+  white-space: nowrap;
+}
+table.simple th {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 600;
+  background: var(--bg-raised);
+  position: sticky;
+  top: 0;
+}
+table.simple th:first-child, table.simple td:first-child { text-align: left; }
+table.simple td { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+table.simple tbody tr:hover { background: var(--bg-hover); }
+table.simple td.pending { color: var(--unavailable); font-style: italic; font-family: var(--sans); }
+
+.foot {
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-dim);
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .headline .big { font-size: 27px; }
+  table.simple th, table.simple td { padding: 8px 6px; font-size: 12px; }
+}

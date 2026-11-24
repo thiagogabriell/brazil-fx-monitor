@@ -11,19 +11,36 @@ zero.
 
 ---
 
-## O que ela responde
+## A página inicial
 
-| Pergunta | Onde |
+Uma pergunta só: **quanto o Brasil tem de reservas e quanto saiu em cada dia.**
+
+| Coluna | O que é |
 |---|---|
-| Quanto o Brasil tem de reservas hoje | Visão geral |
-| O que aconteceu com as reservas em um dia específico | Extrato das reservas |
-| Em quais dias o Banco Central atuou e com qual volume | Calendário e Movimentações diárias |
-| Qual moeda e qual classe de ativo foram usadas | Movimentações diárias e Composição |
-| Quanto foi vendido em 7, 30, 90 e 365 dias | Visão geral e Histórico de intervenções |
-| Se a frequência e o volume das intervenções estão subindo | Histórico e Pressão cambial |
-| Se as intervenções seguram a alta do dólar | Efetividade das intervenções |
-| Se há saída acelerada de dólares | Fluxo cambial |
-| Quanto tempo as reservas durariam em cenários hipotéticos | Simulador |
+| Quanto sobrou | saldo das reservas naquele dia |
+| Mudou no dia | variação do saldo. Inclui rendimento e variação entre moedas, não é só venda |
+| Vendido pelo BC | venda definitiva de dólares, liquidada naquele dia. Sai das reservas de vez |
+| Operação temporária | o BC empresta dólares e recebe de volta na data combinada. Não é gasto permanente |
+
+Três relógios diferentes, porque o Banco Central publica em ritmos diferentes, e
+a página diz qual é qual em vez de misturar:
+
+| Informação | Atraso |
+|---|---|
+| Cotação do dólar | tempo real, fonte de mercado |
+| Saldo das reservas e variação do dia | um dia útil |
+| Venda confirmada pelo BC | **uma publicação por mês**, de três a oito semanas |
+
+Por isso a coluna "Vendido pelo BC" aparece como *ainda não publicado* nos dias
+recentes. Não é falta de dado nesta aplicação: é o ritmo de divulgação do Banco
+Central, e preencher esse espaço com estimativa seria inventar.
+
+## As outras páginas
+
+Treze páginas de detalhe continuam no repositório, acessíveis pelo menu lateral
+a partir de "Ver tudo em detalhe": extrato conciliado dia a dia, calendário de
+intervenções, composição das reservas, histórico por tipo de operação, fluxo
+cambial, efetividade das intervenções, índice de pressão, alertas e simulador.
 
 ## Princípios que o código respeita
 

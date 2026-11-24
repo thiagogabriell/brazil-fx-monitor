@@ -3,118 +3,86 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Visão geral · Brazil FX Monitor</title>
-<meta name="description" content="Monitoramento das reservas internacionais do Brasil, das intervenções cambiais do Banco Central, do fluxo de dólares e da pressão sobre o real, com dados oficiais.">
+<title>Reservas do Brasil</title>
+<meta name="description" content="Quanto o Brasil tem de reservas internacionais, quanto mudou em cada dia e quanto o Banco Central vendeu, com dados oficiais.">
 <meta name="color-scheme" content="dark light">
 <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./assets/css/app.css?v=7676524102">
+<link rel="stylesheet" href="./assets/css/app.css?v=c429661627">
+<link rel="stylesheet" href="./assets/css/simple.css?v=c429661627">
 </head>
-<body>
-<div id="app-shell"></div>
+<body class="simple">
+<main id="main"></main>
 <template id="page-template">
-<p class="page-intro">
-  Situação cambial do Brasil com dados oficiais do Banco Central. Cada bloco
-  informa a própria fonte, a data de referência e a frequência oficial de
-  atualização, porque as séries não são publicadas no mesmo ritmo.
-</p>
-
-<div id="anchor-notice"></div>
-
-<section class="section" aria-labelledby="h-reserves">
-  <div class="section__head"><h2 id="h-reserves">Reservas internacionais</h2>
-    <span id="reserves-badge"></span>
-    <div class="topbar__spacer"></div>
-    <div class="field" style="min-width:0">
-      <label for="concept-select">Conceito</label>
-      <select id="concept-select"></select>
-    </div>
-  </div>
-  <div class="section__body">
-    <div class="grid grid--4" id="reserves-cards"><p class="loading">Carregando…</p></div>
-    <p class="card__meta-row" id="concept-explanation" style="margin-top:10px"></p>
-  </div>
-</section>
-
-<section class="section" aria-labelledby="h-interventions">
-  <div class="section__head"><h2 id="h-interventions">Intervenções cambiais</h2>
-    <span id="interventions-badge"></span></div>
-  <div class="section__body">
-    <div id="interventions-notice"></div>
-    <div class="grid grid--4" id="interventions-cards"><p class="loading">Carregando…</p></div>
-  </div>
-</section>
-
-<section class="section" aria-labelledby="h-market">
-  <div class="section__head"><h2 id="h-market">Mercado cambial</h2>
-    <span id="market-badge"></span></div>
-  <div class="section__body">
-    <div class="grid grid--4" id="market-cards"><p class="loading">Carregando…</p></div>
-  </div>
-</section>
-
-<section class="section" aria-labelledby="h-flow">
-  <div class="section__head"><h2 id="h-flow">Fluxo cambial</h2>
-    <span id="flow-badge"></span></div>
-  <div class="section__body">
-    <div id="flow-notice"></div>
-    <div class="grid grid--4" id="flow-cards"><p class="loading">Carregando…</p></div>
-  </div>
-</section>
-
-<section class="section" aria-labelledby="h-chart">
-  <div class="section__head"><h2 id="h-chart">Reservas e dólar</h2>
-    <div class="topbar__spacer"></div>
-    <div id="overview-range"></div></div>
-  <div class="section__body">
-    <div class="chart" id="chart-overview"></div>
-    <p class="card__meta-row" id="chart-overview-note"></p>
-  </div>
-</section>
-
-<div class="grid grid--2" style="margin-top:22px">
-  <section class="section" style="margin-top:0" aria-labelledby="h-summary">
-    <div class="section__head"><h2 id="h-summary">Resumo do dia</h2>
-      <div class="topbar__spacer"></div>
-      <span class="badge badge--official" id="summary-stamp"></span></div>
-    <div class="section__body" id="daily-summary"><p class="loading">Carregando…</p></div>
-  </section>
-
-  <section class="section" style="margin-top:0" aria-labelledby="h-alerts">
-    <div class="section__head"><h2 id="h-alerts">Alertas e padrões</h2>
-      <div class="topbar__spacer"></div>
-      <a href="pages/alerts.html" id="alerts-link">Ver central de alertas</a></div>
-    <div class="section__body" id="overview-alerts"><p class="loading">Carregando…</p></div>
-  </section>
+<div class="simple-top">
+  <h1>Reservas internacionais do Brasil</h1>
+  <span class="usd" id="usd">buscando o dólar…</span>
+  <span class="spacer"></span>
+  <span style="font-size:11px;color:var(--text-dim)" id="checked"></span>
+  <button class="btn btn--icon" id="theme-toggle" aria-label="Alternar tema">☀</button>
 </div>
 
-<section class="section" aria-labelledby="h-pressure-mini">
-  <div class="section__head"><h2 id="h-pressure-mini">Pressão cambial (indicador experimental desta aplicação)</h2>
-    <div class="topbar__spacer"></div>
-    <a href="pages/pressure-index.html" id="pressure-link">Ver metodologia</a></div>
-  <div class="section__body" id="pressure-mini"><p class="loading">Carregando…</p></div>
-</section>
+<div class="headline" id="headline">
+  <p class="loading">Carregando os dados do Banco Central…</p>
+</div>
+
+<p class="lag" id="lag"></p>
+
+<div class="day-controls" id="day-buttons">
+  <span style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)">Mostrar</span>
+  <button class="btn" type="button" data-days="7">7 dias</button>
+  <button class="btn" type="button" data-days="30">30 dias</button>
+  <button class="btn" type="button" data-days="90">90 dias</button>
+  <button class="btn" type="button" data-days="540">tudo</button>
+  <span class="spacer"></span>
+  <span style="font-size:11.5px;color:var(--text-dim)" id="row-count"></span>
+  <button class="btn" type="button" id="export">Baixar CSV</button>
+</div>
+
+<div style="overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius)">
+  <table class="simple">
+    <thead>
+      <tr>
+        <th scope="col">Dia</th>
+        <th scope="col">Quanto sobrou</th>
+        <th scope="col">Mudou no dia</th>
+        <th scope="col">%</th>
+        <th scope="col">Vendido pelo BC</th>
+        <th scope="col">Operação temporária</th>
+      </tr>
+    </thead>
+    <tbody id="rows"><tr><td colspan="6" class="loading">Carregando…</td></tr></tbody>
+  </table>
+</div>
+
+<div class="foot">
+  <span><strong style="color:var(--text-muted)">Vendido pelo BC</strong>: venda
+    definitiva de dólares, liquidada naquele dia. Sai das reservas de vez.</span>
+  <span><strong style="color:var(--text-muted)">Operação temporária</strong>: o BC
+    empresta dólares e recebe de volta na data combinada. Não é gasto permanente.</span>
+  <span><strong style="color:var(--text-muted)">Mudou no dia</strong>: variação do
+    saldo. Inclui rendimento dos investimentos e variação entre moedas, não só venda.</span>
+</div>
+
+<div class="foot">
+  <span>Fontes: Banco Central do Brasil, séries SGS 13621 e 1 e o conjunto de dados
+    de atuações no mercado de câmbio. Dólar ao vivo de fonte de mercado.</span>
+  <span><a href="pages/reserves.html">Ver tudo em detalhe</a></span>
+</div>
 </template>
-<script defer src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js" integrity="sha384-Mx5lkUEQPM1pOJCwFtUICyX45KNojXbkWdYhkKUKsbv391mavbfoAmONbzkgYPzR" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script defer src="./assets/js/core.js?v=7676524102"></script>
-<script defer src="./assets/js/charts.js?v=7676524102"></script>
-<script defer src="./assets/js/page-overview.js?v=7676524102"></script>
+<script defer src="./assets/js/core.js?v=c429661627"></script>
+<script defer src="./assets/js/page-home.js?v=c429661627"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var start = function () {
     if (!window.BFX) { setTimeout(start, 20); return; }
-    BFX.init('overview', "Visão geral").then(function () {
-      if (window.PAGE && typeof window.PAGE.init === 'function') {
-        window.PAGE.init().catch(function (error) {
-          var main = document.getElementById('main');
-          if (main) {
-            var box = document.createElement('p');
-            box.className = 'notice notice--error';
-            box.textContent = 'Falha ao carregar os dados desta página: ' + error.message;
-            main.prepend(box);
-          }
-          console.error(error);
-        });
-      }
+    BFX.initStandalone().then(function () {
+      window.PAGE.init().catch(function (error) {
+        var box = document.createElement('p');
+        box.className = 'notice notice--error';
+        box.textContent = 'Falha ao carregar os dados: ' + error.message;
+        document.getElementById('main').prepend(box);
+        console.error(error);
+      });
     });
   };
   start();
