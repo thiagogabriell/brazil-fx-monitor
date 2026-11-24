@@ -1,7 +1,7 @@
 {
  "schema": "daily-summary/v1",
- "generated_at": "2026-11-24T20:29:06+00:00",
- "generated_at_sao_paulo": "2026-11-24T17:29:06-03:00",
+ "generated_at": "2026-11-24T20:31:03+00:00",
+ "generated_at_sao_paulo": "2026-11-24T17:31:03-03:00",
  "timezone": "America/Sao_Paulo",
  "date_sao_paulo": "2026-11-24",
  "method": "Texto gerado por regras determinísticas sobre os dados coletados. Nenhum modelo de linguagem e nenhum serviço pago é utilizado.",
