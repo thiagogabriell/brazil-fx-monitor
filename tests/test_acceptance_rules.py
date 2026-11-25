@@ -21,7 +21,8 @@ TEMPORARY = {key for key, spec in CATEGORIES.items() if spec["temporary"]}
 
 
 # 1 --------------------------------------------------------------------------
-def test_swap_is_never_counted_as_a_direct_sale(operations, summary, series):
+def test_swap_is_never_counted_as_a_direct_sale(merged_operations, summary, series):
+    operations = merged_operations
     swap_total = sum(
         o["volume_accepted_usd_cents"] or 0
         for o in operations
@@ -74,7 +75,8 @@ def test_announced_operation_is_not_counted_as_executed(operations):
         assert operation["counts_as_executed"] is False
 
 
-def test_announced_volume_is_excluded_from_totals(series, operations):
+def test_announced_volume_is_excluded_from_totals(series, merged_operations):
+    operations = merged_operations
     executed_sold = sum(
         o["volume_accepted_usd_cents"] or 0
         for o in operations
@@ -90,7 +92,8 @@ def test_announced_volume_is_excluded_from_totals(series, operations):
 
 
 # 3 --------------------------------------------------------------------------
-def test_no_operation_is_counted_twice(operations, series):
+def test_no_operation_is_counted_twice(merged_operations, series):
+    operations = merged_operations
     identifiers = [o["id"] for o in operations]
     assert len(identifiers) == len(set(identifiers))
 
@@ -219,9 +222,15 @@ def test_missing_data_is_never_turned_into_zero(
 # 7 --------------------------------------------------------------------------
 def test_different_frequencies_are_not_presented_as_simultaneous(summary):
     anchors = summary["anchors"]
-    assert anchors["interventions"] <= anchors["reserves"]
+    block = summary["interventions"]
+    # As atuações saem no mesmo dia por comunicado; o saldo das reservas tem um
+    # dia útil de atraso. A cobertura das atuações pode, portanto, ser mais
+    # recente, desde que cada bloco declare a sua própria data.
+    assert block["consolidated_until"] <= block["covered_until"]
+    assert block["covered_until"] <= _dt.date.today().isoformat()
+    assert block["coverage_note"]
     assert summary["anchor_note"]
-    assert summary["interventions"]["anchor_date"] == anchors["interventions"]
+    assert block["anchor_date"] == anchors["interventions"]
     assert summary["interventions"]["anchor_day"]["note"]
     for window in summary["interventions"]["windows"].values():
         assert window["to_date"] == anchors["interventions"]
@@ -526,3 +535,35 @@ def test_a_temporary_operation_never_becomes_a_spending_day():
     document = ci.build_spending_days({}, Series([]), "2026-10-27", recent)
     assert document["days"] == []
     assert document["total_usd_cents"] == 0
+
+
+def test_the_two_intervention_sources_never_overlap(operations_document, recent_auctions):
+    """O arquivo mensal e os comunicados não podem cobrir a mesma data."""
+    if not recent_auctions:
+        pytest.skip("comunicados não coletados")
+    consolidated = operations_document["reference_date"]
+    for auction in recent_auctions["auctions"]:
+        assert auction["trade_date"] > consolidated, auction["auction"]
+
+
+def test_merged_totals_equal_the_sum_of_both_sources(
+    operations_document, recent_auctions, summary
+):
+    from_file = sum(
+        o["volume_accepted_usd_cents"] or 0
+        for o in operations_document["operations"]
+        if o["category"] == "spot_sale" and o["counts_as_executed"]
+    )
+    from_communications = sum(
+        a["accepted_usd_cents"] or 0
+        for a in (recent_auctions or {}).get("auctions", [])
+        if a["parsed"] and a["category"] == "spot_sale"
+    )
+    import json
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parent.parent
+    spending = json.loads(
+        (root / "data" / "indicators" / "spending-days.json").read_text(encoding="utf-8")
+    )
+    assert spending["total_usd_cents"] == from_file + from_communications

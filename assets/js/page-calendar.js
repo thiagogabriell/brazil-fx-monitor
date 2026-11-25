@@ -2,7 +2,7 @@
 'use strict';
 
 window.PAGE = (() => {
-  let series, index, statementIndex, categories;
+  let series, index, statementIndex, summary, categories;
   let dailyMap = new Map(), statementMap = new Map();
   let cursor, selected = null;
 
@@ -21,7 +21,10 @@ window.PAGE = (() => {
   ];
 
   function classify(date) {
-    if (date > index.reference_date || date < index.first_date) return { key: 'nodata' };
+    // O limite é até onde há informação apurada, somando o arquivo mensal e os
+    // comunicados do dia, e não até onde o arquivo mensal chegou.
+    const coveredUntil = summary.interventions.covered_until || index.reference_date;
+    if (date > coveredUntil || date < index.first_date) return { key: 'nodata' };
     const row = dailyMap.get(date);
     if (!row) return { key: 'none' };
     const kinds = [];
@@ -255,24 +258,29 @@ window.PAGE = (() => {
   }
 
   async function init() {
-    [series, index, statementIndex] = await Promise.all([
+    [series, index, statementIndex, summary] = await Promise.all([
       BFX.load('data/indicators/series.json'),
       BFX.load('data/interventions/index.json'),
-      BFX.load('data/reserves/statement-index.json')
+      BFX.load('data/reserves/statement-index.json'),
+      BFX.load('data/indicators/summary.json')
     ]);
     categories = index.categories;
     series.interventions_daily.forEach((row) => dailyMap.set(row.date, row));
 
     document.getElementById('coverage-notice').innerHTML =
-      `<div class="notice notice--warn">
-        <strong>Atuações publicadas de ${BFX.date(index.first_date)} a
-        ${BFX.date(index.reference_date)}.</strong>
-        ${BFX.escapeHtml(index.official_update)}
+      `<div class="notice notice--info">
+        <strong>Atuações apuradas de ${BFX.date(index.first_date)} a
+        ${BFX.date(summary.interventions.covered_until)}.</strong>
+        Até <strong>${BFX.date(summary.interventions.consolidated_until)}</strong> os
+        números vêm do arquivo mensal consolidado. De lá até
+        <strong>${BFX.date(summary.interventions.covered_until)}</strong> vêm dos
+        comunicados publicados no mesmo dia do leilão. Dias depois dessa data
+        aparecem como sem dados, não como dias sem intervenção.
       </div>`;
 
     renderLegend();
 
-    const reference = index.reference_date;
+    const reference = summary.interventions.covered_until || index.reference_date;
     cursor = new Date(reference.slice(0, 7) + '-01T00:00:00Z');
     renderCalendar();
     selectDay(reference);

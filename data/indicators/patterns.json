@@ -1,20 +1,20 @@
 {
  "schema": "patterns/v1",
- "generated_at": "2026-11-25T20:26:18+00:00",
- "anchor_interventions": "2026-10-27",
+ "generated_at": "2026-11-25T21:44:00+00:00",
+ "anchor_interventions": "2026-11-25",
  "anchor_reserves": "2026-11-24",
  "anchor_exchange_rate": "2026-11-25",
  "evidence_policy": "Cada padrao lista os dados que levaram a sua identificacao. 'fato_confirmado' vem direto da fonte oficial; 'tendencia_observada' e uma leitura de series, nao previsao.",
- "detected_count": 3,
+ "detected_count": 4,
  "patterns": [
   {
    "key": "sale_frequency_up",
    "title": "Aumento na frequencia de vendas diretas de dolares",
    "kind": "tendencia_observada",
-   "detected": false,
+   "detected": true,
    "evidence": [
-    "0 dia(s) com venda direta entre 2026-09-28 e 2026-10-27",
-    "3 dia(s) nos 30 dias anteriores"
+    "1 dia(s) com venda direta entre 2026-10-27 e 2026-11-25",
+    "0 dia(s) nos 30 dias anteriores"
    ],
    "detail": "Compara dias com venda direta liquidada em duas janelas de 30 dias."
   },
@@ -24,8 +24,8 @@
    "kind": "tendencia_observada",
    "detected": false,
    "evidence": [
-    "sem venda na janela atual",
-    "media anterior 100000000000 centavos de USD"
+    "media atual 100000000000 centavos de USD",
+    "sem venda na janela anterior"
    ],
    "detail": "Valor medio por operacao de venda direta em duas janelas de 30 dias."
   },
@@ -35,7 +35,7 @@
    "kind": "fato_confirmado",
    "detected": false,
    "evidence": [
-    "datas com venda direta nos ultimos 30 dias: nenhuma"
+    "datas com venda direta nos ultimos 30 dias: 2026-11-24"
    ],
    "detail": "Maior sequencia historica de dias uteis consecutivos com venda direta: 42."
   },
@@ -77,7 +77,7 @@
    "kind": "tendencia_observada",
    "detected": false,
    "evidence": [
-    "40.13% das vendas diretas desde 2015 foram seguidas de alta do dolar em cinco dias uteis"
+    "39.87% das vendas diretas desde 2015 foram seguidas de alta do dolar em cinco dias uteis"
    ],
    "detail": "Comparacao de fechamentos da PTAX, sem inferencia de causalidade."
   },
@@ -87,7 +87,7 @@
    "kind": "fato_confirmado",
    "detected": true,
    "evidence": [
-    "6 operacao(oes) em aberto em 2026-10-27",
+    "6 operacao(oes) em aberto em 2026-11-25",
     "equivalente a 1.1053% das reservas"
    ],
    "detail": "Saldo em aberto calculado pelas datas de liquidacao e de vencimento publicadas. A fonte nao reflete pre-pagamentos, portanto este saldo e um limite superior."

@@ -28,6 +28,26 @@ def operations(operations_document):
 
 
 @pytest.fixture(scope="session")
+def recent_auctions():
+    path = DATA / "interventions" / "recent-auctions.json"
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+@pytest.fixture(scope="session")
+def merged_operations(operations_document, recent_auctions):
+    """O que as páginas realmente usam: arquivo mensal + comunicados do dia."""
+    import calculate_indicators as ci
+
+    daily = ci._daily_intervention_aggregates(operations_document["operations"])
+    _, merged, _ = ci.merge_recent_auctions(
+        daily, operations_document["operations"], recent_auctions
+    )
+    return merged
+
+
+@pytest.fixture(scope="session")
 def summary():
     return _load("indicators/summary.json")
 

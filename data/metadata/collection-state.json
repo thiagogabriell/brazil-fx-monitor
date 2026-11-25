@@ -84,11 +84,11 @@
   "indicators": {
    "status": "ok",
    "reference_date": "2026-11-24",
-   "record_count": 4589,
+   "record_count": 4603,
    "detail": null,
-   "collected_at": "2026-11-25T21:38:08+00:00",
+   "collected_at": "2026-11-25T21:47:19+00:00",
    "last_successful_reference_date": "2026-11-24",
-   "last_successful_at": "2026-11-25T21:38:08+00:00"
+   "last_successful_at": "2026-11-25T21:47:19+00:00"
   },
   "alerts": {
    "status": "ok",
@@ -118,5 +118,5 @@
    "last_successful_at": "2026-11-25T21:38:08+00:00"
   }
  },
- "updated_at": "2026-11-25T21:38:08+00:00"
+ "updated_at": "2026-11-25T21:47:19+00:00"
 }

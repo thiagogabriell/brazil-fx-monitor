@@ -12,7 +12,7 @@ import json
 import sys
 from pathlib import Path
 
-from common import DATA, ROOT, log, read_json
+from common import DATA, ROOT, log, read_json, today_sp
 from intervention_model import CATEGORIES
 from pressure_index import COMPONENTS
 
@@ -220,9 +220,22 @@ def validate_indicators(report: Report) -> None:
         return
 
     anchors = summary["anchors"]
+    block = summary["interventions"]
+    today = today_sp().isoformat()
+    # As atuacoes vem de duas fontes: o arquivo mensal consolidado e os
+    # comunicados do mesmo dia. A cobertura pelos comunicados pode, e deve,
+    # passar a data do saldo das reservas, que tem um dia util de atraso.
     report.check(
-        anchors["interventions"] <= anchors["reserves"],
-        "summary: intervention anchor must not be newer than the reserves anchor",
+        block["consolidated_until"] <= block["covered_until"],
+        "summary: consolidated coverage cannot be newer than the overall coverage",
+    )
+    report.check(
+        block["covered_until"] <= today,
+        "summary: intervention coverage cannot be in the future",
+    )
+    report.check(
+        anchors["interventions"] == block["covered_until"],
+        "summary: the intervention anchor must be the coverage date",
     )
     windows = summary["interventions"]["windows"]
     for key, window in windows.items():

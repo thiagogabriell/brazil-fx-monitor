@@ -298,10 +298,15 @@ window.PAGE = (() => {
     ]);
     categories = index.categories;
 
+    const coverage = summary.interventions;
     document.getElementById('coverage-notice').innerHTML =
-      `<div class="notice notice--warn">
-        <strong>Série de ${BFX.date(index.first_date)} a ${BFX.date(index.reference_date)}.</strong>
-        ${BFX.escapeHtml(index.official_update)}
+      `<div class="notice notice--info">
+        <strong>Série de ${BFX.date(index.first_date)} a
+        ${BFX.date(coverage.covered_until)}.</strong>
+        Até <strong>${BFX.date(coverage.consolidated_until)}</strong> os números vêm
+        do arquivo mensal consolidado do Banco Central. De lá até
+        <strong>${BFX.date(coverage.covered_until)}</strong> vêm dos comunicados
+        publicados no mesmo dia do leilão, marcados como provisórios.
         <ul class="plain" style="margin-top:6px">
           ${index.known_limitations.map((item) => `<li>${BFX.escapeHtml(item)}</li>`).join('')}
         </ul>

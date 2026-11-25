@@ -110,17 +110,18 @@ window.PAGE = (() => {
   function renderInterventions() {
     const block = summary.interventions;
     const windows = block.windows;
-    const fresh = BFX.freshness(block.anchor_date, 75);
+    const fresh = BFX.freshness(block.covered_until || block.anchor_date, 3);
     document.getElementById('interventions-badge').innerHTML =
-      BFX.qualityBadge(fresh.kind, `Última atuação publicada: ${BFX.date(block.anchor_date)}`);
+      BFX.qualityBadge(fresh.kind, `Apurado até ${BFX.date(block.covered_until)}`);
 
     document.getElementById('interventions-notice').innerHTML =
-      `<div class="notice notice--warn">
-        A fonte oficial de atuações é atualizada <strong>uma vez por mês</strong> e
-        cobre até <strong>${BFX.date(block.anchor_date)}</strong>, ou seja
-        ${fresh.ageDays} dias atrás. Os totais abaixo terminam nessa data e não
-        representam o dia de hoje. Não há, portanto, como afirmar que não houve
-        intervenção depois dessa data.
+      `<div class="notice notice--info">
+        <strong>Duas fontes, nesta ordem.</strong>
+        Até <strong>${BFX.date(block.consolidated_until)}</strong> os números vêm do
+        arquivo mensal consolidado do Banco Central. De lá até
+        <strong>${BFX.date(block.covered_until)}</strong> vêm dos comunicados que o
+        Banco Central publica <strong>no mesmo dia do leilão</strong>, marcados como
+        provisórios até o arquivo mensal alcançá-los.
       </div>`;
 
     const meta = (window_) => cardMeta([
@@ -140,7 +141,10 @@ window.PAGE = (() => {
         cardMeta([metaRow('Data', BFX.date(anchorDay.date))])),
       card('Última intervenção direta',
         last ? BFX.usdCents(last.accepted_usd_cents) : BFX.naText(),
-        last ? `<span class="neutral">negociada em ${BFX.date(last.trade_date)}</span>` : '',
+        last
+          ? `<span class="neutral">negociada em ${BFX.date(last.trade_date)}</span>`
+            + (last.provisional ? ' <span class="badge badge--preliminary">provisório</span>' : '')
+          : '',
         last ? cardMeta([
           metaRow('Liquidação', BFX.date(last.settlement_date)),
           metaRow('Modalidade', last.modality),

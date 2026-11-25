@@ -1,9 +1,9 @@
 {
  "schema": "indicator-summary/v1",
- "generated_at": "2026-11-25T21:38:08+00:00",
+ "generated_at": "2026-11-25T21:47:19+00:00",
  "anchors": {
   "reserves": "2026-11-24",
-  "interventions": "2026-10-27",
+  "interventions": "2026-11-25",
   "exchange_rate": "2026-11-25",
   "exchange_flow": "2026-09-01"
  },
@@ -121,9 +121,12 @@
  "reserves_default_concept": "cash",
  "interventions": {
   "unit": "USD cents",
-  "anchor_date": "2026-10-27",
+  "anchor_date": "2026-11-25",
+  "consolidated_until": "2026-10-27",
+  "covered_until": "2026-11-25",
+  "coverage_note": "Os numeros vem do arquivo mensal consolidado do Banco Central ate a data de consolidacao e, dali em diante, dos comunicados que o Banco Central publica no mesmo dia do leilao, marcados como provisorios ate o arquivo mensal alcanca-los.",
   "anchor_day": {
-   "date": "2026-10-27",
+   "date": "2026-11-25",
    "available": true,
    "sold_usd_cents": 0,
    "bought_usd_cents": 0,
@@ -132,70 +135,70 @@
   "windows": {
    "7": {
     "days": 7,
-    "from_date": "2026-10-21",
-    "to_date": "2026-10-27",
-    "sold_usd_cents": 0,
+    "from_date": "2026-11-19",
+    "to_date": "2026-11-25",
+    "sold_usd_cents": 100000000000,
     "bought_usd_cents": 0,
-    "net_usd_cents": 0,
-    "temporary_out_usd_cents": 0,
+    "net_usd_cents": -100000000000,
+    "temporary_out_usd_cents": 100000000000,
     "temporary_returned_usd_cents": 0,
-    "swap_traditional_notional_usd_cents": 1900000000000,
+    "swap_traditional_notional_usd_cents": 1125000000000,
     "swap_reverse_notional_usd_cents": 0,
-    "operation_count": 10,
-    "sale_operation_count": 0,
-    "days_with_direct_sale": 0,
+    "operation_count": 9,
+    "sale_operation_count": 1,
+    "days_with_direct_sale": 1,
     "announced_without_result_count": 0
    },
    "30": {
     "days": 30,
-    "from_date": "2026-09-28",
-    "to_date": "2026-10-27",
-    "sold_usd_cents": 0,
+    "from_date": "2026-10-27",
+    "to_date": "2026-11-25",
+    "sold_usd_cents": 100000000000,
     "bought_usd_cents": 0,
-    "net_usd_cents": 0,
+    "net_usd_cents": -100000000000,
     "temporary_out_usd_cents": 100000000000,
-    "temporary_returned_usd_cents": 0,
-    "swap_traditional_notional_usd_cents": 3900000000000,
+    "temporary_returned_usd_cents": 100000000000,
+    "swap_traditional_notional_usd_cents": 5175000000000,
     "swap_reverse_notional_usd_cents": 0,
-    "operation_count": 26,
-    "sale_operation_count": 0,
-    "days_with_direct_sale": 0,
-    "announced_without_result_count": 4
+    "operation_count": 31,
+    "sale_operation_count": 1,
+    "days_with_direct_sale": 1,
+    "announced_without_result_count": 0
    },
    "90": {
     "days": 90,
-    "from_date": "2026-07-30",
-    "to_date": "2026-10-27",
-    "sold_usd_cents": 300000000000,
+    "from_date": "2026-08-28",
+    "to_date": "2026-11-25",
+    "sold_usd_cents": 400000000000,
     "bought_usd_cents": 0,
-    "net_usd_cents": -300000000000,
-    "temporary_out_usd_cents": 300000000000,
-    "temporary_returned_usd_cents": 100000000000,
-    "swap_traditional_notional_usd_cents": 11350000000000,
-    "swap_reverse_notional_usd_cents": 300000000000,
-    "operation_count": 93,
-    "sale_operation_count": 3,
-    "days_with_direct_sale": 3,
-    "announced_without_result_count": 9
+    "net_usd_cents": -400000000000,
+    "temporary_out_usd_cents": 400000000000,
+    "temporary_returned_usd_cents": 200000000000,
+    "swap_traditional_notional_usd_cents": 12325000000000,
+    "swap_reverse_notional_usd_cents": 200000000000,
+    "operation_count": 91,
+    "sale_operation_count": 4,
+    "days_with_direct_sale": 4,
+    "announced_without_result_count": 8
    },
    "365": {
     "days": 365,
-    "from_date": "2025-10-28",
-    "to_date": "2026-10-27",
+    "from_date": "2025-11-26",
+    "to_date": "2026-11-25",
     "sold_usd_cents": 800000000000,
     "bought_usd_cents": 0,
     "net_usd_cents": -800000000000,
-    "temporary_out_usd_cents": 2055000000000,
-    "temporary_returned_usd_cents": 2780000000000,
-    "swap_traditional_notional_usd_cents": 43115000000000,
+    "temporary_out_usd_cents": 1955000000000,
+    "temporary_returned_usd_cents": 2580000000000,
+    "swap_traditional_notional_usd_cents": 44715000000000,
     "swap_reverse_notional_usd_cents": 750000000000,
-    "operation_count": 379,
+    "operation_count": 378,
     "sale_operation_count": 8,
     "days_with_direct_sale": 8,
-    "announced_without_result_count": 21
+    "announced_without_result_count": 19
    }
   },
-  "total_operations": 10507,
+  "total_operations": 10538,
   "executed_operations": 9505,
   "by_category": {
    "spot_sale": 493,
@@ -214,41 +217,28 @@
    "pendente_de_confirmacao": 13
   },
   "last_direct_sale": {
-   "id": "5123b05173ac0889-1",
-   "trade_date": "2026-09-15",
-   "settlement_date": "2026-09-17",
+   "id": "comunicado-354-2026",
+   "trade_date": "2026-11-19",
+   "settlement_date": "2026-11-24",
    "accepted_usd_cents": 100000000000,
-   "offered_usd_cents": 100000000000,
-   "modality": "PTAX",
-   "cut_rate": -0.0003,
-   "communication_number": "45927"
+   "offered_usd_cents": null,
+   "modality": "Venda À vista",
+   "cut_rate": 5.86,
+   "communication_number": "46328",
+   "provisional": true
   },
   "last_operation": {
-   "id": "29a0dd3f225d9d7a-1",
-   "category": "swap_traditional",
-   "category_label": "Swap cambial tradicional",
-   "trade_date": "2026-10-27",
-   "accepted_usd_cents": 130000000000
+   "id": "comunicado-362-2026",
+   "category": "sale_with_repurchase",
+   "category_label": "Venda com compromisso de recompra",
+   "trade_date": "2026-11-25",
+   "accepted_usd_cents": 200000000000
   },
   "open_temporary": {
-   "as_of": "2026-10-27",
+   "as_of": "2026-11-25",
    "count": 6,
    "outstanding_usd_cents": 400000000000,
    "operations": [
-    {
-     "id": "6d1f4c7e1132963b-1",
-     "category": "sale_with_repurchase",
-     "settlement_date": "2026-06-02",
-     "maturity_date": "2026-11-04",
-     "accepted_usd_cents": 50000000000
-    },
-    {
-     "id": "180810d3ad72d74a-1",
-     "category": "sale_with_repurchase",
-     "settlement_date": "2026-06-02",
-     "maturity_date": "2026-11-04",
-     "accepted_usd_cents": 50000000000
-    },
     {
      "id": "482c13c17c0621db-1",
      "category": "sale_with_repurchase",
@@ -276,15 +266,29 @@
      "settlement_date": "2026-09-28",
      "maturity_date": "2027-04-02",
      "accepted_usd_cents": 50000000000
+    },
+    {
+     "id": "comunicado-352-2026",
+     "category": "sale_with_repurchase",
+     "settlement_date": "2026-11-23",
+     "maturity_date": "2027-04-02",
+     "accepted_usd_cents": 25000000000
+    },
+    {
+     "id": "comunicado-353-2026",
+     "category": "sale_with_repurchase",
+     "settlement_date": "2026-11-23",
+     "maturity_date": "2027-07-02",
+     "accepted_usd_cents": 75000000000
     }
    ],
    "note": "Saldo em aberto calculado pelas datas de liquidacao e de vencimento publicadas. A fonte nao reflete pre-pagamentos, portanto este saldo e um limite superior."
   },
   "swap_outstanding": {
-   "as_of": "2026-10-27",
+   "as_of": "2026-11-25",
    "traditional_notional_usd_cents": 9025000000000,
    "reverse_notional_usd_cents": 0,
-   "traditional_contract_count": 71,
+   "traditional_contract_count": 64,
    "reverse_contract_count": 0,
    "note": "Estoque nocional estimado pelas datas de liquidacao e vencimento das atuacoes publicadas. Valor nocional nao representa dolares retirados das reservas."
   },
