@@ -1,10 +1,10 @@
 {
  "schema": "indicator-summary/v1",
- "generated_at": "2026-11-25T20:05:36+00:00",
+ "generated_at": "2026-11-25T20:26:18+00:00",
  "anchors": {
   "reserves": "2026-11-24",
   "interventions": "2026-10-27",
-  "exchange_rate": "2026-11-24",
+  "exchange_rate": "2026-11-25",
   "exchange_flow": "2026-09-01"
  },
  "anchor_note": "Cada bloco usa a data de referencia da sua propria fonte. As atuacoes no mercado de cambio tem divulgacao mensal e por isso a ancora delas e anterior a das reservas e do cambio.",
@@ -299,37 +299,37 @@
  "market": {
   "ptax": {
    "unit": "BRL per USD",
-   "reference_date": "2026-11-24",
-   "published_at_sao_paulo": "2026-11-24 13:07:40.485706",
-   "sell": 5.8573,
-   "buy": 5.8567,
-   "previous_date": "2026-11-23",
-   "previous_sell": 5.9708,
-   "daily_change_pct": -1.9009,
+   "reference_date": "2026-11-25",
+   "published_at_sao_paulo": "2026-11-25 13:02:42.418138",
+   "sell": 5.8825,
+   "buy": 5.8819,
+   "previous_date": "2026-11-24",
+   "previous_sell": 5.8573,
+   "daily_change_pct": 0.4302,
    "changes": {
     "7": {
      "days": 7,
      "available": true,
-     "from_date": "2026-11-17",
-     "from_value": 5.7851,
-     "change": 0.0722,
-     "change_pct": 1.248
+     "from_date": "2026-11-18",
+     "from_value": 5.8102,
+     "change": 0.0723,
+     "change_pct": 1.2444
     },
     "30": {
      "days": 30,
      "available": true,
-     "from_date": "2026-10-23",
-     "from_value": 5.0377,
-     "change": 0.8196,
-     "change_pct": 16.2693
+     "from_date": "2026-10-26",
+     "from_value": 5.5007,
+     "change": 0.3818,
+     "change_pct": 6.9409
     },
     "365": {
      "days": 365,
      "available": true,
-     "from_date": "2025-11-24",
-     "from_value": 5.3948,
-     "change": 0.4625,
-     "change_pct": 8.5731
+     "from_date": "2025-11-25",
+     "from_value": 5.3841,
+     "change": 0.4984,
+     "change_pct": 9.2569
     }
    },
    "high_12m": 5.9708,
@@ -401,7 +401,7 @@
     "accumulated_12m": 376629.3,
     "year_to_date": 285806.8,
     "moving_average_3m": 33714.7,
-    "moving_average_12m": 31385.78,
+    "moving_average_12m": 31385.77,
     "negative_month_streak": 0,
     "trend": "entrada_liquida"
    },
