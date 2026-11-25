@@ -9,9 +9,15 @@
 'use strict';
 
 window.PAGE = (() => {
-  let summary, statement, spending, days = [], visible = 30;
+  let summary, statement, spending, recent, days = [], visible = 30;
+  // Operações que o navegador descobriu falando com o Banco Central agora,
+  // além do que a automação já tinha gravado no repositório.
+  let live = { days: [], scheduled: [], reserves: null, ptax: null, at: null };
 
   const cents = (value) => BFX.usdCents(value);
+
+  const plural = (count, one, many) =>
+    `${BFX.number(count)} ${count === 1 ? one : many}`;
 
   function conceptNote() {
     return summary.reserves.cash ? 'conceito caixa' : '';
@@ -27,6 +33,21 @@ window.PAGE = (() => {
 
   /** Every day with a definitive sale, over the whole series, not a window. */
   function spendingDays() {
+    const known = new Set(spending.days.map((day) => day.date));
+    const extra = live.days
+      .filter((day) => !known.has(day.date))
+      .map((day) => ({
+        date: day.date,
+        direct_sold_usd_cents: day.sold,
+        temporary_out_usd_cents: day.temporary,
+        opening_date: null, opening_usd: null,
+        closing_usd: null, variation_usd: null, variation_pct: null,
+        interventions_coverage: 'covered',
+        source: 'ao_vivo',
+        provisional: true,
+        live: true,
+        communications: day.communications
+      }));
     return spending.days.map((day) => ({
       date: day.date,
       direct_sold_usd_cents: day.sold_usd_cents,
@@ -40,22 +61,22 @@ window.PAGE = (() => {
       source: day.source,
       provisional: day.provisional,
       communications: day.communications || []
-    }));
+    })).concat(extra).sort((a, b) => a.date.localeCompare(b.date));
   }
 
   function totalSold(fromDate) {
-    return spending.days
+    return spendingDays()
       .filter((day) => !fromDate || day.date >= fromDate)
-      .reduce((total, day) => total + day.sold_usd_cents, 0);
+      .reduce((total, day) => total + day.direct_sold_usd_cents, 0);
   }
 
   function countSold(fromDate) {
-    return spending.days.filter((day) => !fromDate || day.date >= fromDate).length;
+    return spendingDays().filter((day) => !fromDate || day.date >= fromDate).length;
   }
 
   function renderHeadline() {
     const reserves = summary.reserves.cash;
-    const all = spending.days;
+    const all = spendingDays();
     const last = all[all.length - 1] || null;
     const anchor = summary.interventions.anchor_date;
     const yearStart = anchor.slice(0, 4) + '-01-01';
@@ -65,16 +86,18 @@ window.PAGE = (() => {
     document.getElementById('headline').innerHTML = `
       <div class="box box--wide">
         <p class="label">Quanto o governo gastou das reservas no último dia de gasto</p>
-        <div class="big neg">${last ? cents(last.sold_usd_cents) : 'US$ 0'}</div>
+        <div class="big neg">${last ? cents(last.direct_sold_usd_cents) : 'US$ 0'}</div>
         <p class="sub">
           ${last
             ? `Foi em <strong>${BFX.date(last.date, { withWeekday: true })}</strong>`
               + (BFX.daysBetween(last.date, BFX.todaySaoPaulo()) === 0
                 ? ', hoje.'
-                : `, há ${BFX.number(BFX.daysBetween(last.date, BFX.todaySaoPaulo()))} dias.`)
-              + (last.provisional
-                ? ' Vem do comunicado que o Banco Central publicou no dia do leilão.'
-                : '')
+                : `, há ${plural(BFX.daysBetween(last.date, BFX.todaySaoPaulo()), 'dia', 'dias')}.`)
+              + (last.live
+                ? ' Encontrado agora, consultando o Banco Central direto do seu navegador.'
+                : last.provisional
+                  ? ' Vem do comunicado que o Banco Central publicou no dia do leilão.'
+                  : '')
               + ' Em todos os dias úteis desde então o gasto publicado foi zero.'
             : 'Nenhum dia de gasto no período carregado.'}
         </p>
@@ -84,7 +107,7 @@ window.PAGE = (() => {
         <p class="label">Gasto em 12 meses</p>
         <div class="mid neg">${cents(totalSold(twelveMonths))}</div>
         <p class="sub">
-          Em ${BFX.number(countSold(twelveMonths))} dia(s) de gasto.
+          Em ${plural(countSold(twelveMonths), 'dia de gasto', 'dias de gasto')}.
           Nos demais dias úteis, zero.
         </p>
       </div>
@@ -93,10 +116,9 @@ window.PAGE = (() => {
         <p class="label">Gasto em ${anchor.slice(0, 4)}</p>
         <div class="mid neg">${cents(totalSold(yearStart))}</div>
         <p class="sub">
-          Em ${BFX.number(countSold(yearStart))} dia(s) de gasto no ano.
+          Em ${plural(countSold(yearStart), 'dia de gasto', 'dias de gasto')} no ano.
           Desde ${BFX.date(spending.first_date)} o total gasto foi
-          ${cents(spending.total_usd_cents)}, em
-          ${BFX.number(spending.day_count)} dias.
+          ${cents(totalSold(null))}, em ${BFX.number(countSold(null))} dias.
         </p>
       </div>
 
@@ -166,9 +188,9 @@ window.PAGE = (() => {
       : '<tr><td colspan="5" class="pending">Nenhum dia de gasto no período.</td></tr>';
 
     document.getElementById('row-count').textContent = onlySpending
-      ? `${BFX.number(rows.length)} dia(s) de gasto desde ${BFX.date(spending.first_date)}, toda a série`
+      ? `${plural(rows.length, 'dia de gasto', 'dias de gasto')} desde ${BFX.date(spending.first_date)}, toda a série`
         + (spending.provisional_count
-          ? `, incluindo ${BFX.number(spending.provisional_count)} provisório(s).`
+          ? `, incluindo ${plural(spending.provisional_count, 'provisório', 'provisórios')}.`
           : '.')
       : `${BFX.number(rows.length)} dias, do mais recente para o mais antigo.`;
 
@@ -176,6 +198,133 @@ window.PAGE = (() => {
     document.querySelectorAll('[data-days]').forEach((button) => {
       button.classList.toggle('btn--active', Number(button.dataset.days) === visible);
     });
+  }
+
+  const CATEGORY_LABEL = {
+    spot_sale: 'venda definitiva de dólares',
+    spot_purchase: 'compra de dólares',
+    sale_with_repurchase: 'venda com recompra contratada',
+    swap_traditional: 'swap cambial tradicional',
+    swap_reverse: 'swap cambial reverso'
+  };
+
+  function renderScheduled() {
+    const fromFile = (recent && recent.scheduled) || [];
+    const known = new Set(fromFile.map((item) => item.communication_number));
+    const rows = fromFile
+      .map((item) => ({
+        date: item.auction_date,
+        category: item.category,
+        ceiling: item.ceiling_usd_cents,
+        settlement: item.settlement_date,
+        number: item.communication_number,
+        url: item.url,
+        subject: item.subject,
+        live: false
+      }))
+      .concat(live.scheduled
+        .filter((item) => !known.has(item.number))
+        .map((item) => ({
+          date: item.auctionDate, category: item.category,
+          ceiling: item.ceilingCents, settlement: item.settlementDate,
+          number: item.number, url: item.url, subject: item.subject, live: true
+        })))
+      .filter((item) => item.date >= BFX.todaySaoPaulo())
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    const container = document.getElementById('scheduled');
+    if (!rows.length) { container.innerHTML = ''; return; }
+
+    container.innerHTML = `
+      <div class="lag" style="border-left-color:var(--info)">
+        <strong>Anunciado pelo Banco Central, ainda não realizado.</strong>
+        O valor abaixo é o <strong>teto anunciado</strong>, não o que foi
+        efetivamente negociado. O resultado sai no dia do leilão e só então
+        entra nas contas desta página.
+        <ul class="plain" style="margin-top:8px">
+          ${rows.map((item) => `<li>
+            <strong>${BFX.date(item.date, { withWeekday: true })}</strong>:
+            ${BFX.escapeHtml(CATEGORY_LABEL[item.category] || 'operação de câmbio')},
+            até <strong>${item.ceiling === null || item.ceiling === undefined
+              ? 'valor não informado em dólares'
+              : cents(item.ceiling)}</strong>
+            ${item.settlement ? `, liquidação em ${BFX.date(item.settlement)}` : ''}
+            ${item.category === 'sale_with_repurchase'
+              ? ' <em>(o Banco Central vende e recompra depois, então não é gasto permanente)</em>'
+              : ''}
+            ${item.category && item.category.startsWith('swap')
+              ? ' <em>(valor nocional, não sai dólar das reservas)</em>'
+              : ''}
+            · <a href="${BFX.escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">comunicado ${BFX.escapeHtml(String(item.number))}</a>
+            ${item.live ? '<span class="badge badge--preliminary">ao vivo</span>' : ''}
+          </li>`).join('')}
+        </ul>
+      </div>`;
+  }
+
+  async function runRefresh(button) {
+    const status = document.getElementById('checked');
+    const original = button.textContent;
+    button.disabled = true;
+    button.textContent = 'Consultando o BC…';
+    status.textContent = '';
+    try {
+      const result = await BFXLive.refresh({
+        lastCommunication: live.lastProbed
+          || (recent && recent.last_communication_number)
+          || null,
+        onProgress: (n) => { button.textContent = `Consultando o BC… (${n})`; }
+      });
+
+      live.lastProbed = result.lastProbed;
+      live.at = new Date();
+
+      // Apenas vendas definitivas entram como gasto; o resto fica à vista mas
+      // separado, exatamente como no resto da aplicação.
+      const byDate = new Map();
+      for (const auction of result.auctions) {
+        const date = auction.settlementDate || auction.tradeDate;
+        if (!date) continue;
+        if (!byDate.has(date)) {
+          byDate.set(date, { date, sold: 0, temporary: 0, communications: [] });
+        }
+        const bucket = byDate.get(date);
+        if (auction.category === 'spot_sale') bucket.sold += auction.acceptedCents || 0;
+        else if (auction.category === 'sale_with_repurchase') {
+          bucket.temporary += auction.acceptedCents || 0;
+        } else continue;
+        for (const leg of [auction.result, auction.announcement]) {
+          if (leg) bucket.communications.push({ url: leg.url, number: leg.number });
+        }
+      }
+      live.days = [...byDate.values()].filter((day) => day.sold > 0 || day.temporary > 0);
+      live.scheduled = result.scheduled;
+
+      // Saldo das reservas e PTAX mais recentes, direto do SGS.
+      const newest = result.reserves[result.reserves.length - 1];
+      if (newest && summary.reserves.cash
+          && newest.date > summary.reserves.cash.reference_date) {
+        summary.reserves.cash.current_usd = newest.valueUsd;
+        summary.reserves.cash.reference_date = newest.date;
+      }
+
+      renderHeadline();
+      renderScheduled();
+      renderTable();
+
+      const found = live.days.reduce((total, day) => total + day.sold, 0);
+      status.innerHTML = result.ok
+        ? `Banco Central consultado às ${live.at.toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`
+          + (found
+            ? ` · <strong class="neg">${BFX.escapeHtml(cents(found))} de venda nova encontrada</strong>`
+            : ' · nada de novo além do que já estava na tela')
+        : `<span class="na">consulta parcial: ${BFX.escapeHtml(result.errors.join('; '))}</span>`;
+    } catch (error) {
+      status.innerHTML = `<span class="na">não foi possível consultar o Banco Central agora: ${BFX.escapeHtml(error.message)}</span>`;
+    } finally {
+      button.disabled = false;
+      button.textContent = original;
+    }
   }
 
   function paintQuote(quote) {
@@ -192,13 +341,15 @@ window.PAGE = (() => {
   }
 
   async function reload() {
-    [summary, statement, spending] = await Promise.all([
+    [summary, statement, spending, recent] = await Promise.all([
       BFX.reload('data/indicators/summary.json'),
       BFX.reload('data/reserves/statement-latest-cash.json'),
-      BFX.reload('data/indicators/spending-days.json')
+      BFX.reload('data/indicators/spending-days.json'),
+      BFX.reload('data/interventions/recent-auctions.json', { optional: true })
     ]);
     days = statement.days;
     renderHeadline();
+    renderScheduled();
     renderLag();
     renderTable();
     document.getElementById('checked').textContent =
@@ -249,6 +400,11 @@ window.PAGE = (() => {
           (row.interventions_coverage === 'covered' ? 'sim' : 'ainda nao') }
       ]);
     });
+
+    const refresh = document.getElementById('refresh');
+    refresh.addEventListener('click', () => runRefresh(refresh));
+    // Uma consulta automática ao abrir, para a tela já nascer em dia.
+    runRefresh(refresh);
 
     window.addEventListener('bfx:quote', (event) => paintQuote(event.detail));
     if (BFX.lastQuote()) paintQuote(BFX.lastQuote());

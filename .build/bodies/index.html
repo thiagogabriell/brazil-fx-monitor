@@ -2,6 +2,7 @@
   <h1>Quanto o governo está gastando das reservas de dólar</h1>
   <span class="usd" id="usd">buscando o dólar…</span>
   <span class="spacer"></span>
+  <button class="btn" type="button" id="refresh">Atualizar agora</button>
   <span style="font-size:11px;color:var(--text-dim)" id="checked"></span>
   <button class="btn btn--icon" id="theme-toggle" aria-label="Alternar tema">☀</button>
 </div>
@@ -9,6 +10,8 @@
 <div class="headline" id="headline">
   <p class="loading">Carregando os dados do Banco Central…</p>
 </div>
+
+<div id="scheduled"></div>
 
 <p class="lag" id="lag"></p>
 

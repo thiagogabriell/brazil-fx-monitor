@@ -34,9 +34,29 @@ a página diz qual é qual em vez de misturar:
 | Informação | Atraso |
 |---|---|
 | Cotação do dólar | tempo real, fonte de mercado |
-| Gasto, pelo comunicado do leilão | **mesmo dia**, poucos minutos após o leilão |
+| Gasto, pelo comunicado do leilão | **mesmo dia**, e o botão "Atualizar agora" consulta o Banco Central na hora |
 | Saldo das reservas | um dia útil |
 | Gasto, pelo arquivo mensal consolidado | de três a oito semanas |
+
+### O botão "Atualizar agora"
+
+Os três endpoints do Banco Central usados aqui liberam CORS para a origem do
+site, então o botão faz o **navegador falar direto com o Banco Central**: ele
+procura comunicados publicados depois do último que a automação conhece, lê o
+resultado dos leilões e atualiza a tela na hora. O que vem por esse caminho
+aparece marcado como **ao vivo**.
+
+Se a consulta não alcançar o Banco Central, a página diz isso em vez de mostrar
+"nada de novo". A automação em Python continua sendo a fonte dos arquivos do
+repositório; o botão apenas antecipa o que ela gravaria na próxima rodada.
+
+### Operações anunciadas e ainda não realizadas
+
+O Banco Central costuma anunciar às 18h30 os leilões do dia seguinte, com um
+**teto**, não um valor fechado. Essas operações aparecem num bloco próprio,
+separadas e com link para o comunicado, e **nunca entram em nenhum total de
+gasto** até o resultado sair. Uma venda conjugada com compra também fica
+marcada como temporária, porque o dinheiro volta.
 
 O Banco Central publica **cada leilão no mesmo dia**, como Comunicado numerado,
 e consolida tudo num arquivo aberto uma vez por mês. A aplicação usa as duas

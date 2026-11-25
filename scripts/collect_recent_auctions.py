@@ -58,8 +58,10 @@ FX_PATTERN = re.compile(
 
 # "Natureza:" wording -> category used across the application.
 NATURE_MAP = [
-    (re.compile(r"venda\s+conjugada", re.I), "sale_with_repurchase"),
-    (re.compile(r"compra\s+conjugada", re.I), "sale_with_repurchase"),
+    # "venda conjugada com compra" e "leiloes de venda conjugados com leiloes
+    # de compra" sao a mesma operacao: o BCB vende agora e recompra depois.
+    (re.compile(r"venda\s+conjugad[oa]s?", re.I), "sale_with_repurchase"),
+    (re.compile(r"compra\s+conjugad[oa]s?", re.I), "sale_with_repurchase"),
     (re.compile(r"venda\s+com\s+compromisso", re.I), "sale_with_repurchase"),
     (re.compile(r"venda\s+[àa]\s*vista", re.I), "spot_sale"),
     (re.compile(r"compra\s+[àa]\s*vista", re.I), "spot_purchase"),
@@ -85,6 +87,37 @@ REPURCHASE = re.compile(
 # Swap results publish the notional inside parentheses, in contracts plus USD.
 SWAP_AMOUNT = re.compile(r"\(\s*USD\s*\$?\s*([\d.]+,\d{2})\s*\)", re.I)
 SWAP_MATURITY = re.compile(r"com vencimento em\s*(\d{2}/\d{2}/\d{4})", re.I)
+
+
+MONTHS = {
+    "janeiro": 1, "fevereiro": 2, "março": 3, "marco": 3, "abril": 4,
+    "maio": 5, "junho": 6, "julho": 7, "agosto": 8, "setembro": 9,
+    "outubro": 10, "novembro": 11, "dezembro": 12,
+}
+
+# "Divulga as condicoes de oferta publica" / "Divulga a realizacao de leiloes":
+# the Banco Central announces, usually at 18:30, the auctions of the next day.
+# These are intentions with a ceiling, not results, and are published here as
+# scheduled operations so the interface can show them without ever counting
+# them as money spent.
+SCHEDULED_DATE = re.compile(
+    r"leil[oõ]es?\s+(?:ser[aã]o|ser[aá])\s+realizados?\s+no dia\s+"
+    r"(\d{1,2})\s+de\s+(\w+)\s+de\s+(\d{4})",
+    re.I,
+)
+SCHEDULED_CEILING = re.compile(
+    r"aceitos?\s+no m[aá]ximo\s+(?:at[eé]\s+)?US\$\s*([\d.,]+)\s*(bilh|milh)", re.I
+)
+SCHEDULED_SETTLEMENT = re.compile(
+    r"liquidad[ao]s?\s+no dia\s+(\d{1,2})\s+de\s+(\w+)\s+de\s+(\d{4})", re.I
+)
+
+
+def _long_date(day: str, month: str, year: str) -> str | None:
+    number = MONTHS.get(month.lower())
+    if not number:
+        return None
+    return f"{year}-{number:02d}-{int(day):02d}"
 
 
 def _clean(value: str | None) -> str:
@@ -225,6 +258,52 @@ def parse_auctions(communications: list[dict]) -> dict[str, dict]:
     return auctions
 
 
+def parse_scheduled(communications: list[dict], covered_until: str) -> list[dict]:
+    """Auctions the Banco Central has announced but not yet carried out."""
+    scheduled = []
+    for item in communications:
+        text = item["text"]
+        if "Aviso de Abertura" in text or "Resultado do Leil" in text:
+            continue
+        when = SCHEDULED_DATE.search(text)
+        if not when:
+            continue
+        date = _long_date(*when.groups())
+        if not date or date <= covered_until:
+            continue
+
+        category, nature = _nature_of(item["subject"] + " " + text)
+        ceiling = SCHEDULED_CEILING.search(text)
+        ceiling_cents = None
+        if ceiling:
+            try:
+                amount = Decimal(ceiling.group(1).replace(".", "").replace(",", "."))
+                factor = 1_000_000_000 if ceiling.group(2).lower() == "bilh" else 1_000_000
+                ceiling_cents = int(amount * factor * 100)
+            except Exception:
+                ceiling_cents = None
+        settlement = SCHEDULED_SETTLEMENT.search(text)
+
+        scheduled.append(
+            {
+                "auction_date": date,
+                "category": category,
+                "nature_published": nature,
+                "subject": item["subject"],
+                "ceiling_usd_cents": ceiling_cents,
+                "ceiling_is_maximum": True,
+                "settlement_date": _long_date(*settlement.groups()) if settlement else None,
+                "communication_number": item["number"],
+                "published_at_sao_paulo": item["published_at_sao_paulo"],
+                "url": item["url"],
+                "status": "anunciada",
+                "counts_as_spending": False,
+            }
+        )
+    scheduled.sort(key=lambda s: (s["auction_date"], s["communication_number"]))
+    return scheduled
+
+
 def main() -> int:
     interventions = read_json(DATA / "interventions" / "index.json")
     if not interventions:
@@ -312,6 +391,14 @@ def main() -> int:
         if not entry["parsed"] and (entry["trade_date"] or "") > covered_until
     ]
 
+    scheduled = parse_scheduled(communications, covered_until)
+    # An announcement whose result already arrived is no longer pending.
+    done = {(e["trade_date"], e["category"]) for e in pending}
+    scheduled = [
+        item for item in scheduled
+        if (item["auction_date"], item["category"]) not in done
+    ]
+
     reference = max((e["trade_date"] for e in pending), default=covered_until)
     write_json(
         DATA / "interventions" / "recent-auctions.json",
@@ -324,6 +411,9 @@ def main() -> int:
                 "atuacoes."
             ),
             "covers_after": covered_until,
+            # O navegador usa este numero como ponto de partida para checar o
+            # Banco Central ao vivo, sem baixar o cache inteiro de comunicados.
+            "last_communication_number": highest,
             "reference_date": reference,
             "collected_at": utc_now_iso(),
             "source": {
@@ -341,6 +431,13 @@ def main() -> int:
                 "O arquivo mensal continua sendo a fonte oficial consolidada; "
                 "estas operacoes saem daqui assim que ele as incorpora.",
             ],
+            "scheduled_note": (
+                "Leiloes ja anunciados e ainda nao realizados. O valor e o teto "
+                "anunciado, nao o valor aceito. Nunca entra em nenhum total de "
+                "gasto."
+            ),
+            "scheduled_count": len(scheduled),
+            "scheduled": scheduled,
             "auction_count": len(pending),
             "unparsed_count": len(unparsed),
             "unparsed": unparsed,

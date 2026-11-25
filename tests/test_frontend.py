@@ -102,6 +102,12 @@ def site_url():
 
 
 LIVE_QUOTE_PATTERN = "**economia.awesomeapi.com.br/**"
+# O painel consulta o Banco Central direto do navegador. O BCB devolve CORS
+# apenas para a origem real do site, então nos testes as chamadas sao
+# respondidas localmente, para o teste nao depender da rede nem da origem.
+BCB_PATTERNS = ("**bcb.gov.br/**", "**api.bcb.gov.br/**")
+EMPTY_COMMUNICATION = '{"navegacao":null,"view":"x","conteudo":[]}'
+SGS_STUB = '[{"data":"23/11/2026","valor":"362953"}]' 
 
 LIVE_QUOTE_STUB = (
     '{"USDBRL":{"code":"USD","codein":"BRL","bid":"5.8900","ask":"5.8910",'
@@ -110,8 +116,25 @@ LIVE_QUOTE_STUB = (
 )
 
 
+def _stub_bcb(page):
+    """Answer the Banco Central calls locally, with a well formed empty reply."""
+    def handler(route):
+        url = route.request.url
+        body = SGS_STUB if "api.bcb.gov.br" in url else EMPTY_COMMUNICATION
+        route.fulfill(
+            status=200,
+            content_type="application/json",
+            headers={"access-control-allow-origin": "*"},
+            body=body,
+        )
+
+    for pattern in BCB_PATTERNS:
+        page.route(pattern, handler)
+
+
 def _stub_live_quote(page, *, fulfil: bool):
     """The live quote is a third party; tests must not depend on the network."""
+    _stub_bcb(page)
     if fulfil:
         page.route(
             LIVE_QUOTE_PATTERN,

@@ -51,11 +51,12 @@ STANDALONE = """<!doctype html>
 {body}
 </template>
 <script defer src="{base}assets/js/core.js?v={version}"></script>
+<script defer src="{base}assets/js/live-bcb.js?v={version}"></script>
 <script defer src="{base}assets/js/{script}?v={version}"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {{
   var start = function () {{
-    if (!window.BFX) {{ setTimeout(start, 20); return; }}
+    if (!window.BFX || !window.BFXLive) {{ setTimeout(start, 20); return; }}
     BFX.initStandalone().then(function () {{
       window.PAGE.init().catch(function (error) {{
         var box = document.createElement('p');
