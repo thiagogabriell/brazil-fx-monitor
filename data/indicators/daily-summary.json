@@ -1,9 +1,9 @@
 {
  "schema": "daily-summary/v1",
- "generated_at": "2026-11-24T21:35:08+00:00",
- "generated_at_sao_paulo": "2026-11-24T18:35:08-03:00",
+ "generated_at": "2026-11-25T03:46:54+00:00",
+ "generated_at_sao_paulo": "2026-11-25T00:46:54-03:00",
  "timezone": "America/Sao_Paulo",
- "date_sao_paulo": "2026-11-24",
+ "date_sao_paulo": "2026-11-25",
  "method": "Texto gerado por regras determinísticas sobre os dados coletados. Nenhum modelo de linguagem e nenhum serviço pago é utilizado.",
  "anchors": {
   "reserves": "2026-11-23",
@@ -91,7 +91,7 @@
   }
  ],
  "pending_information": [
-  "O saldo das reservas de 24 de novembro de 2026 ainda não foi publicado; o último disponível é de 23 de novembro de 2026.",
+  "O saldo das reservas de 25 de novembro de 2026 ainda não foi publicado; o último disponível é de 23 de novembro de 2026.",
   "As atuações no mercado de câmbio posteriores a 27 de outubro de 2026 ainda não foram publicadas, porque a fonte é atualizada mensalmente.",
   "A composição das reservas por moeda e por classe de ativo não é publicada em API pelo Banco Central."
  ],
