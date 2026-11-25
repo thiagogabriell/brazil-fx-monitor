@@ -1,8 +1,8 @@
 {
  "schema": "indicator-summary/v1",
- "generated_at": "2026-11-25T04:39:15+00:00",
+ "generated_at": "2026-11-25T20:05:36+00:00",
  "anchors": {
-  "reserves": "2026-11-23",
+  "reserves": "2026-11-24",
   "interventions": "2026-10-27",
   "exchange_rate": "2026-11-24",
   "exchange_flow": "2026-09-01"
@@ -13,108 +13,108 @@
    "concept": "cash",
    "label": "Conceito caixa",
    "unit": "USD",
-   "reference_date": "2026-11-23",
-   "current_usd": 362953000000,
-   "previous_date": "2026-11-19",
-   "previous_usd": 363058000000,
-   "daily_change_usd": -105000000,
-   "daily_change_pct": -0.0289,
+   "reference_date": "2026-11-24",
+   "current_usd": 361903000000,
+   "previous_date": "2026-11-23",
+   "previous_usd": 362953000000,
+   "daily_change_usd": -1050000000,
+   "daily_change_pct": -0.2893,
    "changes": {
     "7": {
      "days": 7,
      "available": true,
-     "from_date": "2026-11-16",
-     "from_value": 363843000000,
-     "change": -890000000,
-     "change_pct": -0.2446
+     "from_date": "2026-11-17",
+     "from_value": 364074000000,
+     "change": -2171000000,
+     "change_pct": -0.5963
     },
     "30": {
      "days": 30,
      "available": true,
      "from_date": "2026-10-23",
      "from_value": 364769000000,
-     "change": -1816000000,
-     "change_pct": -0.4978
+     "change": -2866000000,
+     "change_pct": -0.7857
     },
     "90": {
      "days": 90,
      "available": true,
-     "from_date": "2026-08-25",
-     "from_value": 376017000000,
-     "change": -13064000000,
-     "change_pct": -3.4743
+     "from_date": "2026-08-26",
+     "from_value": 375528000000,
+     "change": -13625000000,
+     "change_pct": -3.6282
     },
     "365": {
      "days": 365,
      "available": true,
-     "from_date": "2025-11-21",
-     "from_value": 358579000000,
-     "change": 4374000000,
-     "change_pct": 1.2198
+     "from_date": "2025-11-24",
+     "from_value": 358968000000,
+     "change": 2935000000,
+     "change_pct": 0.8176
     }
    },
    "all_time_high_usd": 390510000000,
    "all_time_high_date": "2019-06-25",
-   "gap_to_all_time_high_usd": -27557000000,
-   "gap_to_all_time_high_pct": -7.0567,
+   "gap_to_all_time_high_usd": -28607000000,
+   "gap_to_all_time_high_pct": -7.3255,
    "low_12m_usd": 358153000000,
    "low_12m_date": "2026-01-02",
    "high_12m_usd": 376017000000,
-   "observation_count": 7003,
+   "observation_count": 7004,
    "first_date": "1999-01-04"
   },
   "liquidity": {
    "concept": "liquidity",
    "label": "Conceito liquidez",
    "unit": "USD",
-   "reference_date": "2026-11-23",
-   "current_usd": 366953000000,
-   "previous_date": "2026-11-19",
-   "previous_usd": 366058000000,
-   "daily_change_usd": 895000000,
-   "daily_change_pct": 0.2445,
+   "reference_date": "2026-11-24",
+   "current_usd": 365903000000,
+   "previous_date": "2026-11-23",
+   "previous_usd": 366953000000,
+   "daily_change_usd": -1050000000,
+   "daily_change_pct": -0.2861,
    "changes": {
     "7": {
      "days": 7,
      "available": true,
-     "from_date": "2026-11-16",
-     "from_value": 366843000000,
-     "change": 110000000,
-     "change_pct": 0.03
+     "from_date": "2026-11-17",
+     "from_value": 367074000000,
+     "change": -1171000000,
+     "change_pct": -0.319
     },
     "30": {
      "days": 30,
      "available": true,
      "from_date": "2026-10-23",
      "from_value": 368769000000,
-     "change": -1816000000,
-     "change_pct": -0.4924
+     "change": -2866000000,
+     "change_pct": -0.7772
     },
     "90": {
      "days": 90,
      "available": true,
-     "from_date": "2026-08-25",
-     "from_value": 378017000000,
-     "change": -11064000000,
-     "change_pct": -2.9269
+     "from_date": "2026-08-26",
+     "from_value": 377528000000,
+     "change": -11625000000,
+     "change_pct": -3.0792
     },
     "365": {
      "days": 365,
      "available": true,
-     "from_date": "2025-11-21",
-     "from_value": 368829000000,
-     "change": -1876000000,
-     "change_pct": -0.5086
+     "from_date": "2025-11-24",
+     "from_value": 369218000000,
+     "change": -3315000000,
+     "change_pct": -0.8978
     }
    },
    "all_time_high_usd": 401630000000,
    "all_time_high_date": "2019-08-23",
-   "gap_to_all_time_high_usd": -34677000000,
-   "gap_to_all_time_high_pct": -8.6341,
-   "low_12m_usd": 366058000000,
-   "low_12m_date": "2026-11-19",
+   "gap_to_all_time_high_usd": -35727000000,
+   "gap_to_all_time_high_pct": -8.8955,
+   "low_12m_usd": 365903000000,
+   "low_12m_date": "2026-11-24",
    "high_12m_usd": 382824000000,
-   "observation_count": 4745,
+   "observation_count": 4746,
    "first_date": "2008-01-02"
   }
  },
@@ -511,14 +511,14 @@
   "not_the_same_as": "Nao e o 'fluxo cambial contratado' semanal (comercial e financeiro) divulgado na nota do setor externo. Esse fluxo nao possui API publica nem serie no SGS; a verificacao do catalogo completo do Portal de Dados Abertos em 2026-11-24 nao retornou nenhum conjunto de dados de cambio contratado."
  },
  "latest_statement_day": {
-  "date": "2026-11-23",
+  "date": "2026-11-24",
   "concept": "cash",
-  "opening_date": "2026-11-19",
-  "opening_usd": 363058000000,
-  "closing_usd": 362953000000,
-  "variation_usd": -105000000,
-  "variation_pct": -0.028921,
-  "calendar_gap_days": 4,
+  "opening_date": "2026-11-23",
+  "opening_usd": 362953000000,
+  "closing_usd": 361903000000,
+  "variation_usd": -1050000000,
+  "variation_pct": -0.289294,
+  "calendar_gap_days": 1,
   "interventions_coverage": "not_yet_published",
   "direct_sold_usd_cents": 0,
   "direct_bought_usd_cents": 0,

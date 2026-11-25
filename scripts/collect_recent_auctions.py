@@ -71,8 +71,10 @@ NATURE_MAP = [
 
 AUCTION_FX = re.compile(r"Leil[aã]o de C[aâ]mbio\s+(\d+)\s*/\s*(\d{4})", re.I)
 AUCTION_SWAP = re.compile(r"Leil[aã]o de Swap(?:\s+Cambial)?\s+(\d+)\s*/\s*(\d{4})", re.I)
+# "USD $2.000.000.000,00" e tambem "USD $0", que e como o BCB escreve um
+# leilao em que nenhuma proposta foi aceita.
 RESULT_AMOUNT = re.compile(
-    r"valor total de\s*USD\s*\$?\s*([\d.]+,\d{2})", re.I
+    r"valor total de\s*USD\s*\$?\s*([\d.]+(?:,\d{2})?)", re.I
 )
 RESULT_CUT = re.compile(r"taxa de corte do leil[aã]o\s+\d+\s*/\s*\d{4}\s+foi de\s*([\d.,]+)", re.I)
 NATURE_FIELD = re.compile(r"Natureza:\s*([^:]+?)(?=\s+(?:Posi[cç][aã]o|Per[ií]odo|Quantidade|Lote|Montante|Volume|Taxa|Data)\b)", re.I)
@@ -85,7 +87,7 @@ REPURCHASE = re.compile(
     re.I,
 )
 # Swap results publish the notional inside parentheses, in contracts plus USD.
-SWAP_AMOUNT = re.compile(r"\(\s*USD\s*\$?\s*([\d.]+,\d{2})\s*\)", re.I)
+SWAP_AMOUNT = re.compile(r"\(\s*USD\s*\$?\s*([\d.]+(?:,\d{2})?)\s*\)", re.I)
 SWAP_MATURITY = re.compile(r"com vencimento em\s*(\d{2}/\d{2}/\d{4})", re.I)
 
 
@@ -245,6 +247,9 @@ def parse_auctions(communications: list[dict]) -> dict[str, dict]:
                 entry["trade_date"] = entry["trade_date"] or item["date"]
 
     for entry in auctions.values():
+        # Um leilao sem nenhuma proposta aceita e um fato publicado, nao um
+        # texto ilegivel: vale zero e nunca entra em total de gasto.
+        entry["no_bids_accepted"] = entry["accepted_usd_cents"] == 0
         entry["parsed"] = bool(
             entry["category"]
             and entry["accepted_usd_cents"] is not None
@@ -445,7 +450,10 @@ def main() -> int:
         },
     )
 
-    spending = [e for e in pending if e["category"] == "spot_sale"]
+    spending = [
+        e for e in pending
+        if e["category"] == "spot_sale" and (e["accepted_usd_cents"] or 0) > 0
+    ]
     record_source_state(
         "recent_auctions",
         status="ok",

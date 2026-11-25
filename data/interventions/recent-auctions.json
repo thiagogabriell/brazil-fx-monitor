@@ -3,9 +3,9 @@
  "unit": "USD cents",
  "concept": "Leiloes de cambio divulgados pelo Banco Central por comunicado, no mesmo dia, que ainda nao entraram no arquivo mensal de atuacoes.",
  "covers_after": "2026-10-27",
- "last_communication_number": 46352,
- "reference_date": "2026-11-24",
- "collected_at": "2026-11-25T04:32:55+00:00",
+ "last_communication_number": 46361,
+ "reference_date": "2026-11-25",
+ "collected_at": "2026-11-25T20:06:21+00:00",
  "source": {
   "name": "Banco Central do Brasil - Comunicados",
   "endpoint": "https://www.bcb.gov.br/api/conteudo/app/normativos/exibeoutrasnormas?p1=COMUNICADO&p2=<numero>",
@@ -16,24 +16,9 @@
   "O arquivo mensal continua sendo a fonte oficial consolidada; estas operacoes saem daqui assim que ele as incorpora."
  ],
  "scheduled_note": "Leiloes ja anunciados e ainda nao realizados. O valor e o teto anunciado, nao o valor aceito. Nunca entra em nenhum total de gasto.",
- "scheduled_count": 1,
- "scheduled": [
-  {
-   "auction_date": "2026-11-25",
-   "category": "sale_with_repurchase",
-   "nature_published": null,
-   "subject": "Divulga a realização de leilões de venda conjugados com leilões de compra de moeda estrangeira no mercado interbancário de câmbio, na modalidade pós-fixado Selic",
-   "ceiling_usd_cents": 200000000000,
-   "ceiling_is_maximum": true,
-   "settlement_date": "2026-11-30",
-   "communication_number": 46351,
-   "published_at_sao_paulo": "24/11/2026 18:30",
-   "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46351",
-   "status": "anunciada",
-   "counts_as_spending": false
-  }
- ],
- "auction_count": 27,
+ "scheduled_count": 0,
+ "scheduled": [],
+ "auction_count": 31,
  "unparsed_count": 0,
  "unparsed": [],
  "auctions": [
@@ -57,7 +42,8 @@
     "published_at_sao_paulo": "4/11/2026 11:46",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46226"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "333/2026",
@@ -79,7 +65,8 @@
     "published_at_sao_paulo": "4/11/2026 11:46",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46226"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "334/2026",
@@ -101,7 +88,8 @@
     "published_at_sao_paulo": "5/11/2026 11:47",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46236"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "335/2026",
@@ -123,7 +111,8 @@
     "published_at_sao_paulo": "5/11/2026 11:47",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46236"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "336/2026",
@@ -145,7 +134,8 @@
     "published_at_sao_paulo": "6/11/2026 11:46",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46244"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "337/2026",
@@ -167,7 +157,8 @@
     "published_at_sao_paulo": "6/11/2026 11:46",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46244"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "338/2026",
@@ -189,7 +180,8 @@
     "published_at_sao_paulo": "9/11/2026 11:44",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46253"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "339/2026",
@@ -211,7 +203,8 @@
     "published_at_sao_paulo": "9/11/2026 11:44",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46253"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "340/2026",
@@ -233,7 +226,8 @@
     "published_at_sao_paulo": "10/11/2026 11:44",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46264"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "341/2026",
@@ -255,7 +249,8 @@
     "published_at_sao_paulo": "10/11/2026 11:44",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46264"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "342/2026",
@@ -277,7 +272,8 @@
     "published_at_sao_paulo": "11/11/2026 11:47",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46273"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "343/2026",
@@ -299,7 +295,8 @@
     "published_at_sao_paulo": "11/11/2026 11:47",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46273"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "344/2026",
@@ -321,7 +318,8 @@
     "published_at_sao_paulo": "12/11/2026 11:47",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46284"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "345/2026",
@@ -343,7 +341,8 @@
     "published_at_sao_paulo": "12/11/2026 11:47",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46284"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "346/2026",
@@ -365,7 +364,8 @@
     "published_at_sao_paulo": "13/11/2026 11:47",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46291"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "347/2026",
@@ -387,7 +387,8 @@
     "published_at_sao_paulo": "13/11/2026 11:47",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46291"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "348/2026",
@@ -409,7 +410,8 @@
     "published_at_sao_paulo": "16/11/2026 11:48",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46302"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "349/2026",
@@ -431,7 +433,8 @@
     "published_at_sao_paulo": "16/11/2026 11:48",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46302"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "350/2026",
@@ -453,7 +456,8 @@
     "published_at_sao_paulo": "17/11/2026 11:46",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46310"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "351/2026",
@@ -475,7 +479,8 @@
     "published_at_sao_paulo": "17/11/2026 11:46",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46310"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "352/2026",
@@ -497,7 +502,8 @@
     "published_at_sao_paulo": "18/11/2026 10:41",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46318"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "353/2026",
@@ -519,7 +525,8 @@
     "published_at_sao_paulo": "18/11/2026 10:41",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46319"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "354/2026",
@@ -541,7 +548,8 @@
     "published_at_sao_paulo": "19/11/2026 12:12",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46328"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "355/2026",
@@ -563,7 +571,8 @@
     "published_at_sao_paulo": "23/11/2026 11:49",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46338"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "356/2026",
@@ -585,7 +594,8 @@
     "published_at_sao_paulo": "23/11/2026 11:49",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46338"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "357/2026",
@@ -607,7 +617,8 @@
     "published_at_sao_paulo": "24/11/2026 11:45",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46347"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
   },
   {
    "auction": "358/2026",
@@ -629,7 +640,100 @@
     "published_at_sao_paulo": "24/11/2026 11:45",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46347"
    },
-   "parsed": true
+   "parsed": true,
+   "no_bids_accepted": false
+  },
+  {
+   "auction": "359/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-25",
+   "settlement_date": null,
+   "maturity_date": "2027-02-01",
+   "accepted_usd_cents": 250000000000,
+   "cut_rate": 6.007,
+   "announcement": {
+    "communication_number": 46358,
+    "published_at_sao_paulo": "25/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46358"
+   },
+   "result": {
+    "communication_number": 46360,
+    "published_at_sao_paulo": "25/11/2026 11:45",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46360"
+   },
+   "parsed": true,
+   "no_bids_accepted": false
+  },
+  {
+   "auction": "360/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-25",
+   "settlement_date": null,
+   "maturity_date": "2027-03-01",
+   "accepted_usd_cents": 125000000000,
+   "cut_rate": 6.029,
+   "announcement": {
+    "communication_number": 46359,
+    "published_at_sao_paulo": "25/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46359"
+   },
+   "result": {
+    "communication_number": 46360,
+    "published_at_sao_paulo": "25/11/2026 11:45",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46360"
+   },
+   "parsed": true,
+   "no_bids_accepted": false
+  },
+  {
+   "auction": "361/2026",
+   "kind": "cambio",
+   "category": "sale_with_repurchase",
+   "nature_published": "Venda Conjugada com Compra Pós-Fixado Selic",
+   "trade_date": "2026-11-25",
+   "settlement_date": "2026-11-30",
+   "maturity_date": "2027-04-02",
+   "accepted_usd_cents": 0,
+   "cut_rate": null,
+   "announcement": {
+    "communication_number": 46355,
+    "published_at_sao_paulo": "25/11/2026 10:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46355"
+   },
+   "result": {
+    "communication_number": 46356,
+    "published_at_sao_paulo": "25/11/2026 10:40",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46356"
+   },
+   "parsed": true,
+   "no_bids_accepted": true
+  },
+  {
+   "auction": "362/2026",
+   "kind": "cambio",
+   "category": "sale_with_repurchase",
+   "nature_published": "Venda Conjugada com Compra Pós-Fixado Selic",
+   "trade_date": "2026-11-25",
+   "settlement_date": "2026-11-30",
+   "maturity_date": "2027-07-02",
+   "accepted_usd_cents": 200000000000,
+   "cut_rate": 6.1777,
+   "announcement": {
+    "communication_number": 46354,
+    "published_at_sao_paulo": "25/11/2026 10:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46354"
+   },
+   "result": {
+    "communication_number": 46357,
+    "published_at_sao_paulo": "25/11/2026 10:40",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46357"
+   },
+   "parsed": true,
+   "no_bids_accepted": false
   }
  ]
 }

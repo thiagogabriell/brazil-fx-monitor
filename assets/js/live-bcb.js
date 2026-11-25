@@ -41,8 +41,10 @@ const BFXLive = (() => {
     fx: /Leil[aã]o de C[aâ]mbio\s+(\d+)\s*\/\s*(\d{4})/gi,
     swap: /Leil[aã]o de Swap(?:\s+Cambial)?\s+(\d+)\s*\/\s*(\d{4})/gi,
     natureField: /Natureza:\s*([^:]+?)(?=\s+(?:Posi[cç][aã]o|Per[ií]odo|Quantidade|Lote|Montante|Volume|Taxa|Data)\b)/i,
-    amount: /valor total de\s*USD\s*\$?\s*([\d.]+,\d{2})/i,
-    swapAmount: /\(\s*USD\s*\$?\s*([\d.]+,\d{2})\s*\)/i,
+    // Aceita "USD $2.000.000.000,00" e "USD $0", que e como o BCB escreve
+    // um leilao em que nenhuma proposta foi aceita.
+    amount: /valor total de\s*USD\s*\$?\s*([\d.]+(?:,\d{2})?)/i,
+    swapAmount: /\(\s*USD\s*\$?\s*([\d.]+(?:,\d{2})?)\s*\)/i,
     cut: /taxa de corte do leil[aã]o\s+\d+\s*\/\s*\d{4}\s+foi de\s*([\d.,]+)/i,
     settlement: /Data de Liquida[cç][aã]o(?:\s+da Opera[cç][aã]o de Venda)?:\s*(\d{2}\/\d{2}\/\d{4})/i,
     repurchase: /Data de Liquida[cç][aã]o da Opera[cç][aã]o de (?:Recompra|Compra):\s*(\d{2}\/\d{2}\/\d{4})/i,

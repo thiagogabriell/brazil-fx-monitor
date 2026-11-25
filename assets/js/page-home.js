@@ -19,6 +19,14 @@ window.PAGE = (() => {
   const plural = (count, one, many) =>
     `${BFX.number(count)} ${count === 1 ? one : many}`;
 
+  /** "hoje", "ontem" ou "há N dias", nunca um número negativo. */
+  function whenPhrase(date) {
+    const days = BFX.daysBetween(date, BFX.todaySaoPaulo());
+    if (days <= 0) return 'hoje';
+    if (days === 1) return 'ontem';
+    return `há ${BFX.number(days)} dias`;
+  }
+
   function conceptNote() {
     return summary.reserves.cash ? 'conceito caixa' : '';
   }
@@ -35,7 +43,10 @@ window.PAGE = (() => {
   function spendingDays() {
     const known = new Set(spending.days.map((day) => day.date));
     const extra = live.days
-      .filter((day) => !known.has(day.date))
+      // Só dias com venda definitiva entram aqui. Uma operação temporária tem
+      // sold = 0 e criava uma linha fantasma de "gasto US$ 0", na data de
+      // liquidação dela, que às vezes é no futuro.
+      .filter((day) => day.sold > 0 && !known.has(day.date))
       .map((day) => ({
         date: day.date,
         direct_sold_usd_cents: day.sold,
@@ -80,7 +91,9 @@ window.PAGE = (() => {
     const last = all[all.length - 1] || null;
     const anchor = summary.interventions.anchor_date;
     const yearStart = anchor.slice(0, 4) + '-01-01';
-    const twelveMonths = new Date(Date.parse(anchor) - 365 * 86400000)
+    // A janela tem de terminar hoje. Ancorar na data da fonte mensal fazia
+    // "12 meses" virar 13 meses e inflar o total.
+    const twelveMonths = new Date(Date.parse(BFX.todaySaoPaulo()) - 365 * 86400000)
       .toISOString().slice(0, 10);
 
     document.getElementById('headline').innerHTML = `
@@ -89,10 +102,8 @@ window.PAGE = (() => {
         <div class="big neg">${last ? cents(last.direct_sold_usd_cents) : 'US$ 0'}</div>
         <p class="sub">
           ${last
-            ? `Foi em <strong>${BFX.date(last.date, { withWeekday: true })}</strong>`
-              + (BFX.daysBetween(last.date, BFX.todaySaoPaulo()) === 0
-                ? ', hoje.'
-                : `, há ${plural(BFX.daysBetween(last.date, BFX.todaySaoPaulo()), 'dia', 'dias')}.`)
+            ? `Foi em <strong>${BFX.date(last.date, { withWeekday: true })}</strong>, `
+              + `${whenPhrase(last.date)}.`
               + (last.live
                 ? ' Encontrado agora, consultando o Banco Central direto do seu navegador.'
                 : last.provisional
@@ -232,12 +243,44 @@ window.PAGE = (() => {
 
     if (!rows.length) { container.innerHTML = ''; return; }
 
+    // Swap aparece quase todo dia e em duas pontas. Agrupar por dia evita que
+    // oito linhas de swap escondam a operação que a pessoa veio procurar.
+    const swaps = new Map();
+    const others = [];
+    for (const row of rows) {
+      if (String(row.category).startsWith('swap')) {
+        const bucket = swaps.get(row.date) || { date: row.date, cents: 0, urls: new Set() };
+        bucket.cents += row.cents;
+        if (row.url) bucket.urls.add(`${row.number}|${row.url}`);
+        swaps.set(row.date, bucket);
+      } else {
+        others.push(row);
+      }
+    }
+
     const why = {
-      swap_traditional: 'swap: contrato liquidado em reais, não sai dólar da reserva',
-      swap_reverse: 'swap reverso: contrato liquidado em reais, não sai dólar da reserva',
       sale_with_repurchase: 'venda com recompra: o Banco Central recebe o dinheiro de volta',
-      spot_purchase: 'compra: entra dólar, não sai'
+      spot_purchase: 'compra de dólares: entra dinheiro, não sai'
     };
+
+    const lines = others.map((row) => `<li>
+        <strong>${BFX.date(row.date)}</strong>: <strong>${cents(row.cents)}</strong> —
+        ${BFX.escapeHtml(why[row.category] || 'não é venda definitiva')}
+        ${row.url ? ` · <a href="${BFX.escapeHtml(row.url)}" target="_blank" rel="noopener noreferrer">comunicado ${BFX.escapeHtml(String(row.number))}</a>` : ''}
+      </li>`).concat([...swaps.values()]
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .map((bucket) => {
+          const links = [...bucket.urls].slice(0, 2).map((item) => {
+            const [number, url] = item.split('|');
+            return `<a href="${BFX.escapeHtml(url)}" target="_blank" rel="noopener noreferrer">comunicado ${BFX.escapeHtml(number)}</a>`;
+          }).join(' · ');
+          return `<li>
+            <strong>${BFX.date(bucket.date)}</strong>: <strong>${cents(bucket.cents)}</strong> em
+            swap cambial — contrato liquidado em reais, não sai dólar da reserva
+            ${links ? ' · ' + links : ''}
+          </li>`;
+        }))
+      .sort((a, b) => b.localeCompare(a));
 
     container.innerHTML = `
       <div class="lag" style="border-left-color:var(--notional)">
@@ -245,13 +288,7 @@ window.PAGE = (() => {
         Se você viu uma notícia com um valor que não aparece acima, provavelmente
         é uma destas. São reais e são do Banco Central, mas nenhuma retira
         dólares das reservas de forma definitiva.
-        <ul class="plain" style="margin-top:8px">
-          ${rows.map((row) => `<li>
-            <strong>${BFX.date(row.date)}</strong>: ${cents(row.cents)} —
-            ${BFX.escapeHtml(why[row.category] || 'não é venda definitiva')}
-            ${row.url ? ` · <a href="${BFX.escapeHtml(row.url)}" target="_blank" rel="noopener noreferrer">comunicado ${BFX.escapeHtml(String(row.number))}</a>` : ''}
-          </li>`).join('')}
-        </ul>
+        <ul class="plain" style="margin-top:8px">${lines.slice(0, 7).join('')}</ul>
       </div>`;
   }
 
@@ -348,12 +385,27 @@ window.PAGE = (() => {
       live.scheduled = result.scheduled;
       live.auctions = result.auctions;
 
-      // Saldo das reservas e PTAX mais recentes, direto do SGS.
+      // Saldo das reservas mais recente, direto do SGS.
       const newest = result.reserves[result.reserves.length - 1];
-      if (newest && summary.reserves.cash
-          && newest.date > summary.reserves.cash.reference_date) {
-        summary.reserves.cash.current_usd = newest.valueUsd;
-        summary.reserves.cash.reference_date = newest.date;
+      const block = summary.reserves.cash;
+      if (newest && block && newest.date > block.reference_date) {
+        block.current_usd = newest.valueUsd;
+        block.reference_date = newest.date;
+        // A variação de 12 meses precisa ser refeita com o saldo novo, senão
+        // a tela mistura saldo de hoje com variação de ontem.
+        const base = block.changes && block.changes['365'];
+        if (base && base.from_value) {
+          base.change = newest.valueUsd - base.from_value;
+          base.change_pct = ((newest.valueUsd - base.from_value) / base.from_value) * 100;
+        }
+      }
+      // Dias de gasto recentes podem ter ficado sem saldo quando o arquivo foi
+      // gerado; o SGS já tem.
+      const balances = new Map(result.reserves.map((row) => [row.date, row.valueUsd]));
+      for (const day of spending.days) {
+        if (day.closing_usd === null && balances.has(day.date)) {
+          day.closing_usd = balances.get(day.date);
+        }
       }
 
       renderHeadline();

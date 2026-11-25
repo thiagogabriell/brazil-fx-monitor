@@ -460,3 +460,69 @@ def test_recent_auctions_never_overlap_the_monthly_file(operations_document):
     # An auction that could not be read is kept aside, never counted.
     for auction in recent["unparsed"]:
         assert auction["parsed"] is False
+
+
+def test_an_auction_with_no_bids_accepted_is_read_and_counts_zero():
+    """The BCB writes "USD $0" without decimals when nobody takes the offer."""
+    import collect_recent_auctions as cra
+
+    opening = {
+        "number": 1, "date": "2026-11-25", "published_at_sao_paulo": "25/11/2026 10:30",
+        "url": "u1", "subject": "venda conjugada",
+        "text": (
+            "Aviso de Abertura do Leilão de Câmbio 361/2026 Moeda: USD - DOLAR DOS EUA "
+            "Natureza: Venda Conjugada com Compra Pós-Fixado Selic Período de "
+            "Acolhimento de Propostas: 10:30 Data de Liquidação da Operação de Venda: "
+            "30/11/2026"
+        ),
+    }
+    result = {
+        "number": 2, "date": "2026-11-25", "published_at_sao_paulo": "25/11/2026 10:40",
+        "url": "u2", "subject": "resultado",
+        "text": (
+            "Resultado do Leilão de Câmbio 361/2026 comunica que não foi aceita "
+            "nenhuma proposta no leilão 361/2026 . Foram aceitas 0 propostas no "
+            "valor total de USD $0 ."
+        ),
+    }
+    auctions = cra.parse_auctions([opening, result])
+    entry = next(iter(auctions.values()))
+    assert entry["parsed"] is True
+    assert entry["accepted_usd_cents"] == 0
+    assert entry["no_bids_accepted"] is True
+    assert entry["category"] == "sale_with_repurchase"
+
+
+def test_spending_days_never_holds_a_zero_or_future_day():
+    """A temporary operation must not create a phantom day of spending."""
+    import json
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parent.parent
+    document = json.loads(
+        (root / "data" / "indicators" / "spending-days.json").read_text(encoding="utf-8")
+    )
+    today = _dt.date.today().isoformat()
+    for day in document["days"]:
+        assert day["sold_usd_cents"] > 0, day["date"]
+        assert day["date"] <= today, f"{day['date']} está no futuro"
+
+
+def test_a_temporary_operation_never_becomes_a_spending_day():
+    import calculate_indicators as ci
+    from calculate_indicators import Series
+
+    recent = {
+        "auctions": [
+            {
+                "parsed": True, "category": "sale_with_repurchase",
+                "trade_date": "2026-11-25", "settlement_date": "2026-11-30",
+                "accepted_usd_cents": 200_000_000_000,
+                "result": {"url": "u", "communication_number": 1},
+                "announcement": None,
+            }
+        ]
+    }
+    document = ci.build_spending_days({}, Series([]), "2026-10-27", recent)
+    assert document["days"] == []
+    assert document["total_usd_cents"] == 0

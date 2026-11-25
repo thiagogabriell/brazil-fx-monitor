@@ -1,5 +1,5 @@
 {
- "score": 42.7,
+ "score": 44.2,
  "classification": {
   "band": [
    41,
@@ -45,10 +45,10 @@
      100
     ]
    ],
-   "observed_value": -0.4978,
-   "score": 29.91,
+   "observed_value": -0.7857,
+   "score": 41.43,
    "available": true,
-   "justification": "As reservas variaram -0.50% em 30 dias. A escala atribui 30 pontos a essa variacao."
+   "justification": "As reservas variaram -0.79% em 30 dias. A escala atribui 41 pontos a essa variacao."
   },
   {
    "key": "reserves_change_90d_pct",
@@ -82,10 +82,10 @@
      100
     ]
    ],
-   "observed_value": -3.4743,
-   "score": 64.74,
+   "observed_value": -3.6282,
+   "score": 66.28,
    "available": true,
-   "justification": "As reservas variaram -3.47% em 90 dias, equivalente a 65 pontos."
+   "justification": "As reservas variaram -3.63% em 90 dias, equivalente a 66 pontos."
   },
   {
    "key": "direct_sale_days_30d",
@@ -156,8 +156,8 @@
      100
     ]
    ],
-   "observed_value": 0.8266,
-   "score": 39.22,
+   "observed_value": 0.829,
+   "score": 39.3,
    "available": true,
    "justification": "As vendas diretas de 90 dias somam 0.83% das reservas atuais, o que vale 39 pontos."
   },
@@ -374,10 +374,10 @@
      100
     ]
    ],
-   "observed_value": 1.1021,
-   "score": 30.04,
+   "observed_value": 1.1053,
+   "score": 30.09,
    "available": true,
-   "justification": "As operacoes temporarias em aberto somam 1.10% das reservas, o que vale 30 pontos."
+   "justification": "As operacoes temporarias em aberto somam 1.11% das reservas, o que vale 30 pontos."
   },
   {
    "key": "reserves_to_short_term_debt",
@@ -444,8 +444,8 @@
      100
     ]
    ],
-   "observed_value": 14.408,
-   "score": 36.97,
+   "observed_value": 14.366,
+   "score": 37.11,
    "available": true,
    "justification": "As reservas cobrem 14.4 meses de importacoes, o que vale 37 pontos."
   }
@@ -492,26 +492,26 @@
  "disclaimer": "Indicador experimental desta aplicacao. Nao e classificacao oficial do Banco Central, nao e previsao de crise e nao e recomendacao financeira.",
  "formula": "score = soma(sub_score_i * peso_i) / soma(peso_i), apenas sobre os componentes com dado disponivel. Cada sub_score vem de uma funcao linear por partes com pontos de quebra declarados.",
  "schema": "pressure-index/v1",
- "generated_at": "2026-11-24T19:43:15+00:00",
+ "generated_at": "2026-11-25T20:05:36+00:00",
  "reference_dates": {
-  "reserves": "2026-11-23",
+  "reserves": "2026-11-24",
   "interventions": "2026-10-27",
   "exchange_rate": "2026-11-24",
   "exchange_flow": "2026-09-01"
  },
  "observed_values": {
-  "reserves_change_30d_pct": -0.4978,
-  "reserves_change_90d_pct": -3.4743,
+  "reserves_change_30d_pct": -0.7857,
+  "reserves_change_90d_pct": -3.6282,
   "direct_sale_days_30d": 0.0,
-  "sold_vs_reserves_90d_pct": 0.8266,
+  "sold_vs_reserves_90d_pct": 0.829,
   "intervention_acceleration_ratio": 0.0,
   "brl_change_30d_pct": 16.2693,
   "brl_change_90d_pct": 13.5048,
   "financial_account_3m_usd_million": -25028.6,
   "persistence_after_intervention_pct": 40.13,
-  "open_temporary_vs_reserves_pct": 1.1021,
+  "open_temporary_vs_reserves_pct": 1.1053,
   "reserves_to_short_term_debt": null,
-  "import_coverage_months": 14.408
+  "import_coverage_months": 14.366
  },
  "history": [
   {
