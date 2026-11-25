@@ -419,6 +419,13 @@ def main() -> int:
             # O navegador usa este numero como ponto de partida para checar o
             # Banco Central ao vivo, sem baixar o cache inteiro de comunicados.
             "last_communication_number": highest,
+            # Ate que dia os comunicados foram efetivamente lidos. Depois do
+            # arquivo mensal e ate esta data, "sem gasto" e um fato apurado,
+            # nao ausencia de informacao.
+            "scanned_until_date": max(
+                (c["date"] for c in communications if c.get("date")),
+                default=covered_until,
+            ),
             "reference_date": reference,
             "collected_at": utc_now_iso(),
             "source": {

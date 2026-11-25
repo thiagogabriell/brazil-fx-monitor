@@ -163,9 +163,63 @@ window.PAGE = (() => {
       Os dois batem quando o arquivo mensal alcança a data.`;
   }
 
+  /** Até onde se pode afirmar "não houve gasto" em vez de "não sei ainda". */
+  function coveredUntil() {
+    const consolidated = spending.consolidated_until;
+    const scanned = (recent && recent.scanned_until_date) || consolidated;
+    const liveScan = live.at ? BFX.todaySaoPaulo() : null;
+    return [consolidated, scanned, liveScan]
+      .filter(Boolean)
+      .sort()
+      .pop();
+  }
+
   function renderTable() {
     const onlySpending = document.getElementById('only-spending').checked;
-    const source = onlySpending ? spendingDays() : days.slice(-visible);
+    const limit = coveredUntil();
+    // O gasto conhecido por qualquer das fontes, por data.
+    const known = new Map(
+      spendingDays().map((day) => [day.date, day])
+    );
+    // As operações temporárias dos comunicados, pela data em que o dinheiro
+    // sai. Sem isto a coluna de empréstimo fica vazia nos dias recentes.
+    const temporary = new Map();
+    const addTemporary = (date, amount) => {
+      if (!date || !amount) return;
+      temporary.set(date, (temporary.get(date) || 0) + amount);
+    };
+    for (const auction of (recent && recent.auctions) || []) {
+      if (auction.category !== 'sale_with_repurchase') continue;
+      addTemporary(
+        auction.settlement_date || auction.trade_date,
+        auction.accepted_usd_cents
+      );
+    }
+    for (const auction of live.auctions) {
+      if (auction.category !== 'sale_with_repurchase') continue;
+      const date = auction.settlementDate || auction.tradeDate;
+      if (temporary.has(date)) continue;
+      addTemporary(date, auction.acceptedCents);
+    }
+    const source = onlySpending
+      ? spendingDays()
+      : days.slice(-visible).map((day) => {
+          const match = known.get(day.date);
+          const covered = day.interventions_coverage === 'covered' || day.date <= limit;
+          return {
+            ...day,
+            direct_sold_usd_cents: match
+              ? match.direct_sold_usd_cents
+              : day.direct_sold_usd_cents,
+            temporary_out_usd_cents: day.temporary_out_usd_cents
+              || (match && match.temporary_out_usd_cents)
+              || temporary.get(day.date)
+              || 0,
+            provisional: match ? match.provisional : day.provisional,
+            communications: match ? match.communications : day.communications,
+            interventions_coverage: covered ? 'covered' : day.interventions_coverage
+          };
+        });
     const rows = source.slice().reverse();
 
     document.getElementById('rows').innerHTML = rows.length
