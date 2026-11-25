@@ -1,15 +1,17 @@
 name: Coleta intradiária (câmbio e reservas)
 
-# A PTAX de fechamento sai por volta das 13h10 de São Paulo (16h10 UTC) e o
-# saldo das reservas é publicado ao longo da manhã. Só rodamos em dias úteis e
-# em horários em que há publicação nova, para não gastar minutos à toa.
+# Esta é a rotina que mantém a página perto do tempo real. Ela lê os comunicados
+# de leilão que o Banco Central publica no mesmo dia, além da PTAX e do saldo
+# das reservas. Roda a cada 30 minutos em dias úteis, no horário em que há
+# publicação, porque o botão "Atualizar agora" da página depende de CORS e o
+# CDN do Banco Central não é confiável nesse ponto; esta coleta não depende de
+# CORS e é a garantia de que o dado chega.
 on:
   schedule:
-    # 11h05, 14h05, 16h20 e 19h05 UTC = 08h05, 11h05, 13h20 e 16h05 em São Paulo
-    - cron: '5 11 * * 1-5'
-    - cron: '5 14 * * 1-5'
-    - cron: '20 16 * * 1-5'
-    - cron: '5 19 * * 1-5'
+    # A cada 30 minutos nos dias úteis, das 08h às 19h em São Paulo. Os leilões
+    # de câmbio acontecem de manhã e os comunicados saem minutos depois, então
+    # esta é a janela em que existe dado novo para buscar. Fora dela não roda.
+    - cron: '*/30 11-22 * * 1-5'
   workflow_dispatch:
 
 permissions:

@@ -161,9 +161,15 @@ const BFXLive = (() => {
       }
     }
     if (networkErrors === probes && probes > 0) {
+      // O CDN do Banco Central guarda a resposta por 90 segundos sem declarar
+      // `Vary: Origin`, então ele às vezes devolve ao navegador o cabeçalho
+      // CORS de outra origem e o pedido é recusado. Não é erro desta página
+      // nem do Banco Central estar fora do ar, e costuma passar sozinho.
       throw new Error(
-        'não foi possível alcançar o site do Banco Central'
-        + (firstError ? ' (' + firstError.message + ')' : '')
+        'o navegador não conseguiu ler a resposta do Banco Central agora '
+        + '(cache do site do BC devolveu a permissão de outra origem). '
+        + 'Os números na tela continuam válidos e a coleta automática não '
+        + 'depende disso; tente de novo em um minuto'
       );
     }
     return {

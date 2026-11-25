@@ -50,6 +50,13 @@ Se a consulta não alcançar o Banco Central, a página diz isso em vez de mostr
 "nada de novo". A automação em Python continua sendo a fonte dos arquivos do
 repositório; o botão apenas antecipa o que ela gravaria na próxima rodada.
 
+**Limitação fora do nosso controle:** o CDN do Banco Central guarda a resposta
+por 90 segundos e **não declara `Vary: Origin`**. Com isso ele às vezes devolve
+ao navegador o cabeçalho CORS de outra origem, e o pedido é recusado. Não há
+correção possível do nosso lado. Por isso a coleta automática, que não passa por
+CORS, roda **a cada 30 minutos em dias úteis** das 8h às 19h de São Paulo: é ela
+que garante que o dado chega, com o botão servindo de atalho quando funciona.
+
 ### Operações anunciadas e ainda não realizadas
 
 O Banco Central costuma anunciar às 18h30 os leilões do dia seguinte, com um
@@ -223,7 +230,7 @@ severa · 81-100 Pressão crítica.
 
 | Workflow | Quando roda | O que faz |
 |---|---|---|
-| `collect-intraday.yml` | Dias úteis, 4 vezes ao dia, horários de publicação | PTAX e reservas |
+| `collect-intraday.yml` | Dias úteis, a cada 30 min, 8h-19h de São Paulo | Comunicados de leilão do dia, PTAX e reservas |
 | `collect-daily.yml` | Dias úteis, 17h40 de São Paulo | Todas as fontes |
 | `collect-interventions.yml` | Dias úteis a partir do dia 20 e às segundas | Atuações e comunicados |
 | `validate-sources.yml` | Dias úteis, manhã | Confere endpoints e layout do CSV |
