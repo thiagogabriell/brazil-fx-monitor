@@ -12,7 +12,7 @@ window.PAGE = (() => {
   let summary, statement, spending, recent, days = [], visible = 30;
   // Operações que o navegador descobriu falando com o Banco Central agora,
   // além do que a automação já tinha gravado no repositório.
-  let live = { days: [], scheduled: [], reserves: null, ptax: null, at: null };
+  let live = { days: [], scheduled: [], auctions: [], reserves: null, ptax: null, at: null };
 
   const cents = (value) => BFX.usdCents(value);
 
@@ -208,6 +208,53 @@ window.PAGE = (() => {
     swap_reverse: 'swap cambial reverso'
   };
 
+  /** Operações recentes que NÃO são gasto, para quem viu a notícia e veio
+   *  procurar o número aqui. Elas existem, são do Banco Central, e a página
+   *  diz exatamente por que não entram na conta. */
+  function renderNotSpending() {
+    const container = document.getElementById('not-spending');
+    const fromFile = ((recent && recent.auctions) || []).map((a) => ({
+      date: a.trade_date, category: a.category,
+      cents: a.accepted_usd_cents, url: (a.result || a.announcement || {}).url,
+      number: (a.result || a.announcement || {}).communication_number
+    }));
+    const fromLive = live.auctions.map((a) => ({
+      date: a.tradeDate, category: a.category, cents: a.acceptedCents,
+      url: (a.result || a.announcement || {}).url,
+      number: (a.result || a.announcement || {}).number
+    }));
+    const seen = new Set(fromFile.map((a) => `${a.date}|${a.category}|${a.cents}`));
+    const rows = fromFile
+      .concat(fromLive.filter((a) => !seen.has(`${a.date}|${a.category}|${a.cents}`)))
+      .filter((a) => a.category !== 'spot_sale' && a.cents && a.date)
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .slice(0, 8);
+
+    if (!rows.length) { container.innerHTML = ''; return; }
+
+    const why = {
+      swap_traditional: 'swap: contrato liquidado em reais, não sai dólar da reserva',
+      swap_reverse: 'swap reverso: contrato liquidado em reais, não sai dólar da reserva',
+      sale_with_repurchase: 'venda com recompra: o Banco Central recebe o dinheiro de volta',
+      spot_purchase: 'compra: entra dólar, não sai'
+    };
+
+    container.innerHTML = `
+      <div class="lag" style="border-left-color:var(--notional)">
+        <strong>Operações recentes que não são gasto.</strong>
+        Se você viu uma notícia com um valor que não aparece acima, provavelmente
+        é uma destas. São reais e são do Banco Central, mas nenhuma retira
+        dólares das reservas de forma definitiva.
+        <ul class="plain" style="margin-top:8px">
+          ${rows.map((row) => `<li>
+            <strong>${BFX.date(row.date)}</strong>: ${cents(row.cents)} —
+            ${BFX.escapeHtml(why[row.category] || 'não é venda definitiva')}
+            ${row.url ? ` · <a href="${BFX.escapeHtml(row.url)}" target="_blank" rel="noopener noreferrer">comunicado ${BFX.escapeHtml(String(row.number))}</a>` : ''}
+          </li>`).join('')}
+        </ul>
+      </div>`;
+  }
+
   function renderScheduled() {
     const fromFile = (recent && recent.scheduled) || [];
     const known = new Set(fromFile.map((item) => item.communication_number));
@@ -299,6 +346,7 @@ window.PAGE = (() => {
       }
       live.days = [...byDate.values()].filter((day) => day.sold > 0 || day.temporary > 0);
       live.scheduled = result.scheduled;
+      live.auctions = result.auctions;
 
       // Saldo das reservas e PTAX mais recentes, direto do SGS.
       const newest = result.reserves[result.reserves.length - 1];
@@ -310,6 +358,7 @@ window.PAGE = (() => {
 
       renderHeadline();
       renderScheduled();
+      renderNotSpending();
       renderTable();
 
       const found = live.days.reduce((total, day) => total + day.sold, 0);
@@ -350,6 +399,7 @@ window.PAGE = (() => {
     days = statement.days;
     renderHeadline();
     renderScheduled();
+    renderNotSpending();
     renderLag();
     renderTable();
     document.getElementById('checked').textContent =
