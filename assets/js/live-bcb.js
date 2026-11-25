@@ -98,7 +98,17 @@ const BFXLive = (() => {
   }
 
   async function communication(number) {
-    const payload = await fetchJson(COMMUNICATION + number);
+    // A primeira requisicao de uma rajada ao site do BCB falha de vez em
+    // quando, aparentemente por conexao fria. Uma segunda tentativa curta
+    // resolve e evita reportar um problema que nao existe.
+    let payload;
+    try {
+      payload = await fetchJson(COMMUNICATION + number);
+    } catch (error) {
+      await new Promise((resolve) => setTimeout(resolve, 600));
+      payload = await fetchJson(COMMUNICATION + number);
+    }
+
     const items = (payload && payload.conteudo) || [];
     if (!items.length) return null;
     const item = items[0];
