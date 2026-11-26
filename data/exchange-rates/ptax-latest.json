@@ -4,18 +4,12 @@
  "timezone": "America/Sao_Paulo",
  "source": {
   "name": "BCB Olinda - servico PTAX (OData v1)",
-  "endpoint": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial='11-04-2026'&@dataFinalCotacao='11-25-2026'&$format=json",
+  "endpoint": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial='11-05-2026'&@dataFinalCotacao='11-26-2026'&$format=json",
   "entity_set": "CotacaoDolarPeriodo"
  },
  "reference_date": "2026-11-25",
- "collected_at": "2026-11-25T20:25:06+00:00",
+ "collected_at": "2026-11-26T03:06:43+00:00",
  "bulletins": [
-  {
-   "date": "2026-11-04",
-   "published_at_sao_paulo": "2026-11-04 13:05:19.232051",
-   "buy": 5.4772,
-   "sell": 5.4778
-  },
   {
    "date": "2026-11-05",
    "published_at_sao_paulo": "2026-11-05 13:06:37.661774",
