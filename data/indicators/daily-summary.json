@@ -1,13 +1,13 @@
 {
  "schema": "daily-summary/v1",
- "generated_at": "2026-11-25T20:26:18+00:00",
- "generated_at_sao_paulo": "2026-11-25T17:26:18-03:00",
+ "generated_at": "2026-11-26T03:00:04+00:00",
+ "generated_at_sao_paulo": "2026-11-26T00:00:04-03:00",
  "timezone": "America/Sao_Paulo",
- "date_sao_paulo": "2026-11-25",
+ "date_sao_paulo": "2026-11-26",
  "method": "Texto gerado por regras determinísticas sobre os dados coletados. Nenhum modelo de linguagem e nenhum serviço pago é utilizado.",
  "anchors": {
   "reserves": "2026-11-24",
-  "interventions": "2026-10-27",
+  "interventions": "2026-11-25",
   "exchange_rate": "2026-11-25",
   "exchange_flow": "2026-09-01"
  },
@@ -29,23 +29,23 @@
   {
    "key": "interventions",
    "title": "Intervenções confirmadas",
-   "text": "A fonte oficial de atuações no mercado de câmbio está publicada até 27 de outubro de 2026. Nessa base, as vendas diretas de dólares somam US$ 0 em 7 dias, US$ 0 em 30 dias, US$ 3,00 bilhões em 90 dias e US$ 8,00 bilhões em 365 dias. As compras diretas no mesmo período de 365 dias somam US$ 0, o que deixa um saldo líquido de US$ -8,00 bilhões.",
+   "text": "A fonte oficial de atuações no mercado de câmbio está publicada até 25 de novembro de 2026. Nessa base, as vendas diretas de dólares somam US$ 1,00 bilhões em 7 dias, US$ 1,00 bilhões em 30 dias, US$ 4,00 bilhões em 90 dias e US$ 8,00 bilhões em 365 dias. As compras diretas no mesmo período de 365 dias somam US$ 0, o que deixa um saldo líquido de US$ -8,00 bilhões.",
    "source": "Histórico de atuações no mercado de câmbio (BCB)",
-   "reference_date": "2026-10-27"
+   "reference_date": "2026-11-25"
   },
   {
    "key": "last_sale",
    "title": "Última venda direta",
-   "text": "A última venda direta de dólares com resultado publicado ocorreu em 15 de setembro de 2026, no valor de US$ 1,00 bilhões, com liquidação em 17 de setembro de 2026 e modalidade PTAX. Comunicado 45927.",
+   "text": "A última venda direta de dólares com resultado publicado ocorreu em 19 de novembro de 2026, no valor de US$ 1,00 bilhões, com liquidação em 24 de novembro de 2026 e modalidade Venda À vista. Comunicado 46328.",
    "source": "Histórico de atuações no mercado de câmbio (BCB)",
-   "reference_date": "2026-09-15"
+   "reference_date": "2026-11-19"
   },
   {
    "key": "temporary_and_swaps",
    "title": "Operações temporárias e swaps",
    "text": "Há 6 operação(ões) temporária(s) em aberto, somando US$ 4,00 bilhões. Essas operações têm recompra contratada e não são consumo permanente das reservas. O estoque nocional de swaps cambiais tradicionais é de US$ 90,25 bilhões e o de swaps reversos é de US$ 0. Valor nocional de swap não é dólar retirado das reservas.",
    "source": "Histórico de atuações no mercado de câmbio (BCB)",
-   "reference_date": "2026-10-27"
+   "reference_date": "2026-11-25"
   },
   {
    "key": "exchange_rate",
@@ -71,28 +71,28 @@
   {
    "key": "patterns",
    "title": "Padrões identificados",
-   "text": "Padrões identificados: Desvalorizacao persistente do real; Saida liquida persistente de dolares; Aumento de operacoes temporarias em aberto.",
+   "text": "Padrões identificados: Aumento na frequencia de vendas diretas de dolares; Desvalorizacao persistente do real; Saida liquida persistente de dolares; Aumento de operacoes temporarias em aberto.",
    "source": "Análise desta aplicação",
    "reference_date": "2026-11-24"
   },
   {
    "key": "alerts",
    "title": "Alertas",
-   "text": "1 alerta(s) ativo(s) com os limites padrão: Novo comunicado sobre intervencao.",
+   "text": "2 alerta(s) ativo(s) com os limites padrão: Venda direta acima de US$ 1 bilhao em um dia; Novo comunicado sobre intervencao.",
    "source": "Central de alertas desta aplicação",
    "reference_date": null
   },
   {
    "key": "pressure",
    "title": "Indicador de pressão cambial",
-   "text": "O indicador experimental de pressão cambial está em 40.9 pontos, faixa \"Pressao critica\", com 100.0% de cobertura dos componentes. É uma metodologia desta aplicação, não uma classificação oficial do Banco Central.",
+   "text": "O indicador experimental de pressão cambial está em 47.4 pontos, faixa \"Pressao elevada\", com 100.0% de cobertura dos componentes. É uma metodologia desta aplicação, não uma classificação oficial do Banco Central.",
    "source": "Metodologia desta aplicação",
    "reference_date": null
   }
  ],
  "pending_information": [
-  "O saldo das reservas de 25 de novembro de 2026 ainda não foi publicado; o último disponível é de 24 de novembro de 2026.",
-  "As atuações no mercado de câmbio posteriores a 27 de outubro de 2026 ainda não foram publicadas, porque a fonte é atualizada mensalmente.",
+  "O saldo das reservas de 26 de novembro de 2026 ainda não foi publicado; o último disponível é de 24 de novembro de 2026.",
+  "As atuações no mercado de câmbio posteriores a 25 de novembro de 2026 ainda não foram publicadas, porque a fonte é atualizada mensalmente.",
   "A composição das reservas por moeda e por classe de ativo não é publicada em API pelo Banco Central."
  ],
  "headline": "Reservas em US$ 361,90 bilhões (-0,29% no dia) e PTAX em R$ 5,8825 (+0,43%)."

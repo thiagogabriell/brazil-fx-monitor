@@ -1,6 +1,6 @@
 {
  "schema": "indicator-summary/v1",
- "generated_at": "2026-11-25T21:47:19+00:00",
+ "generated_at": "2026-11-26T03:00:03+00:00",
  "anchors": {
   "reserves": "2026-11-24",
   "interventions": "2026-11-25",
@@ -405,7 +405,7 @@
     "accumulated_12m": 376629.3,
     "year_to_date": 285806.8,
     "moving_average_3m": 33714.7,
-    "moving_average_12m": 31385.78,
+    "moving_average_12m": 31385.77,
     "negative_month_streak": 0,
     "trend": "entrada_liquida"
    },

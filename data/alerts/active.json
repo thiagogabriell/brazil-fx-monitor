@@ -1,17 +1,36 @@
 {
  "schema": "alerts-active/v1",
- "generated_at": "2026-11-25T20:26:18+00:00",
+ "generated_at": "2026-11-26T03:00:04+00:00",
  "timezone": "America/Sao_Paulo",
  "thresholds": "padrao",
  "disclaimer": "Os limites sao criterios configuraveis de monitoramento desta aplicacao e nao indicadores oficiais de crise.",
- "count": 1,
+ "count": 2,
  "by_severity": {
   "critica": 0,
-  "alta": 0,
+  "alta": 1,
   "atencao": 0,
   "info": 1
  },
  "alerts": [
+  {
+   "id": "direct_sale_day_above_1bn:2026-11-24",
+   "rule_key": "direct_sale_day_above_1bn",
+   "label": "Venda direta acima de US$ 1 bilhao em um dia",
+   "indicator": "Venda direta de dolares liquidada no dia",
+   "severity": "alta",
+   "unit": "USD",
+   "observed_value": 1000000000.0,
+   "threshold": 1000000000,
+   "comparison": ">=",
+   "description": "Em 2026-11-24 foram liquidados US$ 1.000 bilhoes em vendas diretas de dolares.",
+   "source": "Historico de atuacoes no mercado de cambio (BCB)",
+   "page": "pages/transactions.html",
+   "reference_date": "2026-11-24",
+   "detected_date_sao_paulo": "2026-11-26",
+   "detected_time_sao_paulo": "00:00:04",
+   "detected_at_utc": "2026-11-26T03:00:04+00:00",
+   "thresholds_used": "padrao"
+  },
   {
    "id": "new_intervention_communication:2026-10-27",
    "rule_key": "new_intervention_communication",
@@ -26,9 +45,9 @@
    "source": "Comunicados do BCB",
    "page": "pages/interventions.html",
    "reference_date": "2026-10-27",
-   "detected_date_sao_paulo": "2026-11-25",
-   "detected_time_sao_paulo": "17:26:18",
-   "detected_at_utc": "2026-11-25T20:26:18+00:00",
+   "detected_date_sao_paulo": "2026-11-26",
+   "detected_time_sao_paulo": "00:00:04",
+   "detected_at_utc": "2026-11-26T03:00:04+00:00",
    "thresholds_used": "padrao",
    "official_url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46184"
   }
