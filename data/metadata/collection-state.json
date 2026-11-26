@@ -41,18 +41,18 @@
    "reference_date": "2026-10-27",
    "record_count": 10507,
    "detail": "9505 operacoes com resultado publicado",
-   "collected_at": "2026-11-26T03:07:20+00:00",
+   "collected_at": "2026-11-26T03:43:13+00:00",
    "last_successful_reference_date": "2026-10-27",
-   "last_successful_at": "2026-11-26T03:07:20+00:00"
+   "last_successful_at": "2026-11-26T03:43:13+00:00"
   },
   "announcements": {
    "status": "ok",
    "reference_date": "2026-10-27",
    "record_count": 4327,
    "detail": null,
-   "collected_at": "2026-11-26T03:07:20+00:00",
+   "collected_at": "2026-11-26T03:43:14+00:00",
    "last_successful_reference_date": "2026-10-27",
-   "last_successful_at": "2026-11-26T03:07:20+00:00"
+   "last_successful_at": "2026-11-26T03:43:14+00:00"
   },
   "exchange_flow": {
    "status": "ok",
@@ -77,46 +77,46 @@
    "reference_date": "2026-11-24",
    "record_count": 11750,
    "detail": null,
-   "collected_at": "2026-11-26T03:07:31+00:00",
+   "collected_at": "2026-11-26T03:43:25+00:00",
    "last_successful_reference_date": "2026-11-24",
-   "last_successful_at": "2026-11-26T03:07:31+00:00"
+   "last_successful_at": "2026-11-26T03:43:25+00:00"
   },
   "indicators": {
    "status": "ok",
    "reference_date": "2026-11-24",
    "record_count": 4603,
    "detail": null,
-   "collected_at": "2026-11-26T03:07:31+00:00",
+   "collected_at": "2026-11-26T03:43:25+00:00",
    "last_successful_reference_date": "2026-11-24",
-   "last_successful_at": "2026-11-26T03:07:31+00:00"
+   "last_successful_at": "2026-11-26T03:43:25+00:00"
   },
   "alerts": {
    "status": "ok",
    "reference_date": "2026-11-24",
    "record_count": 2,
    "detail": null,
-   "collected_at": "2026-11-26T03:07:31+00:00",
+   "collected_at": "2026-11-26T03:43:25+00:00",
    "last_successful_reference_date": "2026-11-24",
-   "last_successful_at": "2026-11-26T03:07:31+00:00"
+   "last_successful_at": "2026-11-26T03:43:25+00:00"
   },
   "daily_summary": {
    "status": "ok",
    "reference_date": "2026-11-24",
    "record_count": 11,
    "detail": null,
-   "collected_at": "2026-11-26T03:07:32+00:00",
+   "collected_at": "2026-11-26T03:43:25+00:00",
    "last_successful_reference_date": "2026-11-24",
-   "last_successful_at": "2026-11-26T03:07:32+00:00"
+   "last_successful_at": "2026-11-26T03:43:25+00:00"
   },
   "recent_auctions": {
    "status": "ok",
    "reference_date": "2026-11-25",
    "record_count": 31,
    "detail": "1 venda(s) a vista apos 2026-10-27",
-   "collected_at": "2026-11-26T03:07:30+00:00",
+   "collected_at": "2026-11-26T03:43:24+00:00",
    "last_successful_reference_date": "2026-11-25",
-   "last_successful_at": "2026-11-26T03:07:30+00:00"
+   "last_successful_at": "2026-11-26T03:43:24+00:00"
   }
  },
- "updated_at": "2026-11-26T03:07:32+00:00"
+ "updated_at": "2026-11-26T03:43:25+00:00"
 }
