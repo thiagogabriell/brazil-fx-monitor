@@ -1,6 +1,6 @@
 {
  "schema": "reserves-statement-index/v1",
- "generated_at": "2026-11-25T20:05:36+00:00",
+ "generated_at": "2026-11-26T20:02:28+00:00",
  "methodology": {
   "variation": "saldo final menos saldo do dia util anterior publicado",
   "operation_date_used": "data de liquidacao para vendas e compras; data de vencimento para o retorno de operacoes temporarias",
@@ -19,8 +19,8 @@
   {
    "concept": "cash",
    "label": "Conceito caixa",
-   "reference_date": "2026-11-24",
-   "day_count": 7004,
+   "reference_date": "2026-11-25",
+   "day_count": 7005,
    "latest_file": "data/reserves/statement-latest-cash.json",
    "years": [
     {
@@ -161,15 +161,15 @@
     {
      "year": 2026,
      "file": "data/reserves/statement/cash/2026.json",
-     "day_count": 223
+     "day_count": 224
     }
    ]
   },
   {
    "concept": "liquidity",
    "label": "Conceito liquidez",
-   "reference_date": "2026-11-24",
-   "day_count": 4746,
+   "reference_date": "2026-11-25",
+   "day_count": 4747,
    "latest_file": "data/reserves/statement-latest-liquidity.json",
    "years": [
     {
@@ -265,7 +265,7 @@
     {
      "year": 2026,
      "file": "data/reserves/statement/liquidity/2026.json",
-     "day_count": 223
+     "day_count": 224
     }
    ]
   }

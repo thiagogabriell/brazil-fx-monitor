@@ -1,5 +1,5 @@
 {
- "score": 47.4,
+ "score": 47.9,
  "classification": {
   "band": [
    41,
@@ -45,10 +45,10 @@
      100
     ]
    ],
-   "observed_value": -0.7857,
-   "score": 41.43,
+   "observed_value": -0.8918,
+   "score": 45.67,
    "available": true,
-   "justification": "As reservas variaram -0.79% em 30 dias. A escala atribui 41 pontos a essa variacao."
+   "justification": "As reservas variaram -0.89% em 30 dias. A escala atribui 46 pontos a essa variacao."
   },
   {
    "key": "reserves_change_90d_pct",
@@ -82,10 +82,10 @@
      100
     ]
    ],
-   "observed_value": -3.6282,
-   "score": 66.28,
+   "observed_value": -3.7227,
+   "score": 67.23,
    "available": true,
-   "justification": "As reservas variaram -3.63% em 90 dias, equivalente a 66 pontos."
+   "justification": "As reservas variaram -3.72% em 90 dias, equivalente a 67 pontos."
   },
   {
    "key": "direct_sale_days_30d",
@@ -156,8 +156,8 @@
      100
     ]
    ],
-   "observed_value": 1.1053,
-   "score": 46.76,
+   "observed_value": 1.1061,
+   "score": 46.77,
    "available": true,
    "justification": "As vendas diretas de 90 dias somam 1.11% das reservas atuais, o que vale 47 pontos."
   },
@@ -230,10 +230,10 @@
      100
     ]
    ],
-   "observed_value": 6.9409,
-   "score": 64.7,
+   "observed_value": 7.6857,
+   "score": 68.43,
    "available": true,
-   "justification": "A PTAX variou +6.94% em 30 dias, o que vale 65 pontos."
+   "justification": "A PTAX variou +7.69% em 30 dias, o que vale 68 pontos."
   },
   {
    "key": "brl_change_90d_pct",
@@ -267,10 +267,10 @@
      100
     ]
    ],
-   "observed_value": 13.9092,
-   "score": 63.67,
+   "observed_value": 10.4625,
+   "score": 54.51,
    "available": true,
-   "justification": "A PTAX variou +13.91% em 90 dias, o que vale 64 pontos."
+   "justification": "A PTAX variou +10.46% em 90 dias, o que vale 55 pontos."
   },
   {
    "key": "financial_account_3m_usd_million",
@@ -374,8 +374,8 @@
      100
     ]
    ],
-   "observed_value": 1.1053,
-   "score": 30.09,
+   "observed_value": 1.1061,
+   "score": 30.1,
    "available": true,
    "justification": "As operacoes temporarias em aberto somam 1.11% das reservas, o que vale 30 pontos."
   },
@@ -444,8 +444,8 @@
      100
     ]
    ],
-   "observed_value": 14.366,
-   "score": 37.11,
+   "observed_value": 14.355,
+   "score": 37.15,
    "available": true,
    "justification": "As reservas cobrem 14.4 meses de importacoes, o que vale 37 pontos."
   }
@@ -492,26 +492,26 @@
  "disclaimer": "Indicador experimental desta aplicacao. Nao e classificacao oficial do Banco Central, nao e previsao de crise e nao e recomendacao financeira.",
  "formula": "score = soma(sub_score_i * peso_i) / soma(peso_i), apenas sobre os componentes com dado disponivel. Cada sub_score vem de uma funcao linear por partes com pontos de quebra declarados.",
  "schema": "pressure-index/v1",
- "generated_at": "2026-11-25T21:44:22+00:00",
+ "generated_at": "2026-11-26T20:02:29+00:00",
  "reference_dates": {
-  "reserves": "2026-11-24",
-  "interventions": "2026-11-25",
-  "exchange_rate": "2026-11-25",
+  "reserves": "2026-11-25",
+  "interventions": "2026-11-26",
+  "exchange_rate": "2026-11-26",
   "exchange_flow": "2026-09-01"
  },
  "observed_values": {
-  "reserves_change_30d_pct": -0.7857,
-  "reserves_change_90d_pct": -3.6282,
+  "reserves_change_30d_pct": -0.8918,
+  "reserves_change_90d_pct": -3.7227,
   "direct_sale_days_30d": 1.0,
-  "sold_vs_reserves_90d_pct": 1.1053,
+  "sold_vs_reserves_90d_pct": 1.1061,
   "intervention_acceleration_ratio": 1.0,
-  "brl_change_30d_pct": 6.9409,
-  "brl_change_90d_pct": 13.9092,
+  "brl_change_30d_pct": 7.6857,
+  "brl_change_90d_pct": 10.4625,
   "financial_account_3m_usd_million": -25028.6,
   "persistence_after_intervention_pct": 39.87,
-  "open_temporary_vs_reserves_pct": 1.1053,
+  "open_temporary_vs_reserves_pct": 1.1061,
   "reserves_to_short_term_debt": null,
-  "import_coverage_months": 14.366
+  "import_coverage_months": 14.355
  },
  "history": [
   {

@@ -1,9 +1,9 @@
 {
  "schema": "patterns/v1",
- "generated_at": "2026-11-25T21:44:00+00:00",
- "anchor_interventions": "2026-11-25",
- "anchor_reserves": "2026-11-24",
- "anchor_exchange_rate": "2026-11-25",
+ "generated_at": "2026-11-26T20:02:29+00:00",
+ "anchor_interventions": "2026-11-26",
+ "anchor_reserves": "2026-11-25",
+ "anchor_exchange_rate": "2026-11-26",
  "evidence_policy": "Cada padrao lista os dados que levaram a sua identificacao. 'fato_confirmado' vem direto da fonte oficial; 'tendencia_observada' e uma leitura de series, nao previsao.",
  "detected_count": 4,
  "patterns": [
@@ -13,7 +13,7 @@
    "kind": "tendencia_observada",
    "detected": true,
    "evidence": [
-    "1 dia(s) com venda direta entre 2026-10-27 e 2026-11-25",
+    "1 dia(s) com venda direta entre 2026-10-28 e 2026-11-26",
     "0 dia(s) nos 30 dias anteriores"
    ],
    "detail": "Compara dias com venda direta liquidada em duas janelas de 30 dias."
@@ -45,8 +45,8 @@
    "kind": "tendencia_observada",
    "detected": false,
    "evidence": [
-    "variacao de 30 dias: -0.7857%",
-    "variacao de 90 dias: -3.6282%"
+    "variacao de 30 dias: -0.8918%",
+    "variacao de 90 dias: -3.7227%"
    ],
    "detail": "Criterio desta aplicacao: queda de 1% ou mais em 30 dias."
   },
@@ -56,8 +56,8 @@
    "kind": "tendencia_observada",
    "detected": true,
    "evidence": [
-    "PTAX em 30 dias: 6.9409%",
-    "PTAX em 90 dias: 13.9092%"
+    "PTAX em 30 dias: 7.6857%",
+    "PTAX em 90 dias: 10.4625%"
    ],
    "detail": "Alta do dolar nas duas janelas ao mesmo tempo."
   },
@@ -87,8 +87,8 @@
    "kind": "fato_confirmado",
    "detected": true,
    "evidence": [
-    "6 operacao(oes) em aberto em 2026-11-25",
-    "equivalente a 1.1053% das reservas"
+    "6 operacao(oes) em aberto em 2026-11-26",
+    "equivalente a 1.1061% das reservas"
    ],
    "detail": "Saldo em aberto calculado pelas datas de liquidacao e de vencimento publicadas. A fonte nao reflete pre-pagamentos, portanto este saldo e um limite superior."
   },
@@ -98,7 +98,7 @@
    "kind": "tendencia_observada",
    "detected": false,
    "evidence": [
-    "saldo atual US$ 361903000000",
+    "saldo atual US$ 361634000000",
     "minimo de 12 meses US$ 358153000000"
    ],
    "detail": "Criterio desta aplicacao: saldo a 0,5% ou menos do minimo de 12 meses."
@@ -109,8 +109,8 @@
    "kind": "tendencia_observada",
    "detected": false,
    "evidence": [
-    "saldo atual US$ 361903000000",
-    "media dos ultimos cinco anos uteis US$ 351365903174.6"
+    "saldo atual US$ 361634000000",
+    "media dos ultimos cinco anos uteis US$ 351360551587.3"
    ],
    "detail": "Criterio desta aplicacao: afastamento de 5% ou mais da media de cinco anos."
   }

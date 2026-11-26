@@ -7,8 +7,8 @@
   "endpoint": "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial='11-05-2026'&@dataFinalCotacao='11-26-2026'&$format=json",
   "entity_set": "CotacaoDolarPeriodo"
  },
- "reference_date": "2026-11-25",
- "collected_at": "2026-11-26T03:06:43+00:00",
+ "reference_date": "2026-11-26",
+ "collected_at": "2026-11-26T20:01:37+00:00",
  "bulletins": [
   {
    "date": "2026-11-05",
@@ -93,6 +93,12 @@
    "published_at_sao_paulo": "2026-11-25 13:02:42.418138",
    "buy": 5.8819,
    "sell": 5.8825
+  },
+  {
+   "date": "2026-11-26",
+   "published_at_sao_paulo": "2026-11-26 13:11:27.937451",
+   "buy": 5.744,
+   "sell": 5.7446
   }
  ]
 }

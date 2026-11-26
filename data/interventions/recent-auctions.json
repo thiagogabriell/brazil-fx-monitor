@@ -3,10 +3,10 @@
  "unit": "USD cents",
  "concept": "Leiloes de cambio divulgados pelo Banco Central por comunicado, no mesmo dia, que ainda nao entraram no arquivo mensal de atuacoes.",
  "covers_after": "2026-10-27",
- "last_communication_number": 46364,
- "scanned_until_date": "2026-11-25",
- "reference_date": "2026-11-25",
- "collected_at": "2026-11-25T21:38:08+00:00",
+ "last_communication_number": 46369,
+ "scanned_until_date": "2026-11-26",
+ "reference_date": "2026-11-26",
+ "collected_at": "2026-11-26T20:02:27+00:00",
  "source": {
   "name": "Banco Central do Brasil - Comunicados",
   "endpoint": "https://www.bcb.gov.br/api/conteudo/app/normativos/exibeoutrasnormas?p1=COMUNICADO&p2=<numero>",
@@ -19,7 +19,7 @@
  "scheduled_note": "Leiloes ja anunciados e ainda nao realizados. O valor e o teto anunciado, nao o valor aceito. Nunca entra em nenhum total de gasto.",
  "scheduled_count": 0,
  "scheduled": [],
- "auction_count": 31,
+ "auction_count": 33,
  "unparsed_count": 0,
  "unparsed": [],
  "auctions": [
@@ -732,6 +732,52 @@
     "communication_number": 46357,
     "published_at_sao_paulo": "25/11/2026 10:40",
     "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46357"
+   },
+   "parsed": true,
+   "no_bids_accepted": false
+  },
+  {
+   "auction": "363/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-26",
+   "settlement_date": null,
+   "maturity_date": "2027-02-01",
+   "accepted_usd_cents": 25000000000,
+   "cut_rate": 5.873,
+   "announcement": {
+    "communication_number": 46366,
+    "published_at_sao_paulo": "26/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46366"
+   },
+   "result": {
+    "communication_number": 46368,
+    "published_at_sao_paulo": "26/11/2026 11:47",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46368"
+   },
+   "parsed": true,
+   "no_bids_accepted": false
+  },
+  {
+   "auction": "364/2026",
+   "kind": "swap",
+   "category": "swap_traditional",
+   "nature_published": "Swap Cambial Tradicional",
+   "trade_date": "2026-11-26",
+   "settlement_date": null,
+   "maturity_date": "2027-03-01",
+   "accepted_usd_cents": 350000000000,
+   "cut_rate": 5.899,
+   "announcement": {
+    "communication_number": 46367,
+    "published_at_sao_paulo": "26/11/2026 11:30",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46367"
+   },
+   "result": {
+    "communication_number": 46368,
+    "published_at_sao_paulo": "26/11/2026 11:47",
+    "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46368"
    },
    "parsed": true,
    "no_bids_accepted": false
