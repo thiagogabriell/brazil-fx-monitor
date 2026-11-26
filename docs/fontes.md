@@ -177,6 +177,33 @@ cobertura do arquivo mensal, marcadas como provisórias. Um leilão cujo texto n
 permita ler a natureza ou o valor fica registrado como não interpretado e não
 entra em nenhum total.
 
+### Limite conhecido do coletor de comunicados
+
+O coletor reconhece leilões: "Aviso de Abertura do Leilão de Câmbio" e
+"Aviso de Abertura do Leilão de Swap Cambial", com os respectivos resultados.
+Ele **não** reconheceria uma "Operação Direta", que é uma atuação fora de
+leilão e tem outro formato de divulgação.
+
+Isso hoje não deixa buraco: a última operação direta do Banco Central foi em
+**08/06/2020**, e desde então todas as atuações, sem exceção, são leilão
+eletrônico. O risco existiria apenas se o Banco Central voltasse a operar
+diretamente.
+
+Há uma proteção automática. O teste
+`test_the_communication_parser_reproduces_the_official_monthly_file` compara,
+em toda data coberta pelas duas fontes, o que o coletor leu dos comunicados com
+o que o arquivo mensal consolidado publica. Qualquer operação que o coletor
+tenha deixado passar aparece como divergência assim que o arquivo mensal
+alcançar aquela data.
+
+### Observação sobre o número do comunicado no arquivo mensal
+
+A coluna `Comunicado` do arquivo mensal aponta para o comunicado de
+**condições da oferta**, publicado em geral às 18h30 do dia anterior, e não
+para o comunicado de resultado. O aviso de abertura e o resultado saem no dia do
+leilão, com números bem mais altos. Quem quiser casar as duas fontes deve fazê-lo
+**pela data**, não pelo número do comunicado.
+
 ## O que não existe em formato aberto
 
 ### Composição das reservas por moeda e por classe de ativo

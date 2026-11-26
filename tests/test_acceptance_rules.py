@@ -619,3 +619,64 @@ def test_a_line_operation_moves_cash_but_not_liquidity(
         )
         checked += 1
     assert checked >= 5, "poucos dias de linha pura na janela para verificar"
+
+
+def test_the_communication_parser_reproduces_the_official_monthly_file(
+    operations_document,
+):
+    """Nas datas cobertas pelas duas fontes, elas têm de dizer a mesma coisa.
+
+    O arquivo mensal consolidado é a verdade oficial. Se a leitura dos
+    comunicados divergir dele numa data em que ambos existem, a leitura está
+    errada. Esta checagem fica mais forte a cada mês, conforme o arquivo mensal
+    avança sobre a janela já lida por comunicado.
+    """
+    import json
+    from pathlib import Path
+
+    import collect_recent_auctions as cra
+
+    root = Path(__file__).resolve().parent.parent
+    cache_path = root / "data" / "interventions" / "communications.json"
+    if not cache_path.exists():
+        pytest.skip("cache de comunicados ausente")
+    cache = json.loads(cache_path.read_text(encoding="utf-8"))["communications"]
+
+    monthly = {}
+    for operation in operations_document["operations"]:
+        if not operation["counts_as_executed"]:
+            continue
+        monthly.setdefault(operation["trade_date"], []).append(
+            (
+                operation["category"],
+                operation["volume_accepted_usd_cents"],
+                operation["maturity_date"],
+            )
+        )
+
+    by_date = {}
+    for item in cache:
+        stamp = item.get("published_at_sao_paulo") or ""
+        if "/" not in stamp:
+            continue
+        day, month, year = stamp.split(" ")[0].split("/")
+        by_date.setdefault(f"{year}-{month}-{day}", []).append(item)
+
+    compared = 0
+    for date, items in sorted(by_date.items()):
+        if date not in monthly:
+            continue
+        parsed = [
+            (entry["category"], entry["accepted_usd_cents"], entry["maturity_date"])
+            for entry in cra.parse_auctions(items).values()
+            if entry["parsed"]
+        ]
+        if not parsed:
+            continue
+        assert sorted(parsed) == sorted(monthly[date]), (
+            f"{date}: comunicados {sorted(parsed)} != arquivo mensal "
+            f"{sorted(monthly[date])}"
+        )
+        compared += 1
+
+    assert compared >= 1, "nenhuma data em comum entre as duas fontes para comparar"

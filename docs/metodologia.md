@@ -27,6 +27,35 @@ Os horários publicados pelo Banco Central são relógio de parede de São Paulo
 sem offset, e são exibidos exatamente como vieram. Os carimbos gerados por esta
 aplicação são UTC e convertidos para America/Sao_Paulo na interface.
 
+## Os dois conceitos de reserva, verificados contra a fonte
+
+O Banco Central publica dois totais. A diferença entre eles não é arbitrária:
+
+| Operação | Conceito caixa | Conceito liquidez |
+|---|---|---|
+| Venda definitiva de dólares | reduz | reduz igual |
+| Operação de linha (venda com recompra) | reduz | **não altera** |
+
+Isso foi verificado contra as duas séries reais. Em todos os dias da janela em
+que liquidou apenas uma operação de linha, a variação da liquidez menos a
+variação do caixa é exatamente o valor da linha, porque rendimento e variação
+cambial afetam os dois igualmente.
+
+Segue daí uma identidade que a aplicação usa como verificação permanente:
+
+```
+liquidez − caixa = saldo das operações de linha em aberto
+```
+
+Em 24/11/2026: US$ 4,000 bilhões dos dois lados. Essa conta só fecha porque a
+linha de 18/11, que ainda só existe em comunicado, entra no cálculo. Ou seja,
+ela valida a leitura dos comunicados contra a própria publicação do Banco
+Central.
+
+A página inicial mostra o **conceito liquidez**, que é o número que o Banco
+Central e a imprensa usam, e informa quanto sobra descontando as linhas em
+aberto.
+
 ## Conciliação diária das reservas
 
 Para cada data com saldo publicado:
