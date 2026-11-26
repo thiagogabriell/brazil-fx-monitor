@@ -1102,6 +1102,7 @@ def build_spending_days(
     reserves: Series,
     consolidated_until: str,
     recent: dict | None = None,
+    liquidity: Series | None = None,
 ) -> dict:
     """Every single day the Banco Central actually spent reserves, since 1999.
 
@@ -1132,6 +1133,11 @@ def build_spending_days(
             continue
         closing = reserves.at(date)
         previous = reserves.previous(date) if closing is not None else None
+        liquidity_closing = liquidity.at(date) if liquidity else None
+        liquidity_previous = (
+            liquidity.previous(date) if liquidity and liquidity_closing is not None
+            else None
+        )
         provisional = date > consolidated_until
         row = {
             "date": date,
@@ -1145,6 +1151,16 @@ def build_spending_days(
                 closing - previous[1] if closing is not None and previous else None
             ),
             "variation_pct": _pct(closing, previous[1]) if previous else None,
+            "closing_liquidity_usd": liquidity_closing,
+            "variation_liquidity_usd": (
+                liquidity_closing - liquidity_previous[1]
+                if liquidity_closing is not None and liquidity_previous
+                else None
+            ),
+            "variation_liquidity_pct": (
+                _pct(liquidity_closing, liquidity_previous[1])
+                if liquidity_previous else None
+            ),
             "source": "comunicado" if provisional else "dados_abertos",
             "provisional": provisional,
         }
@@ -1248,6 +1264,40 @@ def build_summary(
 
     windows = {str(days): _window_totals(daily, anchor_interventions, days) for days in WINDOWS}
 
+    # Verificacao contra a propria fonte: a diferenca entre os dois conceitos
+    # de reserva e, por construcao, o saldo das operacoes de linha em aberto.
+    # Se os dois numeros batem, a leitura dos comunicados esta correta.
+    cash_block = reserve_blocks.get("cash") or {}
+    liquidity_block = reserve_blocks.get("liquidity") or {}
+    gap_date = min(
+        d for d in (cash_block.get("reference_date"), liquidity_block.get("reference_date"))
+        if d
+    ) if cash_block and liquidity_block else None
+    gap_value = None
+    if gap_date:
+        cash_at = reserves["cash"].at(gap_date)
+        liquidity_at = reserves["liquidity"].at(gap_date)
+        if cash_at is not None and liquidity_at is not None:
+            gap_value = liquidity_at - cash_at
+    outstanding = open_temporary["outstanding_usd_cents"] / 100
+    concept_gap = {
+        "date": gap_date,
+        "liquidity_minus_cash_usd": gap_value,
+        "open_line_operations_usd": outstanding,
+        "difference_usd": (
+            None if gap_value is None else round(gap_value - outstanding, 2)
+        ),
+        "matches": (
+            None if gap_value is None else abs(gap_value - outstanding) < 5_000_000
+        ),
+        "explanation": (
+            "Uma operacao de linha, venda com recompra contratada, reduz o "
+            "conceito caixa e nao altera o conceito liquidez. Por isso a "
+            "diferenca entre os dois conceitos e o saldo das linhas em aberto. "
+            "Uma venda definitiva de dolares reduz os dois igualmente."
+        ),
+    }
+
     executed_sales = sorted(
         (
             o
@@ -1336,7 +1386,8 @@ def build_summary(
             "ancora delas e anterior a das reservas e do cambio."
         ),
         "reserves": reserve_blocks,
-        "reserves_default_concept": "cash",
+        "reserves_default_concept": "liquidity",
+        "concept_gap": concept_gap,
         "interventions": {
             "unit": "USD cents",
             "anchor_date": anchor_interventions,
@@ -1533,7 +1584,13 @@ def main() -> int:
 
     write_json(
         DATA / "indicators" / "spending-days.json",
-        build_spending_days(daily, reserves_cash, consolidated_until, recent_auctions),
+        build_spending_days(
+            daily,
+            reserves_cash,
+            consolidated_until,
+            recent_auctions,
+            reserves.get("liquidity"),
+        ),
         compact=True,
     )
     write_json(DATA / "indicators" / "summary.json", summary)

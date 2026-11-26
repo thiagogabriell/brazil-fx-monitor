@@ -567,3 +567,55 @@ def test_merged_totals_equal_the_sum_of_both_sources(
         (root / "data" / "indicators" / "spending-days.json").read_text(encoding="utf-8")
     )
     assert spending["total_usd_cents"] == from_file + from_communications
+
+
+def test_the_gap_between_the_two_reserve_concepts_equals_the_open_lines(summary):
+    """Checagem contra a própria fonte, que também valida os comunicados.
+
+    Uma operação de linha reduz o conceito caixa e não altera o conceito
+    liquidez. Logo a diferença entre os dois é o saldo das linhas em aberto. Se
+    a leitura dos comunicados estiver errada, esta conta deixa de fechar.
+    """
+    gap = summary["concept_gap"]
+    assert gap["date"]
+    assert gap["liquidity_minus_cash_usd"] is not None
+    assert gap["matches"] is True, (
+        f"liquidez - caixa = {gap['liquidity_minus_cash_usd']}, "
+        f"linhas em aberto = {gap['open_line_operations_usd']}"
+    )
+
+
+def test_a_line_operation_moves_cash_but_not_liquidity(
+    statement_cash, statement_liquidity
+):
+    """Verificado contra as duas séries reais do Banco Central.
+
+    Numa operação de linha o dinheiro sai do caixa e volta depois, então ela
+    reduz o conceito caixa e não altera o conceito liquidez. Rendimento e
+    variação cambial afetam os dois igualmente, logo a diferença entre as duas
+    variações no mesmo dia é exatamente o valor da linha.
+    """
+    cash = {d["date"]: d for d in statement_cash["days"]}
+    liquidity = {d["date"]: d for d in statement_liquidity["days"]}
+
+    checked = 0
+    for date, day in cash.items():
+        if day["interventions_coverage"] != "covered":
+            continue
+        if day["temporary_out_usd_cents"] <= 0:
+            continue
+        if day["direct_sold_usd_cents"] or day["direct_bought_usd_cents"]:
+            continue
+        if day["temporary_returned_usd_cents"]:
+            continue
+        other = liquidity.get(date)
+        if not other or other["variation_usd"] is None or day["variation_usd"] is None:
+            continue
+        line = day["temporary_out_usd_cents"] / 100
+        observed = other["variation_usd"] - day["variation_usd"]
+        # Tolerância de um milhão: as séries são publicadas em milhões.
+        assert abs(observed - line) <= 2_000_000, (
+            f"{date}: liquidez - caixa = {observed}, linha = {line}"
+        )
+        checked += 1
+    assert checked >= 5, "poucos dias de linha pura na janela para verificar"

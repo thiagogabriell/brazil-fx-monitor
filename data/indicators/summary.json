@@ -1,6 +1,6 @@
 {
  "schema": "indicator-summary/v1",
- "generated_at": "2026-11-26T03:00:03+00:00",
+ "generated_at": "2026-11-26T03:49:16+00:00",
  "anchors": {
   "reserves": "2026-11-24",
   "interventions": "2026-11-25",
@@ -118,7 +118,15 @@
    "first_date": "2008-01-02"
   }
  },
- "reserves_default_concept": "cash",
+ "reserves_default_concept": "liquidity",
+ "concept_gap": {
+  "date": "2026-11-24",
+  "liquidity_minus_cash_usd": 4000000000,
+  "open_line_operations_usd": 4000000000.0,
+  "difference_usd": 0.0,
+  "matches": true,
+  "explanation": "Uma operacao de linha, venda com recompra contratada, reduz o conceito caixa e nao altera o conceito liquidez. Por isso a diferenca entre os dois conceitos e o saldo das linhas em aberto. Uma venda definitiva de dolares reduz os dois igualmente."
+ },
  "interventions": {
   "unit": "USD cents",
   "anchor_date": "2026-11-25",
@@ -405,7 +413,7 @@
     "accumulated_12m": 376629.3,
     "year_to_date": 285806.8,
     "moving_average_3m": 33714.7,
-    "moving_average_12m": 31385.77,
+    "moving_average_12m": 31385.78,
     "negative_month_streak": 0,
     "trend": "entrada_liquida"
    },

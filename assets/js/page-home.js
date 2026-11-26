@@ -27,8 +27,9 @@ window.PAGE = (() => {
     return `há ${BFX.number(days)} dias`;
   }
 
-  function conceptNote() {
-    return summary.reserves.cash ? 'conceito caixa' : '';
+  /** O bloco de reservas a exibir: liquidez por padrão. */
+  function reservesBlock() {
+    return summary.reserves.liquidity || summary.reserves.cash;
   }
 
   /** The day the money actually left, as far as the official source goes. */
@@ -68,6 +69,8 @@ window.PAGE = (() => {
       closing_usd: day.closing_usd,
       variation_usd: day.variation_usd,
       variation_pct: day.variation_pct,
+      closing_liquidity_usd: day.closing_liquidity_usd,
+      variation_liquidity_usd: day.variation_liquidity_usd,
       interventions_coverage: 'covered',
       source: day.source,
       provisional: day.provisional,
@@ -86,7 +89,8 @@ window.PAGE = (() => {
   }
 
   function renderHeadline() {
-    const reserves = summary.reserves.cash;
+    const gap = summary.concept_gap;
+    const reserves = summary.reserves.liquidity || summary.reserves.cash;
     const all = spendingDays();
     const last = all[all.length - 1] || null;
     const anchor = summary.interventions.anchor_date;
@@ -137,11 +141,20 @@ window.PAGE = (() => {
         <p class="label">Quanto ainda tem</p>
         <div class="mid">${BFX.usd(reserves.current_usd)}</div>
         <p class="sub">
-          Saldo de ${BFX.date(reserves.reference_date)}.
-          Em 12 meses a reserva
+          Saldo de ${BFX.date(reserves.reference_date)},
+          no conceito liquidez, que é o número que o Banco Central e a imprensa
+          usam. Em 12 meses a reserva
           ${reserves.changes['365'].change_pct >= 0 ? 'subiu' : 'caiu'}
           ${BFX.usd(Math.abs(reserves.changes['365'].change))}
-          (${BFX.pct(reserves.changes['365'].change_pct)}), porque rende juros.
+          (${BFX.pct(reserves.changes['365'].change_pct)})
+          ${reserves.changes['365'].change_pct >= 0
+            ? ', porque rende juros e o gasto foi pequeno'
+            : ', somando gasto, rendimento e variação entre as moedas guardadas'}.
+          ${gap && gap.liquidity_minus_cash_usd
+            ? `Descontando as operações de linha em aberto, de
+               ${BFX.usd(gap.open_line_operations_usd)}, sobram
+               ${BFX.usd(reserves.current_usd - gap.liquidity_minus_cash_usd)}.`
+            : ''}
         </p>
       </div>`;
   }
@@ -154,6 +167,16 @@ window.PAGE = (() => {
       investimentos e por variação entre as moedas guardadas. Isso não é o
       governo gastando. Gasto é o Banco Central vender dólar de vez, e isso
       acontece em dias contados.
+      <br><br>
+      <strong>Dois jeitos de contar a reserva.</strong>
+      O Banco Central publica dois números. No <strong>conceito liquidez</strong>,
+      que é o usado aqui e pela imprensa, uma operação de linha não mexe no saldo,
+      porque o dinheiro volta. No <strong>conceito caixa</strong> ela reduz. A
+      diferença entre os dois é exatamente o total de linhas em aberto
+      ${summary.concept_gap && summary.concept_gap.matches
+        ? `(hoje ${cents(Math.round(summary.concept_gap.open_line_operations_usd * 100))}, e os dois números batem)`
+        : ''}.
+      Venda definitiva de dólares reduz os dois igualmente.
       <br><br>
       <strong>De onde vem cada linha.</strong>
       Até ${BFX.date(consolidated)} os valores vêm do arquivo mensal
@@ -172,6 +195,20 @@ window.PAGE = (() => {
       .filter(Boolean)
       .sort()
       .pop();
+  }
+
+  /** Saldo e variação no conceito liquidez, com recuo para o caixa quando a
+   *  série de liquidez ainda não existia (ela começa em 2008). */
+  function balanceOf(day) {
+    return day.closing_liquidity_usd !== undefined && day.closing_liquidity_usd !== null
+      ? day.closing_liquidity_usd
+      : day.closing_usd;
+  }
+
+  function changeOf(day) {
+    return day.variation_liquidity_usd !== undefined && day.variation_liquidity_usd !== null
+      ? day.variation_liquidity_usd
+      : day.variation_usd;
   }
 
   function renderTable() {
@@ -242,8 +279,8 @@ window.PAGE = (() => {
                   ? cents(day.direct_sold_usd_cents)
                   : 'US$ 0'}
             </td>
-            <td>${BFX.usd(day.closing_usd)}</td>
-            <td class="${trend.cls}">${BFX.usd(day.variation_usd, { sign: true })}</td>
+            <td>${BFX.usd(balanceOf(day))}</td>
+            <td class="${BFX.trend(changeOf(day)).cls}">${BFX.usd(changeOf(day), { sign: true })}</td>
             <td class="${pending ? 'pending' : day.temporary_out_usd_cents ? '' : 'neutral'}">
               ${pending ? '—' : day.temporary_out_usd_cents
                 ? cents(day.temporary_out_usd_cents) : '—'}
@@ -498,7 +535,7 @@ window.PAGE = (() => {
   async function reload() {
     [summary, statement, spending, recent] = await Promise.all([
       BFX.reload('data/indicators/summary.json'),
-      BFX.reload('data/reserves/statement-latest-cash.json'),
+      BFX.reload('data/reserves/statement-latest-liquidity.json'),
       BFX.reload('data/indicators/spending-days.json'),
       BFX.reload('data/interventions/recent-auctions.json', { optional: true })
     ]);
