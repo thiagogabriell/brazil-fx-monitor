@@ -3,10 +3,10 @@
  "unit": "USD cents",
  "concept": "Leiloes de cambio divulgados pelo Banco Central por comunicado, no mesmo dia, que ainda nao entraram no arquivo mensal de atuacoes.",
  "covers_after": "2026-10-27",
- "last_communication_number": 46369,
+ "last_communication_number": 46373,
  "scanned_until_date": "2026-11-26",
  "reference_date": "2026-11-26",
- "collected_at": "2026-11-26T20:02:27+00:00",
+ "collected_at": "2026-11-27T02:47:18+00:00",
  "source": {
   "name": "Banco Central do Brasil - Comunicados",
   "endpoint": "https://www.bcb.gov.br/api/conteudo/app/normativos/exibeoutrasnormas?p1=COMUNICADO&p2=<numero>",
