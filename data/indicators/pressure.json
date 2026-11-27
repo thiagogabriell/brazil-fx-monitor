@@ -1,5 +1,5 @@
 {
- "score": 47.2,
+ "score": 42.3,
  "classification": {
   "band": [
    41,
@@ -45,10 +45,10 @@
      100
     ]
    ],
-   "observed_value": -0.8918,
-   "score": 45.67,
+   "observed_value": -0.6819,
+   "score": 37.28,
    "available": true,
-   "justification": "As reservas variaram -0.89% em 30 dias. A escala atribui 46 pontos a essa variacao."
+   "justification": "As reservas variaram -0.68% em 30 dias. A escala atribui 37 pontos a essa variacao."
   },
   {
    "key": "reserves_change_90d_pct",
@@ -82,10 +82,10 @@
      100
     ]
    ],
-   "observed_value": -3.7227,
-   "score": 67.23,
+   "observed_value": -3.1859,
+   "score": 61.86,
    "available": true,
-   "justification": "As reservas variaram -3.72% em 90 dias, equivalente a 67 pontos."
+   "justification": "As reservas variaram -3.19% em 90 dias, equivalente a 62 pontos."
   },
   {
    "key": "direct_sale_days_30d",
@@ -156,10 +156,10 @@
      100
     ]
    ],
-   "observed_value": 1.1061,
-   "score": 46.77,
+   "observed_value": 1.1035,
+   "score": 46.73,
    "available": true,
-   "justification": "As vendas diretas de 90 dias somam 1.11% das reservas atuais, o que vale 47 pontos."
+   "justification": "As vendas diretas de 90 dias somam 1.10% das reservas atuais, o que vale 47 pontos."
   },
   {
    "key": "intervention_acceleration_ratio",
@@ -230,10 +230,10 @@
      100
     ]
    ],
-   "observed_value": 7.6857,
-   "score": 68.43,
+   "observed_value": 3.7626,
+   "score": 44.69,
    "available": true,
-   "justification": "A PTAX variou +7.69% em 30 dias, o que vale 68 pontos."
+   "justification": "A PTAX variou +3.76% em 30 dias, o que vale 45 pontos."
   },
   {
    "key": "brl_change_90d_pct",
@@ -267,10 +267,10 @@
      100
     ]
    ],
-   "observed_value": 10.4625,
-   "score": 54.51,
+   "observed_value": 6.5859,
+   "score": 40.66,
    "available": true,
-   "justification": "A PTAX variou +10.46% em 90 dias, o que vale 55 pontos."
+   "justification": "A PTAX variou +6.59% em 90 dias, o que vale 41 pontos."
   },
   {
    "key": "financial_account_3m_usd_million",
@@ -374,10 +374,10 @@
      100
     ]
    ],
-   "observed_value": 1.1061,
-   "score": 30.1,
+   "observed_value": 1.1035,
+   "score": 30.06,
    "available": true,
-   "justification": "As operacoes temporarias em aberto somam 1.11% das reservas, o que vale 30 pontos."
+   "justification": "As operacoes temporarias em aberto somam 1.10% das reservas, o que vale 30 pontos."
   },
   {
    "key": "reserves_to_short_term_debt",
@@ -444,8 +444,8 @@
      100
     ]
    ],
-   "observed_value": 14.18,
-   "score": 37.73,
+   "observed_value": 14.214,
+   "score": 37.62,
    "available": true,
    "justification": "As reservas cobrem 14.2 meses de importacoes, o que vale 38 pontos."
   }
@@ -492,26 +492,26 @@
  "disclaimer": "Indicador experimental desta aplicacao. Nao e classificacao oficial do Banco Central, nao e previsao de crise e nao e recomendacao financeira.",
  "formula": "score = soma(sub_score_i * peso_i) / soma(peso_i), apenas sobre os componentes com dado disponivel. Cada sub_score vem de uma funcao linear por partes com pontos de quebra declarados.",
  "schema": "pressure-index/v1",
- "generated_at": "2026-11-27T03:17:58+00:00",
+ "generated_at": "2026-11-27T19:52:21+00:00",
  "reference_dates": {
-  "reserves": "2026-11-25",
-  "interventions": "2026-11-26",
-  "exchange_rate": "2026-11-26",
+  "reserves": "2026-11-26",
+  "interventions": "2026-11-27",
+  "exchange_rate": "2026-11-27",
   "exchange_flow": "2026-10-01"
  },
  "observed_values": {
-  "reserves_change_30d_pct": -0.8918,
-  "reserves_change_90d_pct": -3.7227,
+  "reserves_change_30d_pct": -0.6819,
+  "reserves_change_90d_pct": -3.1859,
   "direct_sale_days_30d": 1.0,
-  "sold_vs_reserves_90d_pct": 1.1061,
+  "sold_vs_reserves_90d_pct": 1.1035,
   "intervention_acceleration_ratio": 1.0,
-  "brl_change_30d_pct": 7.6857,
-  "brl_change_90d_pct": 10.4625,
+  "brl_change_30d_pct": 3.7626,
+  "brl_change_90d_pct": 6.5859,
   "financial_account_3m_usd_million": -20103.7,
   "persistence_after_intervention_pct": 39.87,
-  "open_temporary_vs_reserves_pct": 1.1061,
+  "open_temporary_vs_reserves_pct": 1.1035,
   "reserves_to_short_term_debt": null,
-  "import_coverage_months": 14.18
+  "import_coverage_months": 14.214
  },
  "history": [
   {
