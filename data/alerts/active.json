@@ -1,6 +1,6 @@
 {
  "schema": "alerts-active/v1",
- "generated_at": "2026-11-27T02:47:20+00:00",
+ "generated_at": "2026-11-27T03:17:59+00:00",
  "timezone": "America/Sao_Paulo",
  "thresholds": "padrao",
  "disclaimer": "Os limites sao criterios configuraveis de monitoramento desta aplicacao e nao indicadores oficiais de crise.",
@@ -26,9 +26,9 @@
    "source": "Historico de atuacoes no mercado de cambio (BCB)",
    "page": "pages/transactions.html",
    "reference_date": "2026-11-24",
-   "detected_date_sao_paulo": "2026-11-26",
-   "detected_time_sao_paulo": "23:47:20",
-   "detected_at_utc": "2026-11-27T02:47:20+00:00",
+   "detected_date_sao_paulo": "2026-11-27",
+   "detected_time_sao_paulo": "00:17:59",
+   "detected_at_utc": "2026-11-27T03:17:59+00:00",
    "thresholds_used": "padrao"
   },
   {
@@ -45,9 +45,9 @@
    "source": "Comunicados do BCB",
    "page": "pages/interventions.html",
    "reference_date": "2026-10-27",
-   "detected_date_sao_paulo": "2026-11-26",
-   "detected_time_sao_paulo": "23:47:20",
-   "detected_at_utc": "2026-11-27T02:47:20+00:00",
+   "detected_date_sao_paulo": "2026-11-27",
+   "detected_time_sao_paulo": "00:17:59",
+   "detected_at_utc": "2026-11-27T03:17:59+00:00",
    "thresholds_used": "padrao",
    "official_url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46184"
   }

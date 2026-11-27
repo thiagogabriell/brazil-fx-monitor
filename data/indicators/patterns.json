@@ -1,6 +1,6 @@
 {
  "schema": "patterns/v1",
- "generated_at": "2026-11-26T20:02:29+00:00",
+ "generated_at": "2026-11-27T03:17:59+00:00",
  "anchor_interventions": "2026-11-26",
  "anchor_reserves": "2026-11-25",
  "anchor_exchange_rate": "2026-11-26",
@@ -67,7 +67,7 @@
    "kind": "tendencia_observada",
    "detected": true,
    "evidence": [
-    "conta financeira de 3 meses: US$ -25028.6 milhoes"
+    "conta financeira de 3 meses: US$ -20103.7 milhoes"
    ],
    "detail": "Baseado no balanco de pagamentos mensal, nao no fluxo cambial contratado, que nao tem API publica. Saida liquida nao e, por si, fuga de capital."
   },

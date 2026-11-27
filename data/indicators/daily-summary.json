@@ -1,15 +1,15 @@
 {
  "schema": "daily-summary/v1",
- "generated_at": "2026-11-27T02:47:20+00:00",
- "generated_at_sao_paulo": "2026-11-26T23:47:20-03:00",
+ "generated_at": "2026-11-27T03:17:59+00:00",
+ "generated_at_sao_paulo": "2026-11-27T00:17:59-03:00",
  "timezone": "America/Sao_Paulo",
- "date_sao_paulo": "2026-11-26",
+ "date_sao_paulo": "2026-11-27",
  "method": "Texto gerado por regras determinísticas sobre os dados coletados. Nenhum modelo de linguagem e nenhum serviço pago é utilizado.",
  "anchors": {
   "reserves": "2026-11-25",
   "interventions": "2026-11-26",
   "exchange_rate": "2026-11-26",
-  "exchange_flow": "2026-09-01"
+  "exchange_flow": "2026-10-01"
  },
  "blocks": [
   {
@@ -57,9 +57,9 @@
   {
    "key": "flow",
    "title": "Fluxo mais recente",
-   "text": "O balanço de pagamentos mais recente é de 1 de setembro de 2026. A conta financeira dos três últimos meses publicados soma US$ -25.029 milhões. Os investimentos em carteira acumulam US$ 12.416 milhões em três meses. com 0 mês(es) negativo(s) em sequência. Esse indicador não é o fluxo cambial contratado semanal. que não tem API pública.",
+   "text": "O balanço de pagamentos mais recente é de 1 de outubro de 2026. A conta financeira dos três últimos meses publicados soma US$ -20.104 milhões. Os investimentos em carteira acumulam US$ -209 milhões em três meses. com 1 mês(es) negativo(s) em sequência. Esse indicador não é o fluxo cambial contratado semanal. que não tem API pública.",
    "source": "SGS 22864/22905/22969 (BCB)",
-   "reference_date": "2026-09-01"
+   "reference_date": "2026-10-01"
   },
   {
    "key": "reconciliation",
@@ -85,13 +85,13 @@
   {
    "key": "pressure",
    "title": "Indicador de pressão cambial",
-   "text": "O indicador experimental de pressão cambial está em 47.9 pontos, faixa \"Pressao elevada\", com 100.0% de cobertura dos componentes. É uma metodologia desta aplicação, não uma classificação oficial do Banco Central.",
+   "text": "O indicador experimental de pressão cambial está em 47.2 pontos, faixa \"Pressao elevada\", com 100.0% de cobertura dos componentes. É uma metodologia desta aplicação, não uma classificação oficial do Banco Central.",
    "source": "Metodologia desta aplicação",
    "reference_date": null
   }
  ],
  "pending_information": [
-  "O saldo das reservas de 26 de novembro de 2026 ainda não foi publicado; o último disponível é de 25 de novembro de 2026.",
+  "O saldo das reservas de 27 de novembro de 2026 ainda não foi publicado; o último disponível é de 25 de novembro de 2026.",
   "As atuações no mercado de câmbio posteriores a 26 de novembro de 2026 ainda não foram publicadas, porque a fonte é atualizada mensalmente.",
   "A composição das reservas por moeda e por classe de ativo não é publicada em API pelo Banco Central."
  ],
