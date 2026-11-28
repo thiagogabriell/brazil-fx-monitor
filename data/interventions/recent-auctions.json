@@ -3,10 +3,10 @@
  "unit": "USD cents",
  "concept": "Leiloes de cambio divulgados pelo Banco Central por comunicado, no mesmo dia, que ainda nao entraram no arquivo mensal de atuacoes.",
  "covers_after": "2026-10-27",
- "last_communication_number": 46379,
+ "last_communication_number": 46383,
  "scanned_until_date": "2026-11-27",
  "reference_date": "2026-11-27",
- "collected_at": "2026-11-27T19:52:20+00:00",
+ "collected_at": "2026-11-28T02:31:42+00:00",
  "source": {
   "name": "Banco Central do Brasil - Comunicados",
   "endpoint": "https://www.bcb.gov.br/api/conteudo/app/normativos/exibeoutrasnormas?p1=COMUNICADO&p2=<numero>",
@@ -17,8 +17,23 @@
   "O arquivo mensal continua sendo a fonte oficial consolidada; estas operacoes saem daqui assim que ele as incorpora."
  ],
  "scheduled_note": "Leiloes ja anunciados e ainda nao realizados. O valor e o teto anunciado, nao o valor aceito. Nunca entra em nenhum total de gasto.",
- "scheduled_count": 0,
- "scheduled": [],
+ "scheduled_count": 1,
+ "scheduled": [
+  {
+   "auction_date": "2026-11-30",
+   "category": "sale_with_repurchase",
+   "nature_published": null,
+   "subject": "Divulga a realização de leilões de venda conjugados com leilões de compra de moeda estrangeira no mercado interbancário de câmbio, na modalidade pós-fixado Selic",
+   "ceiling_usd_cents": 200000000000,
+   "ceiling_is_maximum": true,
+   "settlement_date": "2026-12-02",
+   "communication_number": 46382,
+   "published_at_sao_paulo": "27/11/2026 18:31",
+   "url": "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Comunicado&numero=46382",
+   "status": "anunciada",
+   "counts_as_spending": false
+  }
+ ],
  "auction_count": 35,
  "unparsed_count": 0,
  "unparsed": [],
